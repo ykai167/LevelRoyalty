@@ -13,7 +13,7 @@
         </Grid.RowDefinitions>
         <TabControl x:Name="TabMain" Grid.Row="0"></TabControl>
         <StatusBar Name="sbInfo" Grid.Row="1">
-            <StatusBarItem>
+            <!--<StatusBarItem>
                 <TextBlock Text="{Binding AdminName,StringFormat='当前登录人：{0}'}"></TextBlock>
             </StatusBarItem>            
             <StatusBarItem>
@@ -21,7 +21,7 @@
             </StatusBarItem>
             <StatusBarItem>
                 <Button Content="退出" Width="100px" Click="Button_Click"/>
-            </StatusBarItem>
+            </StatusBarItem>-->
         </StatusBar>
     </Grid>
 </UserControl>
