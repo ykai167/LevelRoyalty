@@ -23,6 +23,11 @@ namespace LR.WpfApp
         public MainWindow()
         {
             InitializeComponent();
+
+            for (int i = 0; i < 5; i++)
+            {
+                this.layout.TabMain.Items.Add(new TabItem { Header = $"tab{i}" });
+            }
         }
     }
 }
