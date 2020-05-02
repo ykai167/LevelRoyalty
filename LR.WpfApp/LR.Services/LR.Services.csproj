@@ -45,11 +45,12 @@
     <Compile Include="ConsumeDataService.cs" />
     <Compile Include="Data\Administrator.cs" />
     <Compile Include="Data\MemoryData.cs" />
+    <Compile Include="Enums\RoyaltyType.cs" />
     <Compile Include="Extends.cs" />
     <Compile Include="IService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ServiceBase.cs" />
-    <Compile Include="StaffState.cs" />
+    <Compile Include="Enums\StaffState.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\LR.Repositories\LR.Repositories.csproj">

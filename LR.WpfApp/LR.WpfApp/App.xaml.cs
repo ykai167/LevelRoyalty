@@ -21,6 +21,7 @@ namespace LR.WpfApp
         private void App_Startup(object sender, StartupEventArgs e)
         {
             Tools.DIHelper.RegistTransient<LR.Services.IConsumeDataService, LR.Services.ConsumeDataService>();
+            Tools.DIHelper.RegistTransient<LR.Services.IStaffLevelService, LR.Services.StaffLevelService>();
 
             Application.Current.ShutdownMode = System.Windows.ShutdownMode.OnExplicitShutdown;
 

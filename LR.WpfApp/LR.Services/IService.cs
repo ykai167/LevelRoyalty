@@ -6,10 +6,11 @@ using System.Threading.Tasks;
 
 namespace LR.Services
 {
-    public partial interface IService<T> where T : LR.Entity.IDEntity<Guid>
+    public partial interface IService<T> : IDisposable where T : LR.Entity.IDEntity<Guid>
     {
         T Single(Guid id);
         List<T> PageList(int pageIndex, int pageSize = 20);
+        List<T> List();
         void Update(T entity);
         void Insert(T entity);
     }
@@ -22,9 +23,19 @@ namespace LR.Services
             db = new Repositories.DataContext();
         }
 
-        public void Insert(T entity)
+        public void Dispose()
+        {
+            throw new NotImplementedException();
+        }
+
+        public virtual void Insert(T entity)
         {
             db.Context.Insertable<T>(entity).ExecuteCommand();
+        }
+
+        public List<T> List()
+        {
+            return db.Context.Queryable<T>().ToList();
         }
 
         public List<T> PageList(int pageIndex, int pageSize)
@@ -37,7 +48,7 @@ namespace LR.Services
             return db.Context.Queryable<T>().Single(p => p.ID == id);
         }
 
-        public void Update(T entity)
+        public virtual void Update(T entity)
         {
             db.Context.Updateable<T>(entity).Where(item => item.ID == entity.ID).ExecuteCommand();
         }

@@ -68,6 +68,9 @@
     <Compile Include="Controls\RoomControl.xaml.cs">
       <DependentUpon>RoomControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\RoyaltyConfiControl.xaml.cs">
+      <DependentUpon>RoyaltyConfiControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\StaffLevelControl.xaml.cs">
       <DependentUpon>StaffLevelControl.xaml</DependentUpon>
     </Compile>
@@ -96,6 +99,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Controls\RoomControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\RoyaltyConfiControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

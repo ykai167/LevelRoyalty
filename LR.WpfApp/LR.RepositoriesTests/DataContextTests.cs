@@ -12,6 +12,66 @@ namespace LR.Repositories.Tests
     public class DataContextTests
     {
         [TestMethod()]
+        public void DataContextTranTest()
+        {
+            using (var context = new LR.Repositories.DataContext())
+            {
+                try
+                {
+                    context.Context.Ado.BeginTran();
+                    context.ConsumeDatas.Delete(p => true);
+                    context.ConsumeDatas.Insert(new Entity.ConsumeData
+                    {
+                        Amount = 100,
+                        ID = Guid.NewGuid(),
+                        RoomID = Guid.NewGuid(),
+                        StaffID = Guid.NewGuid(),
+                        State = 100
+                    });
+                    context.ConsumeDatas.Insert(new Entity.ConsumeData
+                    {
+                        Amount = 100,
+                        ID = Guid.NewGuid(),
+                        RoomID = Guid.NewGuid(),
+                        StaffID = Guid.NewGuid(),
+                        State = 100
+                    });
+                    context.Context.Ado.CommitTran();
+
+                    context.Context.Ado.BeginTran();
+                    context.ConsumeDatas.Delete(p => true);
+                    context.ConsumeDatas.Insert(new Entity.ConsumeData
+                    {
+                        Amount = 100,
+                        ID = Guid.NewGuid(),
+                        RoomID = Guid.NewGuid(),
+                        StaffID = Guid.NewGuid(),
+                        State = 100
+                    });
+                    context.ConsumeDatas.Insert(new Entity.ConsumeData
+                    {
+                        Amount = 100,
+                        ID = Guid.NewGuid(),
+                        RoomID = Guid.NewGuid(),
+                        StaffID = Guid.NewGuid(),
+                        State = 100
+                    });
+                    throw new Exception();
+                    context.Context.Ado.CommitTran();
+                }
+                catch (Exception e)
+                {
+                    context.Context.Ado.RollbackTran();
+                    throw e;
+                }
+                finally
+                {
+                    Assert.IsTrue(context.ConsumeDatas.Count(p => true) == 2);
+                }
+            }
+        }
+
+        [TestMethod()]
         public void DataContextTest()
         {
             var context = new LR.Repositories.DataContext();

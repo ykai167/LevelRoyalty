@@ -12,10 +12,8 @@ namespace LR.Services.Tests
     public class ConsumeDataServiceTests
     {
         [TestMethod()]
-        public void TestTest()
+        public void AddDataTest()
         {
-
-
             Assert.Fail();
         }
     }

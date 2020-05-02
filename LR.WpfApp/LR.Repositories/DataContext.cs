@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace LR.Repositories
 {
-    public class DataContext
+    public class DataContext : IDisposable
     {
         ISqlSugarClient context;
         public DataContext(bool createTabel = true)
@@ -40,7 +40,12 @@ namespace LR.Repositories
         public SimpleClient<Entity.WorkGroup> WorkGroups => new SimpleClient<Entity.WorkGroup>(context);
         public SimpleClient<Entity.WorkGroupManagerCategory> WorkGroupManagerCategories => new SimpleClient<Entity.WorkGroupManagerCategory>(context);
         public SimpleClient<Entity.WorkGroupMember> WorkGroupMembers => new SimpleClient<Entity.WorkGroupMember>(context);
+
+        public void Dispose()
+        {
+            this.Context.Dispose();
+        }
     }
 
-    
+
 }
