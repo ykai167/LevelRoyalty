@@ -10,27 +10,26 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
 using System.Windows.Shapes;
 
 namespace LR.WpfApp.Controls
 {
     /// <summary>
-    /// StaffControl.xaml 的交互逻辑
+    /// RoomControl.xaml 的交互逻辑
     /// </summary>
-    [UserControlUse(UseTo.MainWindow, TabHeader = "员工管理")]
-    public partial class StaffControl : UserControl
+    [UserControlUse(UseTo.MainWindow, TabHeader = "房间管理")]
+    public partial class RoomControl : Window
     {
         LR.Services.IConsumeDataService _service;
 
-        public StaffControl(LR.Services.IConsumeDataService service)
+        public RoomControl(LR.Services.IConsumeDataService service)
         {
             this._service = service;
             InitializeComponent();
-            this.Loaded += StaffControl_Loaded;
+            this.Loaded += RoomControl_Loaded;
         }
 
-        private void StaffControl_Loaded(object sender, RoutedEventArgs e)
+        private void RoomControl_Loaded(object sender, RoutedEventArgs e)
         {
             this.dgData.DataContext = this._service.PageList(1);
         }
