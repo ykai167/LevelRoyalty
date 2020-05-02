@@ -25,4 +25,20 @@ namespace LR.Entity
         /// </summary>
         public TOperatorID OperatorID { get; set; }
     }
+
+    public class DataState
+    {
+        /// <summary>
+        /// 正常
+        /// </summary>
+        public const int Normal = 200;
+        /// <summary>
+        /// 删除
+        /// </summary>
+        public const int Delete = 400;
+        /// <summary>
+        /// 禁用
+        /// </summary>
+        public const int Disable = 600;
+    }
 }

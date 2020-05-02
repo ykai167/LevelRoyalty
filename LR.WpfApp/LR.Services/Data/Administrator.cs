@@ -9,6 +9,7 @@ namespace LR.Services
     public class Administrator
     {
         public static Administrator Current { get; set; }
+        public Guid ID { get; set; }
         public string Name { get; set; }
         public AdminType Type { get; set; }
     }

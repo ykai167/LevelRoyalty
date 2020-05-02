@@ -15,7 +15,11 @@ namespace LR.Tools
         }
         public static void RegistTransient<T, TMap>()
         {
-            container.RegisterType(typeof(T), typeof(TMap), null, new Unity.Lifetime.TransientLifetimeManager());
+            RegistTransient(typeof(T), typeof(TMap));
+        }
+        public static void RegistTransient(Type t, Type tMap)
+        {
+            container.RegisterType(t, tMap, null, new Unity.Lifetime.TransientLifetimeManager());
         }
 
         public static T GetInstance<T>() where T : class

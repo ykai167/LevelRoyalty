@@ -26,7 +26,11 @@ namespace LR.WpfApp
             this.Loaded += MainWindow_Loaded;
             foreach (var item in Models.TabSource.GetTabSources(Controls.UseTo.MainWindow))
             {
-                var TabItem = new TabItem { Header = item.Header, Content = Tools.DIHelper.GetInstance(item.ControlType) };
+                var TabItem = new TabItem
+                {
+                    Header = item.Header,
+                    Content = Tools.DIHelper.GetInstance(item.ControlType)
+                };
                 this.tabMain.Items.Add(TabItem);
             }
         }

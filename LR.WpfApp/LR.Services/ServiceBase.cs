@@ -6,11 +6,11 @@ using System.Threading.Tasks;
 
 namespace LR.Services
 {
-    public partial interface IService<T> where T : LR.Entity.IDEntity<Guid>
+    public partial interface IService<T> 
     {
 
     }
-    public partial class ServiceBase<T> : IService<T> where T : LR.Entity.IDEntity<Guid>, new()
+    public partial class ServiceBase<T>
     {
 
     }

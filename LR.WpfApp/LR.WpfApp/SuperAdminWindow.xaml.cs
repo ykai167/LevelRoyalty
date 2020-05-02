@@ -1,4 +1,5 @@
-﻿using System;
+﻿using LR.WpfApp.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -19,14 +20,21 @@ namespace LR.WpfApp
     /// </summary>
     public partial class SuperAdminWindow : Window
     {
+        TabSource[] sources = TabSource.GetTabSources(Controls.UseTo.SuperAdminWindow);
         public SuperAdminWindow()
         {
             InitializeComponent();
-            foreach (var item in Models.TabSource.GetTabSources(Controls.UseTo.SuperAdminWindow))
+            foreach (var item in sources)
             {
                 var TabItem = new TabItem { Header = item.Header, Content = Tools.DIHelper.GetInstance(item.ControlType) };
                 this.tabMain.Items.Add(TabItem);
+                this.tabMain.SelectionChanged += TabMain_SelectionChanged;
             }
+        }
+
+        private void TabMain_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            (this.tabMain.Items[this.tabMain.SelectedIndex] as TabItem).Content = Tools.DIHelper.GetInstance(sources[this.tabMain.SelectedIndex].ControlType);
         }
     }
 }

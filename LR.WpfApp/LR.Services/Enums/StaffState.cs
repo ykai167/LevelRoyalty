@@ -9,16 +9,16 @@ namespace LR.Services
     public enum StaffState
     {
         [EnumName(Name = "在职")]
-        Normal,
+        Normal = LR.Entity.DataState.Normal,
         [EnumName(Name = "离职")]
-        Quit,
+        Quit = LR.Entity.DataState.Disable,
     }
 
     public enum DataState
     {
         [EnumName(Name = "正常")]
-        Normal,
+        Normal = LR.Entity.DataState.Normal,
         [EnumName(Name = "删除")]
-        Delete,
+        Delete = LR.Entity.DataState.Delete,
     }
 }

@@ -1,49 +1,50 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ClassDiagram MajorVersion="1" MinorVersion="1">
   <Class Name="LR.Repositories.DataContext" Collapsed="true">
-    <Position X="30" Y="0.5" Width="1.5" />
+    <Position X="40.75" Y="0.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAACAAAQAgAAAAAAECAAAQBiACBEAAAAAAQAAAAAAAg=</HashCode>
+      <HashCode>AAACAAAQAiAAAAAAECAAAQBiACBEAAAAAAQAAAAAAAg=</HashCode>
       <FileName>DataContext.cs</FileName>
     </TypeIdentifier>
+    <Lollipop Position="0.2" />
   </Class>
   <Class Name="LR.Entity.Admin" Collapsed="true">
-    <Position X="5" Y="4.75" Width="2.25" />
+    <Position X="8.25" Y="4.75" Width="2.25" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAQAAAAAAAAA=</HashCode>
       <FileName>Entity\Admin.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="LR.Entity.IDEntity&lt;TID&gt;" Collapsed="true">
-    <Position X="14" Y="0.5" Width="1.5" />
+    <Position X="19.5" Y="0.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAABAAAAAAA=</HashCode>
       <FileName>Entity\Base\IDEntity.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="LR.Entity.NamingEntity&lt;TID&gt;" Collapsed="true">
-    <Position X="10.75" Y="1.75" Width="1.75" />
+    <Position X="2.75" Y="1.75" Width="1.75" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Entity\Base\NamingEntity.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="LR.Entity.UpdateEntity&lt;TID, TOperatorID&gt;" Collapsed="true">
-    <Position X="24.25" Y="1.75" Width="2.75" />
+    <Position X="21.25" Y="1.75" Width="2.75" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAABACAAAA=</HashCode>
       <FileName>Entity\Base\UpdateEntity.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="LR.Entity.UpdateNamingEntity&lt;TID, TOperatorID&gt;" Collapsed="true">
-    <Position X="10" Y="3.25" Width="3.25" />
+    <Position X="15.5" Y="3.25" Width="3.25" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAABACAAAA=</HashCode>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Entity\Base\UpdateNamingEntity.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="LR.Entity.ConsumeData" Collapsed="true">
-    <Position X="23" Y="3.25" Width="2" />
+    <Position X="32.25" Y="3.25" Width="2" />
     <TypeIdentifier>
       <HashCode>AAAAAAACAAAAAAAAAAAAAACAAAAAAAAAAAAAAgAAAAA=</HashCode>
       <FileName>Entity\ConsumeData.cs</FileName>
@@ -57,70 +58,70 @@
     </TypeIdentifier>
   </Class>
   <Class Name="LR.Entity.Room" Collapsed="true">
-    <Position X="11.75" Y="4.75" Width="2.25" />
+    <Position X="17.5" Y="4.75" Width="2.25" />
     <TypeIdentifier>
       <HashCode>AACAAAACAAAAAAAAAAAAAAAAACAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Entity\Room.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="LR.Entity.RoomCategory" Collapsed="true">
-    <Position X="16.25" Y="4.75" Width="2.25" />
+    <Position X="23.5" Y="4.75" Width="2.25" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Entity\RoomCategory.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="LR.Entity.Royalty" Collapsed="true">
-    <Position X="20.75" Y="3.25" Width="2" />
+    <Position X="29.5" Y="3.25" Width="2" />
     <TypeIdentifier>
       <HashCode>AAAAQAAAAAAAAAAAAAIAAABAAAAAAAAAAAAACgAAAAA=</HashCode>
       <FileName>Entity\Royalty.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="LR.Entity.RoyaltyConfig" Collapsed="true">
-    <Position X="7.25" Y="4.75" Width="2.25" />
+    <Position X="11.25" Y="4.75" Width="2.25" />
     <TypeIdentifier>
-      <HashCode>AAAAIAAAAAAAAAAABAAAAABAAAAAAAAAAAAACAAAAAA=</HashCode>
+      <HashCode>AAAAQAAAAAAAAAAAAAAAAABAAAAAAAAAAAAACAIAAAA=</HashCode>
       <FileName>Entity\RoyaltyConfig.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="LR.Entity.SettleBatch" Collapsed="true">
-    <Position X="25.25" Y="3.25" Width="2" />
+    <Position X="35" Y="3.25" Width="2" />
     <TypeIdentifier>
       <HashCode>IAAAAAAAAAAAAAAAAAAAAAAAIAAgAAAACAAAAAAAAAA=</HashCode>
       <FileName>Entity\SettleBatch.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="LR.Entity.Staff" Collapsed="true">
-    <Position X="14" Y="4.75" Width="2.25" />
+    <Position X="20.5" Y="4.75" Width="2.25" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAABAgQAAAAAAAACAA=</HashCode>
       <FileName>Entity\Staff.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="LR.Entity.StaffLevel" Collapsed="true">
-    <Position X="18.5" Y="4.75" Width="2.25" />
+    <Position X="26.5" Y="4.75" Width="2.25" />
     <TypeIdentifier>
       <HashCode>AAEAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Entity\StaffLevel.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="LR.Entity.WorkGroup" Collapsed="true">
-    <Position X="2.75" Y="4.75" Width="2.25" />
+    <Position X="5.25" Y="4.75" Width="2.25" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Entity\WorkGroup.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="LR.Entity.WorkGroupManagerCategory" Collapsed="true">
-    <Position X="9.5" Y="4.75" Width="2.5" />
+    <Position X="14.25" Y="4.75" Width="2.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAAAAAA=</HashCode>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Entity\WorkGroupManagerCategory.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="LR.Entity.WorkGroupMember" Collapsed="true">
-    <Position X="27.5" Y="3.25" Width="2" />
+    <Position X="37.75" Y="3.25" Width="2" />
     <TypeIdentifier>
       <HashCode>AAAAAAACAAAAAAAAAAAAAAAAIAAAAAAAAAAAAgAAAAA=</HashCode>
       <FileName>Entity\WorkGroupMember.cs</FileName>

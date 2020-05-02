@@ -8,7 +8,7 @@ namespace LR.Entity
     /// <summary>
     /// 奖励参数配置,记录各等级员工
     /// </summary>
-    public class RoyaltyConfig : UpdateNamingEntity<Guid, Guid>
+    public class RoyaltyConfig : UpdateEntity<Guid, Guid>
     {
         /// <summary>
         /// 提成类型,由系统定义枚举
@@ -16,14 +16,14 @@ namespace LR.Entity
         public int RoyaltyType { get; set; }
 
         /// <summary>
-        /// 提成员工级别
-        /// </summary>
-        public Guid StaffLevel { get; set; }
+        /// 提成者身份ID:员工级别ID或管理人员类别ID
+        /// /// </summary>
+        public Guid AcceptID { get; set; }
 
         /// <summary>
-        /// 被提成员工级别
+        /// 贡献提成者身份ID:员工级别ID,管理提成与几别无关
         /// </summary>
-        public Guid FromStaffLevel { get; set; }
+        public Guid ExpendID { get; set; }
 
         /// <summary>
         /// 提成比例

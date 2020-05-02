@@ -34,14 +34,28 @@ namespace LR.Services
         public static MemoryData Current { get { return current; } }
     }
 
+    public class WorkGroupManagerCategory
+    {
+        public Guid ID { get; set; }
+        public string Name { get; set; }
+
+        public readonly static WorkGroupManagerCategory[] WorkGroupManagerCategories;
+        static WorkGroupManagerCategory()
+        {
+            WorkGroupManagerCategories = LR.Tools.DIHelper.GetInstance<IWorkGroupManagerCategoryService>().List().Select(item => new WorkGroupManagerCategory
+            {
+                ID = item.ID,
+                Name = item.Name
+            }).ToArray();
+        }
+    }
     public class Level
     {
         public readonly static Level Min;
 
         static Level()
         {
-            var db = new LR.Repositories.DataContext();
-            var list = db.StaffLevels.GetList().OrderBy(item => item.Order).Select(item => new Level
+            var list = LR.Tools.DIHelper.GetInstance<IStaffLevelService>().List().OrderBy(item => item.Order).Select(item => new Level
             {
                 ID = item.ID,
                 Name = item.Name,

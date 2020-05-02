@@ -12,6 +12,66 @@ namespace LR.Repositories.Tests
     public class DataContextTests
     {
         [TestMethod()]
+        public void DataContextTranTest()
+        {
+            using (var context = new LR.Repositories.DataContext())
+            {
+                try
+                {
+                    context.Context.Ado.BeginTran();
+                    context.ConsumeDatas.Delete(p => true);
+                    context.ConsumeDatas.Insert(new Entity.ConsumeData
+                    {
+                        Amount = 100,
+                        ID = Guid.NewGuid(),
+                        RoomID = Guid.NewGuid(),
+                        StaffID = Guid.NewGuid(),
+                        State = 100
+                    });
+                    context.ConsumeDatas.Insert(new Entity.ConsumeData
+                    {
+                        Amount = 100,
+                        ID = Guid.NewGuid(),
+                        RoomID = Guid.NewGuid(),
+                        StaffID = Guid.NewGuid(),
+                        State = 100
+                    });
+                    context.Context.Ado.CommitTran();
+
+                    context.Context.Ado.BeginTran();
+                    context.ConsumeDatas.Delete(p => true);
+                    context.ConsumeDatas.Insert(new Entity.ConsumeData
+                    {
+                        Amount = 100,
+                        ID = Guid.NewGuid(),
+                        RoomID = Guid.NewGuid(),
+                        StaffID = Guid.NewGuid(),
+                        State = 100
+                    });
+                    context.ConsumeDatas.Insert(new Entity.ConsumeData
+                    {
+                        Amount = 100,
+                        ID = Guid.NewGuid(),
+                        RoomID = Guid.NewGuid(),
+                        StaffID = Guid.NewGuid(),
+                        State = 100
+                    });
+                    throw new Exception();
+                    context.Context.Ado.CommitTran();
+                }
+                catch (Exception e)
+                {
+                    context.Context.Ado.RollbackTran();
+                    throw e;
+                }
+                finally
+                {
+                    Assert.IsTrue(context.ConsumeDatas.Count(p => true) == 2);
+                }
+            }
+        }
+
+        [TestMethod()]
         public void DataContextTest()
         {
             var context = new LR.Repositories.DataContext();
@@ -25,6 +85,29 @@ namespace LR.Repositories.Tests
             }
 
             Assert.IsTrue(arry.All(p => p != null));
+        }
+
+        [TestMethod()]
+        public void WorkgroyManagerCategoryAddTest()
+        {
+            var context = new LR.Repositories.DataContext();
+            if (context.WorkGroupManagerCategories.Count(p => p.State == 200) == 0)
+            {
+                context.WorkGroupManagerCategories.Insert(new Entity.WorkGroupManagerCategory
+                {
+                    ID = Guid.NewGuid(),
+                    Name = "妈咪",
+                    State = Entity.DataState.Normal
+                });
+                context.WorkGroupManagerCategories.Insert(new Entity.WorkGroupManagerCategory
+                {
+                    ID = Guid.NewGuid(),
+                    Name = "助理",
+                    State = Entity.DataState.Normal
+                });
+            }
+
+            Assert.IsTrue(context.WorkGroupManagerCategories.Count(p => p.State == 200) == 2);
         }
         [TestMethod()]
         public void StaffAddTest()
@@ -85,21 +168,24 @@ namespace LR.Repositories.Tests
                     ID = Guid.NewGuid(),
                     Name = "初级",
                     MinCount = 2,
-                    Order = 0
+                    Order = 0,
+                    State = LR.Entity.DataState.Normal
                 };
                 var b = new LR.Entity.StaffLevel
                 {
                     ID = Guid.NewGuid(),
                     Name = "中级",
                     MinCount = 2,
-                    Order = 1
+                    Order = 1,
+                    State = LR.Entity.DataState.Normal
                 };
                 var c = new LR.Entity.StaffLevel
                 {
                     ID = Guid.NewGuid(),
                     Name = "高级",
                     MinCount = 2,
-                    Order = 2
+                    Order = 2,
+                    State = LR.Entity.DataState.Normal
                 };
 
                 context.StaffLevels.InsertRange(new[] { a, b, c });

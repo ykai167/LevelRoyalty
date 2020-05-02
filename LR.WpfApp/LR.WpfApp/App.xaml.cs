@@ -20,8 +20,15 @@ namespace LR.WpfApp
 
         private void App_Startup(object sender, StartupEventArgs e)
         {
-            Tools.DIHelper.RegistTransient<LR.Services.IConsumeDataService, LR.Services.ConsumeDataService>();
 
+
+            var baseType = typeof(LR.Services.IService<>);
+            var types = baseType.Assembly.GetTypes()
+                .Where(t => !t.IsInterface && !t.IsGenericType && t.GetInterfaces().Any(p => p.Name == baseType.Name));
+            foreach (var type in types)
+            {
+                Tools.DIHelper.RegistTransient(type.GetInterfaces().Last(), type);
+            }
             Application.Current.ShutdownMode = System.Windows.ShutdownMode.OnExplicitShutdown;
 
             //判断:未创建超级管理员,创建超级管理员及密码
