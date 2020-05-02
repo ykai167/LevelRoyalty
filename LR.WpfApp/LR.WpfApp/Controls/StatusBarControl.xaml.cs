@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -17,34 +16,21 @@ using System.Windows.Shapes;
 namespace LR.WpfApp.Controls
 {
     /// <summary>
-    /// LayoutControl.xaml 的交互逻辑
+    /// StatusBarControl.xaml 的交互逻辑
     /// </summary>
-    public partial class LayoutControl : UserControl
+    public partial class StatusBarControl : UserControl
     {
-        Models.LayOutViewModel vm;
-        public LayoutControl()
+        Models.LayOutViewModel vm = new Models.LayOutViewModel { };
+        public StatusBarControl()
         {
             InitializeComponent();
-            this.Loaded += LayoutControl_Loaded;
-        }
-
-        private void LayoutControl_Loaded(object sender, RoutedEventArgs e)
-        {
-            vm = new Models.LayOutViewModel()
-            {
-                AdminName = LR.Services.Administrator.Current.Name,
-                DateTime = DateTime.Now
-            };
             this.DataContext = vm;
-
+            this.Loaded += StatusBarControl_Loaded;
         }
 
-        public TabControl TabControl
+        private void StatusBarControl_Loaded(object sender, RoutedEventArgs e)
         {
-            get
-            {
-                return this.TabMain;
-            }
+            vm.AdminName = LR.Services.Administrator.Current?.Name;
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)

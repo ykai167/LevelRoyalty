@@ -8,6 +8,30 @@
         mc:Ignorable="d"
         Title="SuperAdminWindow" Height="450" Width="800">
     <Grid>
-        <Controls:LayoutControl x:Name="layout"/>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="30px"></RowDefinition>
+        </Grid.RowDefinitions>
+        <Controls:StatusBarControl Grid.Row="1"/>
+        <TabControl Grid.Row="0">
+            <TabItem Header="系统管理员设置">
+                <Controls:AdminsControl />
+            </TabItem>
+            <TabItem Header="房间类型设置">
+                <Controls:AdminsControl />
+            </TabItem>
+            <TabItem Header="员工级别设置">
+                <Controls:AdminsControl />
+            </TabItem>
+            <TabItem Header="工作组管理员类别设置">
+                <Controls:AdminsControl />
+            </TabItem>
+            <TabItem Header="员工奖励参数设置">
+                <Controls:AdminsControl />
+            </TabItem>
+            <TabItem Header="超级管理员日志">
+                <Controls:AdminsControl />
+            </TabItem>
+        </TabControl>
     </Grid>
 </Window>

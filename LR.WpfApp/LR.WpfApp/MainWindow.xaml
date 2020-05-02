@@ -9,6 +9,13 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Grid>
-        <Controls:LayoutControl x:Name="layout" />
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="30px"></RowDefinition>
+        </Grid.RowDefinitions>
+        <Controls:StatusBarControl Grid.Row="1"/>
+        <TabControl Grid.Row="0" Name="tabMain">
+            
+        </TabControl>
     </Grid>
 </Window>

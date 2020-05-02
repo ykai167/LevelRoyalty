@@ -20,11 +20,13 @@ namespace LR.WpfApp
 
         private void App_Startup(object sender, StartupEventArgs e)
         {
+            Tools.DIHelper.RegistTransient<LR.Services.IConsumeDataService, LR.Services.ConsumeDataService>();
+
             Application.Current.ShutdownMode = System.Windows.ShutdownMode.OnExplicitShutdown;
 
             //判断:未创建超级管理员,创建超级管理员及密码
 
-            
+
 
             LoginWindow window = new LoginWindow();
             bool? dialogResult = window.ShowDialog();

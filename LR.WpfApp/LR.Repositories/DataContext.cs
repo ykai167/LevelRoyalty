@@ -40,6 +40,7 @@ namespace LR.Repositories
         public SimpleClient<Entity.WorkGroup> WorkGroups => new SimpleClient<Entity.WorkGroup>(context);
         public SimpleClient<Entity.WorkGroupManagerCategory> WorkGroupManagerCategories => new SimpleClient<Entity.WorkGroupManagerCategory>(context);
         public SimpleClient<Entity.WorkGroupMember> WorkGroupMembers => new SimpleClient<Entity.WorkGroupMember>(context);
-
     }
+
+    
 }
