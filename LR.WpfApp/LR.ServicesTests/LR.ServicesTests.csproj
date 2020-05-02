@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{9A1E3D89-B5ED-44DE-BD55-23CF183C23D6}</ProjectGuid>
+    <ProjectGuid>{9C99296E-E4CB-419B-840A-1B8C7DB29E08}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>LR.RepositoriesTests</RootNamespace>
-    <AssemblyName>LR.RepositoriesTests</AssemblyName>
+    <RootNamespace>LR.ServicesTests</RootNamespace>
+    <AssemblyName>LR.ServicesTests</AssemblyName>
     <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{3AC096D0-A1C2-E12C-1390-A8335801FDAB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
@@ -29,7 +29,6 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <PlatformTarget>x64</PlatformTarget>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -57,7 +56,8 @@
     <Otherwise />
   </Choose>
   <ItemGroup>
-    <Compile Include="DataContextTests.cs" />
+    <Compile Include="ConsumeDataServiceTests.cs" />
+    <Compile Include="Data\MemoryDataTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -65,13 +65,9 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\LR.Repositories\LR.Repositories.csproj">
-      <Project>{00D10E9A-7351-484C-B36A-7A9BC3ABAD16}</Project>
-      <Name>LR.Repositories</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\SqlSugar\SqlSugar.csproj">
-      <Project>{489bb790-226c-4fad-8d1e-51d72a7ff8e5}</Project>
-      <Name>SqlSugar</Name>
+    <ProjectReference Include="..\LR.Services\LR.Services.csproj">
+      <Project>{DA8C2470-0538-478D-9322-6AD4F52E794D}</Project>
+      <Name>LR.Services</Name>
     </ProjectReference>
   </ItemGroup>
   <Choose>

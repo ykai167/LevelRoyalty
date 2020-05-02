@@ -11,15 +11,11 @@
             <RowDefinition Height="30"></RowDefinition>
             <RowDefinition Height="*"></RowDefinition>
         </Grid.RowDefinitions>
-        <StackPanel Grid.Row="0" Orientation="Horizontal">
-            <Button Content="添加"/>
-            <Button Content="修改"/>
-        </StackPanel>
+        
         <DataGrid Grid.Row="1" x:Name="dgData">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="用户名"></DataGridTextColumn>
             </DataGrid.Columns>
         </DataGrid>
     </Grid>
-
 </UserControl>

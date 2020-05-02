@@ -12,5 +12,14 @@ namespace LR.Services
     }
     public class ConsumeDataService : ServiceBase<LR.Entity.ConsumeData>, IConsumeDataService
     {
+        
+    }
+
+    public interface IStaffService : IService<LR.Entity.Staff>
+    {
+    }
+
+    public class StaffService : ServiceBase<LR.Entity.ConsumeData>, IConsumeDataService
+    {
     }
 }

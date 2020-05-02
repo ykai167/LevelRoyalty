@@ -33,5 +33,15 @@ namespace LR.WpfApp.Controls
         {
             this.dgData.DataContext = this._service.PageList(1);
         }
+
+        private void btnAdd_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void benEdit_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }
