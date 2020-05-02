@@ -18,6 +18,7 @@ namespace LR.WpfApp.Controls
     /// <summary>
     /// AdminsControl.xaml 的交互逻辑
     /// </summary>
+    [UserControlUse(UseTo.SuperAdminWindow, TabHeader = "普通管理员")]
     public partial class AdminsControl : UserControl
     {
         public AdminsControl()

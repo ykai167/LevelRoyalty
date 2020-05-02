@@ -18,6 +18,7 @@ namespace LR.WpfApp.Controls
     /// <summary>
     /// ConsumeDataControl.xaml 的交互逻辑
     /// </summary>
+    [UserControlUse(UseTo.MainWindow, TabHeader = "消费记录")]
     public partial class ConsumeDataControl : UserControl
     {
         LR.Services.IConsumeDataService _service;
@@ -26,8 +27,6 @@ namespace LR.WpfApp.Controls
             this._service = service;
             InitializeComponent();
             this.Loaded += ConsumeDataControl_Loaded;
-
-            
         }
 
         private void ConsumeDataControl_Loaded(object sender, RoutedEventArgs e)

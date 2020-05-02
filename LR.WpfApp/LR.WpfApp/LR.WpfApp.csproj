@@ -55,14 +55,21 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Controls\Attributes\UserControlUseAttribute.cs" />
     <Compile Include="Controls\ConsumeDataControl.xaml.cs">
       <DependentUpon>ConsumeDataControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Controls\LayoutControl.xaml.cs">
+    <Compile Include="Controls\common\LayoutControl.xaml.cs">
       <DependentUpon>LayoutControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Controls\StatusBarControl.xaml.cs">
+    <Compile Include="Controls\common\StatusBarControl.xaml.cs">
       <DependentUpon>StatusBarControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\StaffLevelControl.xaml.cs">
+      <DependentUpon>StaffLevelControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\StaffControl.xaml.cs">
+      <DependentUpon>StaffControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="Models\LayOutViewModel.cs" />
     <Compile Include="Models\TabSource.cs" />
@@ -77,11 +84,19 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Controls\LayoutControl.xaml">
+    <Page Include="Controls\common\LayoutControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Controls\StatusBarControl.xaml">
+    <Page Include="Controls\common\StatusBarControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\StaffLevelControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\StaffControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

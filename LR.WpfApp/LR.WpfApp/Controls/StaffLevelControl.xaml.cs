@@ -10,23 +10,20 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace LR.WpfApp
+namespace LR.WpfApp.Controls
 {
     /// <summary>
-    /// SuperAdminWindow.xaml 的交互逻辑
+    /// StaffCategoryControl.xaml 的交互逻辑
     /// </summary>
-    public partial class SuperAdminWindow : Window
+    [UserControlUse(UseTo.SuperAdminWindow, TabHeader = "员工级别设置")]
+    public partial class StaffLevelControl : UserControl
     {
-        public SuperAdminWindow()
+        public StaffLevelControl()
         {
             InitializeComponent();
-            foreach (var item in Models.TabSource.GetTabSources(Controls.UseTo.SuperAdminWindow))
-            {
-                var TabItem = new TabItem { Header = item.Header, Content = Tools.DIHelper.GetInstance(item.ControlType) };
-                this.tabMain.Items.Add(TabItem);
-            }
         }
     }
 }
