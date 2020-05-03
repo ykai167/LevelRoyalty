@@ -46,6 +46,7 @@
     <Compile Include="Data\MemoryData.cs" />
     <Compile Include="IService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RoomCategoryService.cs" />
     <Compile Include="RoomService.cs" />
     <Compile Include="StaffService.cs" />
   </ItemGroup>

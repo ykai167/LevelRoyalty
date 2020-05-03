@@ -9,22 +9,20 @@
     <Grid Margin="15,0,0,0">
         <Grid.RowDefinitions>
             <RowDefinition  Height="*"/>
-            <RowDefinition  Height="*"/>
+            <RowDefinition  Height="2*"/>
         </Grid.RowDefinitions>
         <Grid Grid.Row="0" Margin="0,10,10.333,10" HorizontalAlignment="Right" Width="765">
             <Grid.RowDefinitions>
                 <RowDefinition Height="*"/>
                 <RowDefinition Height="*"/>
                 <RowDefinition Height="*"/>
-                <RowDefinition Height="*"/>
-                <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="60"/>
+                <ColumnDefinition Width="100"/>
+                <ColumnDefinition Width="60"/>
+                <ColumnDefinition Width="100"/>
+                <ColumnDefinition Width="60"/>
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
@@ -34,60 +32,36 @@
             <TextBox x:Name="txtName"  Grid.Row="0" Grid.Column="3" Height="25" Width="100"/>
             <Label Content="房间类型" Grid.Row="0" Grid.Column="4" Height="25" Width="65"/>
             <ComboBox x:Name="cboType" Grid.Row="0" Grid.Column="5" Height="25" Width="160"/>
-            <Label Content="说明" Grid.Row="1" Grid.Column="0"  Height="25" Width="160"/>
-            <TextBox x:Name="txtEfficay" Grid.Row="1" Grid.RowSpan="4" Grid.Column="1" Grid.ColumnSpan="5" Height="26" TextWrapping="WrapWithOverflow" Margin="68,0,37,0" TextChanged="txtEfficay_TextChanged"/>
-            <Button Grid.Row="0"  Grid.Column="6" Content="显示全部"/>
-            <Button Grid.Row="1"  Grid.Column="6" Content="查找"/>
-            <Button Grid.Row="2"  Grid.Column="6" Content="新增"/>
-            <Button Grid.Row="3"  Grid.Column="6" Content="修改"/>
-            <Button Grid.Row="4"  Grid.Column="6" Content="删除"/>
-            
-            <!--<StackPanel Margin="10,10,0,10" HorizontalAlignment="Left" Width="745">
-                <StackPanel Orientation="Horizontal" Margin="0,15,0,0">
-                    <Label Content="房间号"  Grid.Row="0" Grid.Column="0" Height="25" Width="65"/>
-                    <TextBox x:Name="txtNo" Grid.Row="0" Grid.Column="1" Height="25" Width="100"/>
-                </StackPanel>
-                <StackPanel Orientation="Horizontal" Margin="0,15,0,0">
-                    <Label Content="房间名称" Grid.Row="0" Grid.Column="2" Height="25" Width="65"/>
-                    <TextBox x:Name="txtName"  Grid.Row="0" Grid.Column="3" Height="25" Width="100"/>
-                </StackPanel>
-                <StackPanel Orientation="Horizontal" Margin="0,15,0,0">
-                    <Label Content="房间类型" Grid.Row="0" Grid.Column="4" Height="25" Width="65"/>
-                    <ComboBox x:Name="cboType" Grid.Row="0" Grid.Column="5" Height="25" Width="160"/>
-                </StackPanel>
-                --><!--<StackPanel Orientation="Horizontal" Margin="0,15,0,0">
-                    <Label Content="生产日期" Height="25" Width="65"/>
-                    <DatePicker Name="dtpDproductTime" Height="25" Width="160"/>
-                </StackPanel>--><!--
-            </StackPanel>
-            <StackPanel Margin="10" Width="204">
-                <StackPanel Margin="0,15,0,0" Height="144">
-                    <Label Content="说明" Grid.Row="1" Grid.Column="0" Margin="10,0,151,0"/>
-                    <TextBox x:Name="txtEfficay" Grid.Row="1" Grid.RowSpan="4" Grid.Column="1" Grid.ColumnSpan="5" Height="26" TextWrapping="WrapWithOverflow" Margin="68,0,37,0" TextChanged="txtEfficay_TextChanged"/>
-                </StackPanel>
-            </StackPanel>
-            <StackPanel Margin="10" Height="201">
+            <Label Content="状态"  Grid.Row="1" Grid.Column="0" Height="25" Width="65"/>
+            <TextBox x:Name="txtState" Grid.Row="1" Grid.Column="1" Height="25" Width="100"/> 
+            <Label Content="说明" Grid.Row="1" Grid.Column="2"  Height="25" Width="160"/>
+            <TextBox x:Name="txtSummary" Grid.Row="1" Grid.RowSpan="2" Grid.Column="3" Grid.ColumnSpan="3" Margin="0,10,0,0" TextWrapping="WrapWithOverflow"/>
+            <Button x:Name="btnAdd" Grid.Row="0" Grid.Column="6" Content="新增" Height="25" Width="60" Click="btnAdd_Click" />
+            <Button x:Name="btnUpdate" Grid.Row="1" Grid.Column="6" Content="修改" Height="25" Width="60" Click="btnUpdate_Click"/>
+            <Button x:Name="btnDelete" Grid.Row="2" Grid.Column="6" Content="删除" Height="25" Width="60" Click="btnDelete_Click"/>
+            <!--<StackPanel Grid.Row="0" Grid.RowSpan="3" Grid.Column="6">
                 <StackPanel.Resources>
-                    <Style TargetType="{x:Type Button}">
+                    <Style TargetType="Button">
                         <Setter Property="Height" Value="25"/>
                         <Setter Property="Width" Value="60"/>
-                        <Setter Property="Margin" Value="0,16,0,0"/>
-                        <EventSetter Event="ButtonBase.Click" Handler="Button_Click"/>
+                        <Setter Property="Margin" Value="6"/>
+                        <EventSetter Event="Click" Handler="Button_Click"/>
                     </Style>
                 </StackPanel.Resources>
-                
+                <Button Content="新增"/>
+                <Button Content="修改"/>
+                <Button Content="删除"/>
             </StackPanel>-->
         </Grid>
-        <ListView Grid.Row="1" Name="lvwShow" Height="320" Width="980" Margin="-75,25,0,0"
+        <ListView Grid.Row="1" Name="lvwShow" Margin="0,25,0,0"
                     SelectionChanged="LvwShow_SelectionChanged">
             <ListView.View>
                 <GridView>
                     <GridViewColumn Header="房间号" Width="75" DisplayMemberBinding="{Binding Path=No}" />
-                    <GridViewColumn Header="名称" Width="75" DisplayMemberBinding="{Binding Path=type}"/>
-                    <GridViewColumn Header="类别" Width="75" DisplayMemberBinding="{Binding Path=fare}"/>
-                    <GridViewColumn Header="说明" Width="75"     DisplayMemberBinding="{Binding Path=dosetype}"/>
-                    <GridViewColumn Header="状态" Width="75"     DisplayMemberBinding="{Binding Path=spec}"/>
-                    <GridViewColumn Header="消费" Width="75"     DisplayMemberBinding="{Binding Path=in_price}"/>
+                    <GridViewColumn Header="名称" Width="75" DisplayMemberBinding="{Binding Path=Name}"/>
+                    <GridViewColumn Header="类别" Width="75" DisplayMemberBinding="{Binding Path=Type}"/>
+                    <GridViewColumn Header="说明" Width="75"     DisplayMemberBinding="{Binding Path=Summary}"/>
+                    <GridViewColumn Header="状态" Width="75"     DisplayMemberBinding="{Binding Path=Status}"/>
                 </GridView>
             </ListView.View>
         </ListView>

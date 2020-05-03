@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -30,6 +31,15 @@ namespace LR.Services
         {
 
             return db.Context.Queryable<T>().Single(p => p.ID == id);
+        }
+        public T Single(Expression<Func<T, bool>> exp)
+        {
+            return db.Context.Queryable<T>().Single(exp);
+        }
+
+        public List<T> All()
+        {
+            return db.Context.Queryable<T>().ToList();
         }
 
         public void Update(T entity)
