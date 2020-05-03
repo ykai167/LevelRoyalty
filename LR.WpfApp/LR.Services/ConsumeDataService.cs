@@ -26,13 +26,13 @@ namespace LR.Services
         }
     }
 
-    public interface IStaffService : IService<LR.Entity.Staff>
-    {
-    }
+    //public interface IStaffService : IService<LR.Entity.Staff>
+    //{
+    //}
 
-    public class StaffService : ServiceBase<LR.Entity.ConsumeData>, IConsumeDataService
-    {
-    }
+    //public class StaffService : ServiceBase<LR.Entity.ConsumeData>, IConsumeDataService
+    //{
+    //}
 
     public interface IStaffLevelService : IService<LR.Entity.StaffLevel>
     {
