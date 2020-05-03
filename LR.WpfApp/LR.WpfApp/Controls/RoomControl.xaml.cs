@@ -21,12 +21,13 @@ namespace LR.WpfApp.Controls
     [UserControlUse(UseTo.MainWindow, TabHeader = "房间管理")]
     public partial class RoomControl : UserControl
     {
-        LR.Services.RoomService service;
+        LR.Services.IRoomService service;
+
 
         public RoomControl(LR.Services.IRoomService _service)
         {
-            this.service = (LR.Services.RoomService)_service;
-            
+            this.service = _service;
+
             InitializeComponent();
             this.Loaded += RoomControl_Loaded;
         }
@@ -41,16 +42,16 @@ namespace LR.WpfApp.Controls
                 {
                     No = di[i].No,
                     Name = di[i].Name,
-                    Type =  di[i].CategoryID,
+                    Type = di[i].CategoryID,
                     Summary = di[i].Summary,
                     Status = di[i].State
-                }); 
+                });
             }
         }
         private void RoomControl_Loaded(object sender, RoutedEventArgs e)
         {
             this.InitListView();
-        }       
+        }
 
         private void LvwShow_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
@@ -101,7 +102,7 @@ namespace LR.WpfApp.Controls
             room.CategoryID = new Guid(); //TODO
             room.Summary = txtSummary.Text;
             room.State = int.Parse(txtState.Text);
-            this.service.Update(room);
+            this.service.Insert(room);
             this.InitListView();
         }
 
@@ -141,16 +142,16 @@ namespace LR.WpfApp.Controls
             room.CategoryID = new Guid(); //TODO
             room.Summary = txtSummary.Text;
             room.State = int.Parse(txtState.Text);
-            this.service.Update(room);
+            this.service.Update(room.ID, new { room.No, room.Name, room.CategoryID, room.Summary, room.State });
             this.InitListView();
         }
 
         private void btnDelete_Click(object sender, RoutedEventArgs e)
         {
-            LR.Entity.Room room = new LR.Entity.Room();       
+            LR.Entity.Room room = new LR.Entity.Room();
             room.State = 400;
             room.ID = this.service.Single(item => item.No == room.No).ID;
-            this.service.Update(room);
+            this.service.Update(room.ID, new { room.ID });
             this.InitListView();
         }
     }
