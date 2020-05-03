@@ -41,6 +41,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="calss - 复制.cs" />
+    <Compile Include="Data\Models\StaffModel.cs" />
+    <Compile Include="Data\Models\LevelModel.cs" />
+    <Compile Include="Data\Models\WorkGroupManagerCategoryModel.cs" />
+    <Compile Include="Data\Models\empty.cs" />
     <Compile Include="WorkGroupManagerCategoryService.cs" />
     <Compile Include="RoyaltyConfigService.cs" />
     <Compile Include="StaffLevelService.cs" />

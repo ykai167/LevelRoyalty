@@ -15,6 +15,8 @@ namespace LR.Services
     {
         public override void Insert(ConsumeData entity)
         {
+            //增加消费记录
+            //
             base.Insert(entity);
         }
     }  

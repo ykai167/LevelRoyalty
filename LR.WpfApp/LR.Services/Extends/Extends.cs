@@ -4,6 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+using LR.Models;
+
 namespace LR.Services
 {
     public static class Extends
@@ -14,10 +16,10 @@ namespace LR.Services
             return attr?.Name;
         }
 
-        public static Level[] Downer(this Level level)
+        public static LevelModel[] Downer(this LevelModel level)
         {
-            var current = Level.Min;
-            List<Level> list = new List<Level>(); ;
+            var current = LevelModel.Min;
+            List<LevelModel> list = new List<LevelModel>(); ;
             while (current != null && current.ID != level.ID)
             {
                 list.Add(current);

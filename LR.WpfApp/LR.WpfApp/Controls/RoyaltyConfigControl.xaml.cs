@@ -14,6 +14,8 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
+using LR.Models;
+
 namespace LR.WpfApp.Controls
 {
     class MessageHelper
@@ -51,7 +53,7 @@ namespace LR.WpfApp.Controls
                     switch (item)
                     {
                         case RoyaltyType.Reservation:
-                            var level = LR.Services.Level.Min;
+                            var level = LevelModel.Min;
                             while (level != null)
                             {
                                 grid.RowDefinitions.Add(new RowDefinition());
@@ -77,7 +79,7 @@ namespace LR.WpfApp.Controls
                             }
                             break;
                         case RoyaltyType.Administration:
-                            var level2 = LR.Services.Level.Min.Upper;
+                            var level2 = LevelModel.Min.Upper;
                             while (level2 != null)
                             {
                                 var downers = level2.Downer();
@@ -105,7 +107,7 @@ namespace LR.WpfApp.Controls
                             }
                             break;
                         case RoyaltyType.Cooperation:
-                            var level3 = LR.Services.Level.Min.Upper;
+                            var level3 = LevelModel.Min.Upper;
                             while (level3 != null)
                             {
                                 grid.RowDefinitions.Add(new RowDefinition());
@@ -129,7 +131,7 @@ namespace LR.WpfApp.Controls
                             }
                             break;
                         case RoyaltyType.Transcend:
-                            var level4 = LR.Services.Level.Min.Upper;
+                            var level4 = LevelModel.Min.Upper;
                             while (level4.Upper != null)
                             {
                                 grid.RowDefinitions.Add(new RowDefinition());
@@ -171,7 +173,7 @@ namespace LR.WpfApp.Controls
                             Grid.SetColumn(txtw, 1);
                             break;
                         case RoyaltyType.WorkGroup:
-                            var wgmc = LR.Services.WorkGroupManagerCategory.WorkGroupManagerCategories;
+                            var wgmc = WorkGroupManagerCategoryModel.WorkGroupManagerCategories;
                             for (int i = 0; i < wgmc.Length; i++)
                             {
                                 var category = wgmc[i];

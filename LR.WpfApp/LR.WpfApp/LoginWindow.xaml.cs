@@ -28,6 +28,7 @@ namespace LR.WpfApp
         {
             LR.Services.Administrator.Current = new Services.Administrator
             {
+                ID = Guid.NewGuid(),
                 Name = "张三",
                 Type = Services.AdminType.Ordin
             };
@@ -39,6 +40,7 @@ namespace LR.WpfApp
         {
             LR.Services.Administrator.Current = new Services.Administrator
             {
+                ID = Guid.NewGuid(),
                 Name = "超级管理员",
                 Type = Services.AdminType.Super
             };

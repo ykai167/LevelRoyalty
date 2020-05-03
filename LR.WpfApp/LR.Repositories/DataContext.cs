@@ -10,7 +10,7 @@ namespace LR.Repositories
     public class DataContext : IDisposable
     {
         ISqlSugarClient context;
-        public DataContext(bool createTabel = true)
+        public DataContext(bool createTabel = false)
         {
             this.context = new SqlSugarClient(new ConnectionConfig
             {
