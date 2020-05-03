@@ -21,6 +21,8 @@ namespace LR.WpfApp
         private void App_Startup(object sender, StartupEventArgs e)
         {
             Tools.DIHelper.RegistTransient<LR.Services.IConsumeDataService, LR.Services.ConsumeDataService>();
+            Tools.DIHelper.RegistTransient<LR.Services.IRoomService, LR.Services.RoomService>();
+            Tools.DIHelper.RegistTransient<LR.Services.IStaffService, LR.Services.StaffService>();
 
             Application.Current.ShutdownMode = System.Windows.ShutdownMode.OnExplicitShutdown;
 

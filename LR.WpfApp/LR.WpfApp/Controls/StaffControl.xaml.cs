@@ -21,12 +21,12 @@ namespace LR.WpfApp.Controls
     [UserControlUse(UseTo.MainWindow, TabHeader = "员工管理")]
     public partial class StaffControl : UserControl
     {
-        LR.Services.IConsumeDataService _service;
+        LR.Services.IStaffService _service;
 
-        public StaffControl(LR.Services.IConsumeDataService service)
+        public StaffControl(LR.Services.IStaffService service)
         {
             this._service = service;
-            InitializeComponent();
+            InitializeComponent();          
             this.Loaded += StaffControl_Loaded;
         }
 

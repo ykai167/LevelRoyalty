@@ -10,6 +10,7 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
 using System.Windows.Shapes;
 
 namespace LR.WpfApp.Controls
@@ -18,11 +19,11 @@ namespace LR.WpfApp.Controls
     /// RoomControl.xaml 的交互逻辑
     /// </summary>
     [UserControlUse(UseTo.MainWindow, TabHeader = "房间管理")]
-    public partial class RoomControl : Window
+    public partial class RoomControl : UserControl
     {
-        LR.Services.IConsumeDataService _service;
+        LR.Services.IRoomService _service;
 
-        public RoomControl(LR.Services.IConsumeDataService service)
+        public RoomControl(LR.Services.IRoomService service)
         {
             this._service = service;
             InitializeComponent();
@@ -32,6 +33,11 @@ namespace LR.WpfApp.Controls
         private void RoomControl_Loaded(object sender, RoutedEventArgs e)
         {
             this.dgData.DataContext = this._service.PageList(1);
+        }
+
+        private void txtEfficay_TextChanged(object sender, TextChangedEventArgs e)
+        {
+
         }
     }
 }
