@@ -11,6 +11,4 @@ namespace LR.Services
     {
         public string Name { get; set; }
     }
-
-
 }

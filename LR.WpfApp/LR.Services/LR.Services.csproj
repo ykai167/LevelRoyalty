@@ -41,18 +41,20 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Attribute.cs" />
+    <Compile Include="WorkGroupManagerCategoryService.cs" />
+    <Compile Include="RoyaltyConfigService.cs" />
+    <Compile Include="StaffLevelService.cs" />
     <Compile Include="ConsumeDataService.cs" />
     <Compile Include="Data\Administrator.cs" />
     <Compile Include="Data\MemoryData.cs" />
     <Compile Include="Enums\RoyaltyType.cs" />
-    <Compile Include="Extends.cs" />
-    <Compile Include="IService.cs" />
+    <Compile Include="Extends\Extends.cs" />
+    <Compile Include="Base\IService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RoomCategoryService.cs" />
     <Compile Include="RoomService.cs" />
     <Compile Include="StaffService.cs" />
-    <Compile Include="ServiceBase.cs" />
+    <Compile Include="calss.cs" />
     <Compile Include="Enums\StaffState.cs" />
   </ItemGroup>
   <ItemGroup>

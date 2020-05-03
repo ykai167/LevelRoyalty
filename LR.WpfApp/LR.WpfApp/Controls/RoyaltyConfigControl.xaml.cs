@@ -44,7 +44,7 @@ namespace LR.WpfApp.Controls
                     var groupBox = new GroupBox { Header = item.GetName() };
                     Grid grid = new Grid();
                     grid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(100, GridUnitType.Pixel) });
-                    grid.ColumnDefinitions.Add(new ColumnDefinition { });
+                    grid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(100, GridUnitType.Pixel) });
                     grid.ColumnDefinitions.Add(new ColumnDefinition { });
                     groupBox.Content = grid;
                     int rowIndex = 0;
@@ -60,7 +60,7 @@ namespace LR.WpfApp.Controls
                                 Grid.SetRow(txb, rowIndex);
                                 Grid.SetColumn(txb, 0);
 
-                                var txb2 = GenTextBlock($"本人订房消费额百分比", HorizontalAlignment.Left);
+                                var txb2 = GenTextBlock($"% (本人订房消费额百分比)", HorizontalAlignment.Left);
                                 grid.Children.Add(txb2);
                                 Grid.SetRow(txb2, rowIndex);
                                 Grid.SetColumn(txb2, 2);
@@ -89,7 +89,7 @@ namespace LR.WpfApp.Controls
                                 for (int index = 0; index < downers.Length; index++)
                                 {
                                     grid.RowDefinitions.Add(new RowDefinition { });
-                                    var txb2 = GenTextBlock($"名下[ {downers[index].Name} ]订房消费额百分比", HorizontalAlignment.Left);
+                                    var txb2 = GenTextBlock($"% (名下[ {downers[index].Name} ]订房消费额百分比)", HorizontalAlignment.Left);
                                     grid.Children.Add(txb2);
                                     Grid.SetRow(txb2, rowIndex);
                                     Grid.SetColumn(txb2, 2);
@@ -114,7 +114,7 @@ namespace LR.WpfApp.Controls
                                 Grid.SetRow(txb, rowIndex);
                                 Grid.SetColumn(txb, 0);
 
-                                var txb2 = GenTextBlock($"直推[ {level3.Name} ]团队订房消费额百分比", HorizontalAlignment.Left);
+                                var txb2 = GenTextBlock($"% (直推[ {level3.Name} ]团队订房消费额百分比)", HorizontalAlignment.Left);
                                 grid.Children.Add(txb2);
                                 Grid.SetRow(txb2, rowIndex);
                                 Grid.SetColumn(txb2, 2);
@@ -138,7 +138,7 @@ namespace LR.WpfApp.Controls
                                 Grid.SetRow(txb, rowIndex);
                                 Grid.SetColumn(txb, 0);
 
-                                var txb2 = GenTextBlock($"直推[ {level4.Upper.Name} ]团队订房消费额百分比", HorizontalAlignment.Left);
+                                var txb2 = GenTextBlock($"% (直推[ {level4.Upper.Name} ]团队订房消费额百分比)", HorizontalAlignment.Left);
                                 grid.Children.Add(txb2);
                                 Grid.SetRow(txb2, rowIndex);
                                 Grid.SetColumn(txb2, 2);
@@ -159,7 +159,7 @@ namespace LR.WpfApp.Controls
                             Grid.SetRow(txbw, rowIndex);
                             Grid.SetColumn(txbw, 0);
 
-                            var txbw2 = GenTextBlock($"组消费总额百分比", HorizontalAlignment.Left);
+                            var txbw2 = GenTextBlock($"% (组消费总额百分比)", HorizontalAlignment.Left);
                             grid.Children.Add(txbw2);
                             Grid.SetRow(txbw2, rowIndex);
                             Grid.SetColumn(txbw2, 2);
@@ -181,7 +181,7 @@ namespace LR.WpfApp.Controls
                                 Grid.SetRow(txb, rowIndex);
                                 Grid.SetColumn(txb, 0);
 
-                                var txb2 = GenTextBlock($"奖励总额的百分比", HorizontalAlignment.Left);
+                                var txb2 = GenTextBlock($"% (奖励总额的百分比)", HorizontalAlignment.Left);
                                 grid.Children.Add(txb2);
                                 Grid.SetRow(txb2, rowIndex);
                                 Grid.SetColumn(txb2, 2);
@@ -211,7 +211,7 @@ namespace LR.WpfApp.Controls
         {
             return new TextBlock
             {
-                Text = $"% ({text})",
+                Text = text,
                 HorizontalAlignment = hAling,
                 VerticalAlignment = VerticalAlignment.Center
             };
@@ -223,7 +223,8 @@ namespace LR.WpfApp.Controls
                 Name = $"txt_{id.ToString().Replace("-", "_")}",
                 Margin = new Thickness(10, 0, 10, 0),
                 MaxHeight = 30,
-                Text = value.ToString()
+                Text = value.ToString(),
+                TextAlignment = TextAlignment.Right
             };
             txt.GotFocus += Txt_GotFocus;
             txt.LostFocus += Txt_LostFocus;// += Txt_TextChanged;

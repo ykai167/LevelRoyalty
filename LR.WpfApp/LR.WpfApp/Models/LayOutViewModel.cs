@@ -23,7 +23,21 @@ namespace LR.WpfApp.Models
             });
             this.DateTime = DateTime.Now;
         }
-        public string AdminName { get; set; }
+        string adminName;
+        public string AdminName
+        {
+            get
+            {
+                return adminName;
+            }
+
+            set
+            {
+                this.adminName = value;
+                this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(AdminName)));
+            }
+        }
+
         DateTime dateTime;
         public DateTime DateTime
         {
