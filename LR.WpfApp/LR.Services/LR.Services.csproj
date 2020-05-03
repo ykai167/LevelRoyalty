@@ -49,6 +49,9 @@
     <Compile Include="Extends.cs" />
     <Compile Include="IService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RoomCategoryService.cs" />
+    <Compile Include="RoomService.cs" />
+    <Compile Include="StaffService.cs" />
     <Compile Include="ServiceBase.cs" />
     <Compile Include="Enums\StaffState.cs" />
   </ItemGroup>

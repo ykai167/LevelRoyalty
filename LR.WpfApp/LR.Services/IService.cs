@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -60,6 +61,15 @@ namespace LR.Services
             entity.ModifyDate = DateTime.Now;
             entity.OperatorID = Administrator.Current.ID;
             db.Context.Updateable<T>(entity).Where(item => item.ID == entity.ID).ExecuteCommand();
+        }
+        public T Single(Expression<Func<T, bool>> exp)
+        {
+            return db.Context.Queryable<T>().Single(exp);
+        }
+
+        public List<T> All()
+        {
+            return db.Context.Queryable<T>().ToList();
         }
 
         public void Dispose()
