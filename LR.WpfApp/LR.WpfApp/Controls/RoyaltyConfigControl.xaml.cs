@@ -16,6 +16,11 @@ using System.Windows.Shapes;
 
 namespace LR.WpfApp.Controls
 {
+    class MessageHelper
+    {
+        public string GroupName { get; set; }
+        public string Name { get; set; }
+    }
     /// <summary>
     /// RoyaltyConfiControl.xaml 的交互逻辑
     /// </summary>
@@ -23,6 +28,7 @@ namespace LR.WpfApp.Controls
     public partial class RoyaltyConfigControl : UserControl
     {
         IRoyaltyConfigService _service;
+        Dictionary<Guid, MessageHelper> lables = new Dictionary<Guid, MessageHelper>();
         public RoyaltyConfigControl(IRoyaltyConfigService service)
         {
             InitializeComponent();
@@ -60,6 +66,7 @@ namespace LR.WpfApp.Controls
                                 Grid.SetColumn(txb2, 2);
 
                                 var royalty = this._service.GetConfig(item, level.ID, new Guid());
+                                AddLabel(royalty.ID, item.GetName(), level.Name);
 
                                 var txt = ToTextBox(royalty.ID, item, royalty.Percent);
 
@@ -82,12 +89,13 @@ namespace LR.WpfApp.Controls
                                 for (int index = 0; index < downers.Length; index++)
                                 {
                                     grid.RowDefinitions.Add(new RowDefinition { });
-                                    var txb2 = GenTextBlock($"名下[{downers[index].Name}]订房消费额百分比", HorizontalAlignment.Left);
+                                    var txb2 = GenTextBlock($"名下[ {downers[index].Name} ]订房消费额百分比", HorizontalAlignment.Left);
                                     grid.Children.Add(txb2);
                                     Grid.SetRow(txb2, rowIndex);
                                     Grid.SetColumn(txb2, 2);
 
                                     var royalty = this._service.GetConfig(item, level2.ID, downers[index].ID);
+                                    AddLabel(royalty.ID, item.GetName(), level2.Name);
                                     var txt = ToTextBox(royalty.ID, item, royalty.Percent);
                                     grid.Children.Add(txt);
                                     Grid.SetRow(txt, rowIndex++);
@@ -106,12 +114,13 @@ namespace LR.WpfApp.Controls
                                 Grid.SetRow(txb, rowIndex);
                                 Grid.SetColumn(txb, 0);
 
-                                var txb2 = GenTextBlock($"直推[{level3.Name}]团队订房消费额百分比", HorizontalAlignment.Left);
+                                var txb2 = GenTextBlock($"直推[ {level3.Name} ]团队订房消费额百分比", HorizontalAlignment.Left);
                                 grid.Children.Add(txb2);
                                 Grid.SetRow(txb2, rowIndex);
                                 Grid.SetColumn(txb2, 2);
 
                                 var royalty = this._service.GetConfig(item, level3.ID, level3.ID);
+                                AddLabel(royalty.ID, item.GetName(), level3.Name);
                                 var txt = ToTextBox(royalty.ID, item, royalty.Percent);
                                 grid.Children.Add(txt);
                                 Grid.SetRow(txt, rowIndex++);
@@ -129,11 +138,12 @@ namespace LR.WpfApp.Controls
                                 Grid.SetRow(txb, rowIndex);
                                 Grid.SetColumn(txb, 0);
 
-                                var txb2 = GenTextBlock($"直推[{level4.Upper.Name}]团队订房消费额百分比", HorizontalAlignment.Left);
+                                var txb2 = GenTextBlock($"直推[ {level4.Upper.Name} ]团队订房消费额百分比", HorizontalAlignment.Left);
                                 grid.Children.Add(txb2);
                                 Grid.SetRow(txb2, rowIndex);
                                 Grid.SetColumn(txb2, 2);
                                 var royalty = this._service.GetConfig(item, level4.ID, level4.Upper.ID);
+                                AddLabel(royalty.ID, item.GetName(), level4.Name);
                                 var txt = ToTextBox(royalty.ID, item, royalty.Percent);
                                 grid.Children.Add(txt);
                                 Grid.SetRow(txt, rowIndex++);
@@ -143,7 +153,8 @@ namespace LR.WpfApp.Controls
                             break;
                         case RoyaltyType.WorkGroupRoyalty:
                             grid.RowDefinitions.Add(new RowDefinition());
-                            var txbw = GenTextBlock($"总奖励：");
+                            string label = "总奖励";
+                            var txbw = GenTextBlock($"{label}：");
                             grid.Children.Add(txbw);
                             Grid.SetRow(txbw, rowIndex);
                             Grid.SetColumn(txbw, 0);
@@ -153,6 +164,7 @@ namespace LR.WpfApp.Controls
                             Grid.SetRow(txbw2, rowIndex);
                             Grid.SetColumn(txbw2, 2);
                             var royaltyW = this._service.GetConfig(item, new Guid(), new Guid());
+                            AddLabel(royaltyW.ID, item.GetName(), label);
                             var txtw = ToTextBox(royaltyW.ID, item, royaltyW.Percent);
                             grid.Children.Add(txtw);
                             Grid.SetRow(txtw, rowIndex++);
@@ -174,6 +186,7 @@ namespace LR.WpfApp.Controls
                                 Grid.SetRow(txb2, rowIndex);
                                 Grid.SetColumn(txb2, 2);
                                 var royalty = this._service.GetConfig(item, category.ID, new Guid());
+                                AddLabel(royalty.ID, item.GetName(), category.Name);
                                 var txt = ToTextBox(royalty.ID, item, royalty.Percent);
                                 grid.Children.Add(txt);
                                 Grid.SetRow(txt, rowIndex++);
@@ -198,7 +211,7 @@ namespace LR.WpfApp.Controls
         {
             return new TextBlock
             {
-                Text = text,
+                Text = $"% ({text})",
                 HorizontalAlignment = hAling,
                 VerticalAlignment = VerticalAlignment.Center
             };
@@ -212,19 +225,61 @@ namespace LR.WpfApp.Controls
                 MaxHeight = 30,
                 Text = value.ToString()
             };
+            txt.GotFocus += Txt_GotFocus;
             txt.LostFocus += Txt_LostFocus;// += Txt_TextChanged;
             return txt;
         }
 
-        private void Txt_LostFocus(object sender, RoutedEventArgs e)
+        decimal oldValue = 0;
+        private void Txt_GotFocus(object sender, RoutedEventArgs e)
         {
             var txt = sender as TextBox;
             var value = txt.Text;
-            if (!System.Text.RegularExpressions.Regex.IsMatch(@"\d+.?\d?", value))
-            {
+            decimal.TryParse(value, out oldValue);
+            e.Handled = true;
+        }
 
+        private async void Txt_LostFocus(object sender, RoutedEventArgs e)
+        {
+            var txt = sender as TextBox;
+            var value = txt.Text;
+            if (System.Text.RegularExpressions.Regex.IsMatch(value, @"^\d+(\.\d+)?$"))
+            {
+                Guid id = Guid.Parse(txt.Name.Substring(4).Replace("_", "-"));
+                decimal newValue = decimal.Parse(value);
+                if (newValue <= 100 && oldValue != newValue)
+                {
+                    var result = MessageBox.Show($"{lables[id].GroupName}[{lables[id].Name}]\r\n由[{oldValue}]改为[{newValue}],是否保存?", "提示", MessageBoxButton.YesNo);
+
+                    txt.Text = await Task.Run<string>(() =>
+                    {
+                        if (result == MessageBoxResult.Yes)
+                        {
+                            this._service.Update(id, new { Percent = newValue });
+                            return newValue.ToString();
+                        }
+                        else
+                        {
+                            return oldValue.ToString();
+                        }
+                    });
+                }
+                else
+                {
+                    txt.Text = await Task.Run<string>(() => newValue <= 100 ? newValue.ToString() : "0");
+                }
             }
-            Guid id = Guid.Parse(txt.Name.Substring(4).Replace("_", "-"));
+            else
+            {
+                MessageBox.Show("请输入100以内数字", "提示");
+                txt.Text = await Task.Run<string>(() => oldValue <= 100 ? oldValue.ToString() : "0");
+            }
+            e.Handled = true;
+        }
+
+        void AddLabel(Guid id, string group, string label)
+        {
+            lables[id] = new MessageHelper { GroupName = group, Name = label };
         }
     }
 }

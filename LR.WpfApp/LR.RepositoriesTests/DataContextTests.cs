@@ -9,8 +9,9 @@ using System.Threading.Tasks;
 namespace LR.Repositories.Tests
 {
     [TestClass()]
-    public class DataContextTests
+    public partial class DataContextTests
     {
+        //3486a760-dff8-4596-9764-97dedd9f0e48
         [TestMethod()]
         public void DataContextTranTest()
         {

@@ -11,7 +11,7 @@ namespace LR.Services
         T Single(Guid id);
         List<T> PageList(int pageIndex, int pageSize = 20);
         List<T> List();
-        void Update(T entity);
+        void Update(Guid id, object columData);
         void Insert(T entity);
     }
 
@@ -55,11 +55,17 @@ namespace LR.Services
             return this.Queryable.Single(p => p.ID == id);
         }
 
-        public virtual void Update(T entity)
+        public virtual void Update(Guid id, object columData)
         {
-            entity.ModifyDate = DateTime.Now;
-            entity.OperatorID = Administrator.Current.ID;
-            db.Context.Updateable<T>(entity).Where(item => item.ID == entity.ID).ExecuteCommand();
+            T t = null;
+            Dictionary<string, object> dic = new Dictionary<string, object>();
+            dic[nameof(t.ModifyDate)] = DateTime.Now;
+            dic[nameof(t.OperatorID)] = Administrator.Current.ID;
+            foreach (var prop in columData.GetType().GetProperties())
+            {
+                dic[prop.Name] = prop.GetValue(columData);
+            }
+            db.Context.Updateable<T>(dic).Where(item => item.ID == id).ExecuteCommand();
         }
 
         public void Dispose()

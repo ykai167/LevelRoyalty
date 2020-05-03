@@ -19,11 +19,6 @@ namespace LR.Services
 
 
         }
-
-        public override void Update(ConsumeData entity)
-        {
-            base.Update(entity);
-        }
     }
 
     public interface IStaffService : IService<LR.Entity.Staff>
@@ -64,7 +59,7 @@ namespace LR.Services
     {
         public RoyaltyConfig GetConfig(RoyaltyType type, Guid acceptID, Guid expendID)
         {
-            var entity = this.Context.RoyaltyConfigs.GetSingle(p => p.AcceptID == acceptID && p.ExpendID == expendID);
+            var entity = this.Context.RoyaltyConfigs.GetSingle(p => p.RoyaltyType == (int)type && p.AcceptID == acceptID && p.ExpendID == expendID);
             if (entity == null)
             {
                 this.Context.RoyaltyConfigs.Insert(entity = new RoyaltyConfig
