@@ -56,20 +56,17 @@ namespace LR.Services
             return this.Queryable.Single(p => p.ID == id);
         }
 
+
+        public T Single(Expression<Func<T, bool>> exp)
+        {
+            return this.Queryable.Single(exp);
+        }
+
         public virtual void Update(T entity)
         {
             entity.ModifyDate = DateTime.Now;
             entity.OperatorID = Administrator.Current.ID;
             db.Context.Updateable<T>(entity).Where(item => item.ID == entity.ID).ExecuteCommand();
-        }
-        public T Single(Expression<Func<T, bool>> exp)
-        {
-            return db.Context.Queryable<T>().Single(exp);
-        }
-
-        public List<T> All()
-        {
-            return db.Context.Queryable<T>().ToList();
         }
 
         public void Dispose()

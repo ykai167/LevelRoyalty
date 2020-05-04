@@ -33,25 +33,12 @@
             <Label Content="房间类型" Grid.Row="0" Grid.Column="4" Height="25" Width="65"/>
             <ComboBox x:Name="cboType" Grid.Row="0" Grid.Column="5" Height="25" Width="160"/>
             <Label Content="状态"  Grid.Row="1" Grid.Column="0" Height="25" Width="65"/>
-            <TextBox x:Name="txtState" Grid.Row="1" Grid.Column="1" Height="25" Width="100"/> 
+            <ComboBox x:Name="cboState" Grid.Row="1" Grid.Column="1" Height="25" Width="100" ItemsSource="{Binding}" DataContext="{Binding}"/>
             <Label Content="说明" Grid.Row="1" Grid.Column="2"  Height="25" Width="160"/>
             <TextBox x:Name="txtSummary" Grid.Row="1" Grid.RowSpan="2" Grid.Column="3" Grid.ColumnSpan="3" Margin="0,10,0,0" TextWrapping="WrapWithOverflow"/>
             <Button x:Name="btnAdd" Grid.Row="0" Grid.Column="6" Content="新增" Height="25" Width="60" Click="btnAdd_Click" />
             <Button x:Name="btnUpdate" Grid.Row="1" Grid.Column="6" Content="修改" Height="25" Width="60" Click="btnUpdate_Click"/>
             <Button x:Name="btnDelete" Grid.Row="2" Grid.Column="6" Content="删除" Height="25" Width="60" Click="btnDelete_Click"/>
-            <!--<StackPanel Grid.Row="0" Grid.RowSpan="3" Grid.Column="6">
-                <StackPanel.Resources>
-                    <Style TargetType="Button">
-                        <Setter Property="Height" Value="25"/>
-                        <Setter Property="Width" Value="60"/>
-                        <Setter Property="Margin" Value="6"/>
-                        <EventSetter Event="Click" Handler="Button_Click"/>
-                    </Style>
-                </StackPanel.Resources>
-                <Button Content="新增"/>
-                <Button Content="修改"/>
-                <Button Content="删除"/>
-            </StackPanel>-->
         </Grid>
         <ListView Grid.Row="1" Name="lvwShow" Margin="0,25,0,0"
                     SelectionChanged="LvwShow_SelectionChanged">
@@ -61,7 +48,7 @@
                     <GridViewColumn Header="名称" Width="75" DisplayMemberBinding="{Binding Path=Name}"/>
                     <GridViewColumn Header="类别" Width="75" DisplayMemberBinding="{Binding Path=Type}"/>
                     <GridViewColumn Header="说明" Width="75"     DisplayMemberBinding="{Binding Path=Summary}"/>
-                    <GridViewColumn Header="状态" Width="75"     DisplayMemberBinding="{Binding Path=Status}"/>
+                    <GridViewColumn Header="状态" Width="75"     DisplayMemberBinding="{Binding Path=State}"/>
                 </GridView>
             </ListView.View>
         </ListView>
