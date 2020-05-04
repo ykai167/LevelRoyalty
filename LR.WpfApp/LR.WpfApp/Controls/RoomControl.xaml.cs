@@ -50,7 +50,7 @@ namespace LR.WpfApp.Controls
         private void InitListView()
         {
             lvwShow.Items.Clear();
-            List<LR.Entity.Room> di = this.service.List();
+            List<LR.Entity.Room> di = this.service.All();
             for (int i = 0; i < di.Count; i++)
             {
                 lvwShow.Items.Add(new
@@ -117,7 +117,7 @@ namespace LR.WpfApp.Controls
             room.CategoryID = new Guid(); //TODO
             room.Summary = txtSummary.Text;
             room.State = int.Parse(cboState.Text);
-            this.service.Update(room);
+            this.service.Insert(room);
             this.InitListView();
         }
 
@@ -151,13 +151,13 @@ namespace LR.WpfApp.Controls
                     }
             }
             LR.Entity.Room room = new LR.Entity.Room();
-            room.ID = this.service.Single(item => item.No == txtNo.Text).ID;
+            var id = this.service.Single(item => item.No == txtNo.Text).ID;
             room.No = txtNo.Text;
             room.Name = txtName.Text;
             room.CategoryID = new Guid(); //TODO
             room.Summary = txtSummary.Text;
             room.State = int.Parse(cboState.Text);
-            this.service.Update(room);
+            this.service.Update(id , room);
             this.InitListView();
         }
 
@@ -165,8 +165,8 @@ namespace LR.WpfApp.Controls
         {
             LR.Entity.Room room = new LR.Entity.Room();
             room.State = 400;
-            room.ID = this.service.Single(item => item.No == room.No).ID;
-            this.service.Update(room.ID, new { room.ID });
+            var id = this.service.Single(item => item.No == room.No).ID;
+            this.service.Update(id, new { room.ID });
             this.InitListView();
         }
     }

@@ -54,7 +54,7 @@ namespace LR.WpfApp.Controls
         private void InitListView()
         {
             lvwShow.Items.Clear();
-            List<LR.Entity.Staff> di = this.service.List();
+            List<LR.Entity.Staff> di = this.service.All();
             for (int i = 0; i < di.Count; i++)
             {
                 lvwShow.Items.Add(new
@@ -136,7 +136,7 @@ namespace LR.WpfApp.Controls
             staff.WorkGroupID = Guid.Parse(txtWorkGroup.Text); //TODO
             staff.StaffLevelID = Guid.Parse(txtLevel.Text);
             staff.State = int.Parse(cboState.Text);
-            this.service.Update(staff);
+            this.service.Insert(staff);
             this.InitListView();
         }
 
@@ -174,6 +174,7 @@ namespace LR.WpfApp.Controls
                     }
             }
             LR.Entity.Staff staff = new LR.Entity.Staff();
+            var id = this.service.Single(item => item.No == txtNo.Text).ID;
             staff.No = txtNo.Text;
             staff.Name = txtName.Text;
             staff.IdenNo = txtIdenNo.Text;
@@ -182,16 +183,16 @@ namespace LR.WpfApp.Controls
             staff.WorkGroupID = Guid.Parse(txtWorkGroup.Text); //TODO
             staff.StaffLevelID = Guid.Parse(txtLevel.Text);
             staff.State = int.Parse(cboState.Text);
-            this.service.Update(staff);            
+            this.service.Update(id, staff);            
             this.InitListView();
         }
 
         private void btnDelete_Click(object sender, RoutedEventArgs e)
         {
             LR.Entity.Staff staff = new LR.Entity.Staff();
+            var id = this.service.Single(item => item.No == staff.No).ID;
             staff.State = 400;
-            staff.ID = this.service.Single(item => item.No == staff.No).ID;
-            this.service.Update(staff);
+            this.service.Update(staff.ID, staff);
             this.InitListView();
         }
     }
