@@ -41,6 +41,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Base\IUpdateService.cs" />
+    <Compile Include="Base\IInsertService.cs" />
     <Compile Include="calss - 复制.cs" />
     <Compile Include="Models\RoyaltyConfigModel.cs" />
     <Compile Include="Models\StaffModel.cs" />
@@ -55,7 +57,7 @@
     <Compile Include="Data\MemoryData.cs" />
     <Compile Include="Enums\RoyaltyType.cs" />
     <Compile Include="Extends\Extends.cs" />
-    <Compile Include="Base\IService.cs" />
+    <Compile Include="Base\IQueryService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RoomCategoryService.cs" />
     <Compile Include="RoomService.cs" />

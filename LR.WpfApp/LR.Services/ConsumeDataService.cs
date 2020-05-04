@@ -34,7 +34,7 @@ namespace LR.Services
     }
 
 
-    public interface IRoyaltyService : IService<Royalty>
+    public interface IRoyaltyService : IQueryService<Royalty>
     {
     }
 

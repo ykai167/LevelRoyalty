@@ -14,7 +14,7 @@ namespace LR.Services.Tests
     {
         public ConsumeDataServiceTests()
         {
-            var baseType = typeof(LR.Services.IService<>);
+            var baseType = typeof(LR.Services.IQueryService<>);
             var types = baseType.Assembly.GetTypes()
                 .Where(t => !t.IsInterface && !t.IsGenericType && t.GetInterfaces().Any(p => p.Name == baseType.Name));
             foreach (var type in types)

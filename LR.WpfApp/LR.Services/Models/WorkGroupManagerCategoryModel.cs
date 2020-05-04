@@ -16,7 +16,7 @@ namespace LR.Models
         public readonly static WorkGroupManagerCategoryModel[] WorkGroupManagerCategories;
         static WorkGroupManagerCategoryModel()
         {
-            WorkGroupManagerCategories = LR.Tools.DIHelper.GetInstance<IWorkGroupManagerCategoryService>().List().Select(item => new WorkGroupManagerCategoryModel
+            WorkGroupManagerCategories = LR.Tools.DIHelper.GetInstance<IWorkGroupManagerCategoryService>().All().Select(item => new WorkGroupManagerCategoryModel
             {
                 ID = item.ID,
                 Name = item.Name
