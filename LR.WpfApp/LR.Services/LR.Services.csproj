@@ -43,7 +43,11 @@
   <ItemGroup>
     <Compile Include="Base\IUpdateService.cs" />
     <Compile Include="Base\IInsertService.cs" />
-    <Compile Include="calss - 复制.cs" />
+    <Compile Include="Models\OperateResult.cs" />
+    <Compile Include="Models\WorkGroupModel.cs" />
+    <Compile Include="WorkGroupService.cs" />
+    <Compile Include="RoyaltyService.cs" />
+    <Compile Include="SettleBatchService.cs" />
     <Compile Include="Models\RoyaltyConfigModel.cs" />
     <Compile Include="Models\StaffModel.cs" />
     <Compile Include="Models\LevelModel.cs" />

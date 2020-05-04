@@ -24,6 +24,11 @@ namespace LR.Services
             db = new Repositories.DataContext();
         }
 
+        public QueryServiceBase(LR.Repositories.DataContext context)
+        {
+            this.db = context;
+        }
+
         protected LR.Repositories.DataContext Context { get { return this.db; } }
 
         protected virtual SqlSugar.ISugarQueryable<T> Queryable

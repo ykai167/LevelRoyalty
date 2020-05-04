@@ -51,15 +51,6 @@ namespace LR.Models
             return this.Name;
         }
 
-        public static bool operator >(LevelModel b, LevelModel c)
-        {
-            return b.Order > c.Order;
-        }
-        public static bool operator <(LevelModel b, LevelModel c)
-        {
-            return b.Order < c.Order;
-        }
-
         public static bool operator >=(LevelModel b, LevelModel c)
         {
             return b.Order >= c.Order;
@@ -69,5 +60,4 @@ namespace LR.Models
             return b.Order <= c.Order;
         }
     }
-
 }

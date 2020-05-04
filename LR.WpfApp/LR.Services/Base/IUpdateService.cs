@@ -14,6 +14,14 @@ namespace LR.Services
 
     public partial class UpdateServiceBase<T> : InsertServiceBase<T>, IUpdateService<T> where T : LR.Entity.UpdateEntity<Guid, Guid>, new()
     {
+        public UpdateServiceBase()
+        {
+
+        }
+        public UpdateServiceBase(Repositories.DataContext context) : base(context)
+        {
+
+        }
         protected override ISugarQueryable<T> Queryable => base.Queryable.Where(p => p.State == LR.Entity.DataState.Normal);
 
         public virtual void Update(Guid id, object columData)

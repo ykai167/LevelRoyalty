@@ -56,7 +56,7 @@ namespace LR.Services
         {
             get { return data.FirstOrDefault(p => p.RoyaltyType == type && p.AcceptID == accpt.ID && p.ExpendID == expend.ID); }
         }
-        public RoyaltyConfigModel this[RoyaltyType type, LR.Entity.WorkGroupManagerCategory catetory]
+        public RoyaltyConfigModel this[RoyaltyType type, Models.WorkGroupManagerCategoryModel catetory]
         {
             get { return data.FirstOrDefault(p => p.RoyaltyType == type && p.AcceptID == catetory.ID); }
         }

@@ -25,9 +25,31 @@ namespace LR.Services.Tests
             LR.Services.Administrator.Current = new Administrator();
         }
         [TestMethod()]
-        public void AddDataTest()
+        public void AddWorkGroupDataTest()
         {
-            Assert.Fail();
+            var service = Tools.DIHelper.GetInstance<IWorkGroupService>();
+
+            var old = service.All();
+
+            var mcategory = Tools.DIHelper.GetInstance<IWorkGroupManagerCategoryService>().All();
+            var newID = service.Insert(new WorkGroup { Name = "青年组" });
+
+            var staffs = Tools.DIHelper.GetInstance<IStaffService>().All();
+            for (int i = 0; i < staffs.Count; i++)
+            {
+                if (i % 2 == 0)
+                {
+                    service.AddMember(newID, staffs[i].ID);
+                }
+                if (i % 3 < mcategory.Count)
+                {
+                    service.SetManager(newID, staffs[i].ID, mcategory[i % 3].ID);
+                }
+            }
+
+            var currenty = service.All();
+
+            Assert.IsTrue(currenty.Count - old.Count == 1);
         }
 
         [TestMethod()]
@@ -37,7 +59,7 @@ namespace LR.Services.Tests
 
             service.Insert(new ConsumeData
             {
-                StaffID = LR.Services.MemoryData.Current.Staffs.LastOrDefault(p => p.Level == LR.Models.LevelModel.Min).ID,
+                StaffID = Guid.Parse("a5c5ae5f-7b56-4516-8ce3-a7d503de9755"),
                 Amount = 100
             });
 

@@ -16,7 +16,7 @@ namespace LR.Repositories.Tests
         [TestMethod()]
         public void WorkgroyManagerCategoryAddTest()
         {
-            var context = new LR.Repositories.DataContext();
+            var context = new LR.Repositories.DataContext(true);
             if (context.WorkGroupManagerCategories.Count(p => p.State == 200) == 0)
             {
                 context.WorkGroupManagerCategories.Insert(new Entity.WorkGroupManagerCategory
@@ -42,7 +42,7 @@ namespace LR.Repositories.Tests
 
             var list = new List<LR.Entity.Staff>();
 
-            string name = "张三";
+            string name = "李四";
             int index = 0;
             Random r = new Random();
             LR.Entity.Staff staff = null;
@@ -77,10 +77,11 @@ namespace LR.Repositories.Tests
             {
                 p.IdenNo = "";
                 p.MobileNo = "";
+                p.State = Entity.DataState.Normal;
                 return p;
             }).ToArray());
 
-            Assert.IsTrue(context.Staffs.Count(p => true) == 6);
+            Assert.IsTrue(context.Staffs.Count(p => true) > 0);
         }
         [TestMethod()]
         public void StaffLevelInitTest()
@@ -119,5 +120,7 @@ namespace LR.Repositories.Tests
 
             Assert.IsTrue(context.StaffLevels.Count(p => true) == 3);
         }
+
+
     }
 }

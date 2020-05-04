@@ -14,6 +14,14 @@ namespace LR.Services
 
     public partial class InsertServiceBase<T> : QueryServiceBase<T>, IInsertService<T> where T : LR.Entity.IDEntity<Guid>, new()
     {
+        public InsertServiceBase()
+        {
+
+        }
+        public InsertServiceBase(Repositories.DataContext context) : base(context)
+        {
+
+        }
         public virtual Guid Insert(T entity)
         {
             if (entity.ID == new Guid())
