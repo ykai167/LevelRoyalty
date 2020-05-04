@@ -21,30 +21,45 @@ namespace LR.WpfApp.Controls
     [UserControlUse(UseTo.MainWindow, TabHeader = "房间管理")]
     public partial class RoomControl : UserControl
     {
-        LR.Services.IRoomService service;
+        LR.Services.RoomService service;
+        LR.Services.RoomCategoryService cateservice = new Services.RoomCategoryService();
 
+        public class RoomState
+        {
+            public int ID { get; set; }
+            public String Name { get; set; }
+            public int Value { get; set; }
+        }
 
         public RoomControl(LR.Services.IRoomService _service)
         {
-            this.service = _service;
-
             InitializeComponent();
+            this.service = (LR.Services.RoomService)_service;
+            List<RoomState> stateSource = new List<RoomState>()
+            {
+                new RoomState(){ Name = "正常", ID = 0, Value = 200},
+                new RoomState() { Name = "删除", ID = 1, Value = 400}
+            };
+            cboState.ItemsSource = stateSource;
+            cboState.DisplayMemberPath = "Name";
+            cboState.SelectedValuePath = "Value";
+            cboState.SelectedIndex = 0;
             this.Loaded += RoomControl_Loaded;
         }
 
         private void InitListView()
         {
             lvwShow.Items.Clear();
-            List<LR.Entity.Room> di = this.service.All();
+            List<LR.Entity.Room> di = this.service.List();
             for (int i = 0; i < di.Count; i++)
             {
                 lvwShow.Items.Add(new
                 {
                     No = di[i].No,
                     Name = di[i].Name,
-                    Type = di[i].CategoryID,
+                    Type = "包间", // cateservice.Single(di[i].CategoryID).Name,
                     Summary = di[i].Summary,
-                    Status = di[i].State
+                    State = di[i].State
                 });
             }
         }
@@ -59,11 +74,11 @@ namespace LR.WpfApp.Controls
             {
                 string s = lvwShow.Items[lvwShow.SelectedIndex].ToString();
                 string[] ss = s.Split(',');
-                txtNo.Text = ss[0].Substring(10).Replace("=", "").Trim();
-                txtName.Text = ss[1].Substring(6).Replace("=", "").Trim();
-                cboType.Text = ss[2].Substring(6).Replace("=", "").Trim();
-                txtState.Text = ss[3].Substring(10).Replace("=", "").Trim();
-                txtSummary.Text = ss[4].Substring(6).Replace("=", "").Trim();
+                txtNo.Text = ss[0].Split('=')[1].Trim();
+                txtName.Text = ss[1].Split('=')[1].Trim();
+                cboType.Text = ss[2].Split('=')[1].Trim();
+                txtSummary.Text = ss[3].Split('=')[1].Trim();
+                cboState.SelectedValue = ss[4].Split('=')[1].Trim('}').Trim();
             }
         }
 
@@ -76,7 +91,7 @@ namespace LR.WpfApp.Controls
                 txtName,
                 cboType,
                 txtSummary,
-                txtState
+                cboState
             };
             #endregion
             foreach (Control item in con_list)
@@ -101,8 +116,8 @@ namespace LR.WpfApp.Controls
             room.Name = txtName.Text;
             room.CategoryID = new Guid(); //TODO
             room.Summary = txtSummary.Text;
-            room.State = int.Parse(txtState.Text);
-            this.service.Insert(room);
+            room.State = int.Parse(cboState.Text);
+            this.service.Update(room);
             this.InitListView();
         }
 
@@ -115,7 +130,7 @@ namespace LR.WpfApp.Controls
                 txtName,
                 cboType,
                 txtSummary,
-                txtState
+                cboState
             };
             #endregion
             foreach (Control item in con_list)
@@ -141,8 +156,8 @@ namespace LR.WpfApp.Controls
             room.Name = txtName.Text;
             room.CategoryID = new Guid(); //TODO
             room.Summary = txtSummary.Text;
-            room.State = int.Parse(txtState.Text);
-            this.service.Update(room.ID, new { room.No, room.Name, room.CategoryID, room.Summary, room.State });
+            room.State = int.Parse(cboState.Text);
+            this.service.Update(room);
             this.InitListView();
         }
 

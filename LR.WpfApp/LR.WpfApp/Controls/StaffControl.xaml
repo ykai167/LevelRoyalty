@@ -6,19 +6,66 @@
              xmlns:local="clr-namespace:LR.WpfApp.Controls"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
-    <Grid>
+    <Grid Margin="15,0,0,0">
         <Grid.RowDefinitions>
-            <RowDefinition Height="30"></RowDefinition>
-            <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition  Height="*"/>
+            <RowDefinition  Height="2*"/>
         </Grid.RowDefinitions>
-        <StackPanel Grid.Row="0" Orientation="Horizontal">
-            <Button Content="添加"/>
-            <Button Content="修改"/>
-        </StackPanel>
-        <DataGrid Grid.Row="1" x:Name="dgData">
-            <DataGrid.Columns>
-                <DataGridTextColumn Header="用户名"></DataGridTextColumn>
-            </DataGrid.Columns>
-        </DataGrid>
+        <Grid Grid.Row="0" Margin="0,10,10.333,10" HorizontalAlignment="Right" Width="765">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="60"/>
+                <ColumnDefinition Width="100"/>
+                <ColumnDefinition Width="60"/>
+                <ColumnDefinition Width="100"/>
+                <ColumnDefinition Width="60"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Label Content="工号"  Grid.Row="0" Grid.Column="0" Height="25" Width="65"/>
+            <TextBox x:Name="txtNo" Grid.Row="0" Grid.Column="1" Height="25" Width="100"/>
+            <Label Content="姓名"  Grid.Row="0" Grid.Column="2" Height="25" Width="65"/>
+            <TextBox x:Name="txtName" Grid.Row="0" Grid.Column="3" Height="25" Width="100"/>
+            <Label Content="身份证" Grid.Row="0" Grid.Column="4" Height="25" Width="65"/>
+            <TextBox x:Name="txtIdenNo"  Grid.Row="0" Grid.Column="5" Height="25" Width="160"/>
+
+            <Label Content="推荐人" Grid.Row="1" Grid.Column="0" Height="25" Width="65"/>
+            <TextBox x:Name="txtReferrer" Grid.Row="1" Grid.Column="1" Height="25" Width="160"/>
+            <Label Content="工作组"  Grid.Row="1" Grid.Column="2" Height="25" Width="65"/>
+            <TextBox x:Name="txtWorkGroup" Grid.Row="1" Grid.Column="3" Height="25" Width="100"/>
+            <Label Content="手机号" Grid.Row="1" Grid.Column="4"  Height="25" Width="160"/>
+            <TextBox x:Name="txtMobileNo" Grid.Row="1" Grid.Column="5" Height="25" Width="160"/>
+            
+            <Label Content="级别"  Grid.Row="2" Grid.Column="0" Height="25" Width="65"/>
+            <TextBox x:Name="txtLevel" Grid.Row="2" Grid.Column="1" Height="25" Width="100"/>
+            <Label Content="入职时间"  Grid.Row="2" Grid.Column="2" Height="25" Width="65"/>
+            <DatePicker x:Name="dpEntryTime" Grid.Row="2" Grid.Column="3" Height="25" Width="100"/>
+            <Label Content="状态"  Grid.Row="2" Grid.Column="4" Height="25" Width="65"/>
+            <ComboBox x:Name="cboState" Grid.Row="2" Grid.Column="5" Height="25" Width="100" ItemsSource="{Binding}" DataContext="{Binding}"/>
+            
+            <Button x:Name="btnAdd" Grid.Row="0" Grid.Column="6" Content="新增" Height="25" Width="60" Click="btnAdd_Click" />
+            <Button x:Name="btnUpdate" Grid.Row="1" Grid.Column="6" Content="修改" Height="25" Width="60" Click="btnUpdate_Click"/>
+            <Button x:Name="btnDelete" Grid.Row="2" Grid.Column="6" Content="删除" Height="25" Width="60" Click="btnDelete_Click"/>
+        </Grid>
+        <ListView Grid.Row="1" Name="lvwShow" Margin="0,25,0,0"
+                    SelectionChanged="LvwShow_SelectionChanged">
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn Header="工号" Width="75" DisplayMemberBinding="{Binding Path=No}" />
+                    <GridViewColumn Header="姓名" Width="75" DisplayMemberBinding="{Binding Path=Name}"/>
+                    <GridViewColumn Header="身份证号" Width="75" DisplayMemberBinding="{Binding Path=IdenNo}"/>
+                    <GridViewColumn Header="手机号" Width="75"     DisplayMemberBinding="{Binding Path=MobileNo}"/>
+                    <GridViewColumn Header="推荐人" Width="75"     DisplayMemberBinding="{Binding Path=ReferrerID}"/>
+                    <GridViewColumn Header="工作组" Width="75"     DisplayMemberBinding="{Binding Path=WorkGroupID}"/>
+                    <GridViewColumn Header="员工级别" Width="75"     DisplayMemberBinding="{Binding Path=StaffLevelID}"/>
+                    <GridViewColumn Header="入职时间" Width="75"     DisplayMemberBinding="{Binding Path=EntryTime}"/>
+                    <GridViewColumn Header="状态" Width="75"     DisplayMemberBinding="{Binding Path=State}"/>
+                </GridView>
+            </ListView.View>
+        </ListView>
     </Grid>
 </UserControl>

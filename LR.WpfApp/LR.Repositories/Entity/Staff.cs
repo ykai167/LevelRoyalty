@@ -12,6 +12,11 @@ namespace LR.Entity
     public class Staff : UpdateNamingEntity<Guid, Guid>
     {
         /// <summary>
+        /// 员工号
+        /// </summary>
+        public string No { get; set; }
+
+        /// <summary>
         /// 身份证号
         /// </summary>
         public string IdenNo { get; set; }
@@ -25,6 +30,16 @@ namespace LR.Entity
         /// 推荐人ID
         /// </summary>
         public Guid ReferrerID { get; set; }
+
+        /// <summary>
+        /// 工作组ID
+        /// </summary>
+        public Guid WorkGroupID { get; set; }
+
+        /// <summary>
+        /// 员工级别ID
+        /// </summary>
+        public Guid StaffLevelID { get; set; }
 
         /// <summary>
         /// 入职时间
