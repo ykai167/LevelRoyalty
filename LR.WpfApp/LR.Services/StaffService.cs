@@ -6,11 +6,11 @@ using System.Threading.Tasks;
 
 namespace LR.Services
 {
-    public interface IStaffService :　IService<LR.Entity.Staff>
+    public interface IStaffService : IUpdateService<LR.Entity.Staff>
     {
     }
 
-    public class StaffService : ServiceBase<LR.Entity.Staff>, IStaffService
+    public class StaffService : UpdateServiceBase<LR.Entity.Staff>, IStaffService
     {
-    }    
+    }
 }

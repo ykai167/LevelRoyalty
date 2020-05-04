@@ -7,12 +7,12 @@ using System.Threading.Tasks;
 
 namespace LR.Services
 {
-    public interface IRoyaltyConfigService : IService<LR.Entity.RoyaltyConfig>
+    public interface IRoyaltyConfigService : IUpdateService<LR.Entity.RoyaltyConfig>
     {
         LR.Entity.RoyaltyConfig GetConfig(RoyaltyType type, Guid acceptID, Guid expendID);
     }
 
-    public class RoyaltyConfigService : ServiceBase<LR.Entity.RoyaltyConfig>, IRoyaltyConfigService
+    public class RoyaltyConfigService : UpdateServiceBase<LR.Entity.RoyaltyConfig>, IRoyaltyConfigService
     {
         public RoyaltyConfig GetConfig(RoyaltyType type, Guid acceptID, Guid expendID)
         {

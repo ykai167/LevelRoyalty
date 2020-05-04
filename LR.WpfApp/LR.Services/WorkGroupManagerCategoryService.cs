@@ -6,11 +6,11 @@ using System.Threading.Tasks;
 
 namespace LR.Services
 {
-    public interface IWorkGroupManagerCategoryService : IService<LR.Entity.WorkGroupManagerCategory>
+    public interface IWorkGroupManagerCategoryService : IUpdateService<LR.Entity.WorkGroupManagerCategory>
     {
     }
 
-    public class WorkGroupManagerCategoryService : ServiceBase<LR.Entity.WorkGroupManagerCategory>, IWorkGroupManagerCategoryService
+    public class WorkGroupManagerCategoryService : UpdateServiceBase<LR.Entity.WorkGroupManagerCategory>, IWorkGroupManagerCategoryService
     {
 
     }

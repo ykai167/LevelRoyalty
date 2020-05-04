@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SqlSugar;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
@@ -7,18 +8,22 @@ using System.Threading.Tasks;
 
 namespace LR.Services
 {
-    public partial interface IService<T> : IDisposable where T : LR.Entity.UpdateEntity<Guid, Guid>, new()
+    public partial interface IService<T> : IDisposable where T : LR.Entity.IDEntity<Guid>, new()
     {
         List<T> All();
         T Single(Guid id);
         T Single(Expression<Func<T, bool>> exp);
         List<T> PageList(int pageIndex, int pageSize = 20);
         List<T> List();
-        void Update(Guid id, object columData);
-        void Insert(T entity);
+        Guid Insert(T entity);
     }
 
-    public partial class ServiceBase<T> : IService<T> where T : LR.Entity.UpdateEntity<Guid, Guid>, new()
+    public interface IUpdateService<T> : IService<T> where T : LR.Entity.UpdateEntity<Guid, Guid>, new()
+    {
+        void Update(Guid id, object columData);
+    }
+
+    public partial class ServiceBase<T> : IService<T> where T : LR.Entity.IDEntity<Guid>, new()
     {
         LR.Repositories.DataContext db;
         public ServiceBase()
@@ -28,19 +33,23 @@ namespace LR.Services
 
         protected LR.Repositories.DataContext Context { get { return this.db; } }
 
-        protected SqlSugar.ISugarQueryable<T> Queryable
+        protected virtual SqlSugar.ISugarQueryable<T> Queryable
         {
             get
             {
-                return this.db.Context.Queryable<T>().Where(item => item.State == (int)DataState.Normal);
+                return this.db.Context.Queryable<T>();
             }
         }
 
-        public virtual void Insert(T entity)
+        public virtual Guid Insert(T entity)
         {
-            entity.ModifyDate = entity.CreateDate = DateTime.Now;
-            entity.OperatorID = Administrator.Current.ID;
+            if (entity.ID == new Guid())
+            {
+                entity.ID = Guid.NewGuid();
+            }
+            entity.CreateDate = DateTime.Now;
             db.Context.Insertable<T>(entity).ExecuteCommand();
+            return entity.ID;
         }
 
         public virtual List<T> List()
@@ -58,18 +67,7 @@ namespace LR.Services
             return this.Queryable.Single(p => p.ID == id);
         }
 
-        public virtual void Update(Guid id, object columData)
-        {
-            T t = null;
-            Dictionary<string, object> dic = new Dictionary<string, object>();
-            dic[nameof(t.ModifyDate)] = DateTime.Now;
-            dic[nameof(t.OperatorID)] = Administrator.Current.ID;
-            foreach (var prop in columData.GetType().GetProperties())
-            {
-                dic[prop.Name] = prop.GetValue(columData);
-            }
-            db.Context.Updateable<T>(dic).Where(item => item.ID == id).ExecuteCommand();
-        }
+
         public T Single(Expression<Func<T, bool>> exp)
         {
             return db.Context.Queryable<T>().Single(exp);
@@ -83,6 +81,33 @@ namespace LR.Services
         public void Dispose()
         {
             this.db.Dispose();
+        }
+    }
+
+    public partial class UpdateServiceBase<T> : ServiceBase<T>, IUpdateService<T> where T : LR.Entity.UpdateEntity<Guid, Guid>, new()
+    {
+        protected override ISugarQueryable<T> Queryable => base.Queryable.Where(p => p.State == LR.Entity.DataState.Normal);
+
+        public virtual void Update(Guid id, object columData)
+        {
+            T t = null;
+            Dictionary<string, object> dic = new Dictionary<string, object>();
+            dic[nameof(t.ModifyDate)] = DateTime.Now;
+            dic[nameof(t.OperatorID)] = Administrator.Current.ID;
+            foreach (var prop in columData.GetType().GetProperties())
+            {
+                dic[prop.Name] = prop.GetValue(columData);
+            }
+            this.Context.Context.Updateable<T>(dic).Where(item => item.ID == id).ExecuteCommand();
+        }
+
+        public override Guid Insert(T entity)
+        {
+            entity.ModifyDate = DateTime.Now;
+            entity.OperatorID = Administrator.Current.ID;
+            entity.State = (int)DataState.Normal;
+            base.Insert(entity);
+            return entity.ID;
         }
     }
 }

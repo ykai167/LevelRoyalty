@@ -6,11 +6,5 @@ using System.Threading.Tasks;
 
 namespace LR.Services
 {
-    public interface ISettleBatchService : IService<LR.Entity.SettleBatch>
-    {
-    }
-
-    public class SettleBatchService : ServiceBase<LR.Entity.SettleBatch>, ISettleBatchService
-    {
-    }
+    
 }

@@ -28,6 +28,6 @@ namespace LR.Entity
         /// <summary>
         /// 结束时间
         /// </summary>
-        public DateTime? EndTime { get; set; }
+        public DateTime EndTime { get; set; }
     }    
 }

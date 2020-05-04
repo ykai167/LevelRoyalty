@@ -8,7 +8,7 @@ namespace LR.Entity
     /// <summary>
     /// 提成数据,及时记录
     /// </summary>
-    public class Royalty : UpdateEntity<Guid, Guid>
+    public class Royalty : IDEntity<Guid>
     {
         /// <summary>
         /// 员工ID

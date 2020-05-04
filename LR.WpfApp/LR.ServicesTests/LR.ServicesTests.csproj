@@ -65,9 +65,17 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\LR.Repositories\LR.Repositories.csproj">
+      <Project>{00d10e9a-7351-484c-b36a-7a9bc3abad16}</Project>
+      <Name>LR.Repositories</Name>
+    </ProjectReference>
     <ProjectReference Include="..\LR.Services\LR.Services.csproj">
       <Project>{DA8C2470-0538-478D-9322-6AD4F52E794D}</Project>
       <Name>LR.Services</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\LR.Tools\LR.Tools.csproj">
+      <Project>{b322f67d-ca94-4d0c-9076-81a77af43ec3}</Project>
+      <Name>LR.Tools</Name>
     </ProjectReference>
   </ItemGroup>
   <Choose>

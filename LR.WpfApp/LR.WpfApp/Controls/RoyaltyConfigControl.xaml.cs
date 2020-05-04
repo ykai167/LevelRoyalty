@@ -79,6 +79,10 @@ namespace LR.WpfApp.Controls
                             }
                             break;
                         case RoyaltyType.Administration:
+                            if (LevelModel.Min == null)
+                            {
+                                break;
+                            }
                             var level2 = LevelModel.Min.Upper;
                             while (level2 != null)
                             {
@@ -107,6 +111,10 @@ namespace LR.WpfApp.Controls
                             }
                             break;
                         case RoyaltyType.Cooperation:
+                            if (LevelModel.Min == null)
+                            {
+                                break;
+                            }
                             var level3 = LevelModel.Min.Upper;
                             while (level3 != null)
                             {
@@ -131,6 +139,10 @@ namespace LR.WpfApp.Controls
                             }
                             break;
                         case RoyaltyType.Transcend:
+                            if (LevelModel.Min == null)
+                            {
+                                break;
+                            }
                             var level4 = LevelModel.Min.Upper;
                             while (level4.Upper != null)
                             {

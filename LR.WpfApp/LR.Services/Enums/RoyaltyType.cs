@@ -32,12 +32,12 @@ namespace LR.Services
         [EnumName(Name = "超越奖励")]
         Transcend,
         /// <summary>
-        /// 超越奖励
+        /// 工作组奖励占比
         /// </summary>
         [EnumName(Name = "工作组奖励占比")]
         WorkGroupRoyalty,
         /// <summary>
-        /// 超越奖励
+        /// 工作组管理奖励
         /// </summary>
         [EnumName(Name = "工作组管理奖励")]
         WorkGroup

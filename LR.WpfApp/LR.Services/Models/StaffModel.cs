@@ -16,7 +16,7 @@ namespace LR.Models
             {
                 if (this._level == null)
                 {
-                    if (Subs.Length == 0)
+                    if (Subs == null || Subs.Length == 0)
                     {
                         this._level = LevelModel.Min;
                     }
@@ -46,7 +46,8 @@ namespace LR.Models
         //[Newtonsoft.Json.JsonIgnore]
         public StaffModel[] Subs { get; set; }
         public Guid ID { get; set; }
-        public Guid ParentID { get; set; }
+        public Guid ReferrerID { get; set; }
+        public StaffModel Referrer { get; set; }
         public override string ToString()
         {
             return $"{ID}\t{Name}\t{Level}\t[{string.Join(",", Subs.AsEnumerable())}]";
