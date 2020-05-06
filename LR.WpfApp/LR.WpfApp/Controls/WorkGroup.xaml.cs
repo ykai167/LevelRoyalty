@@ -10,63 +10,52 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
 using System.Windows.Shapes;
 
 namespace LR.WpfApp.Controls
 {
     /// <summary>
-    /// StaffControl.xaml 的交互逻辑
+    /// WorkGroup.xaml 的交互逻辑
     /// </summary>
-    [UserControlUse(UseTo.MainWindow, TabHeader = "员工管理")]
-    public partial class StaffControl : UserControl
+    public partial class WorkGroup : Window
     {
-        LR.Services.IStaffService _service;
+        LR.Services.IWorkGroupService _service;
+        LR.Services.StaffService staffService = new Services.StaffService();
 
-        public class StaffState
+        public class WorkGroupState
         {
             public int ID { get; set; }
             public String Name { get; set; }
             public int Value { get; set; }
         }
 
-        public StaffControl(LR.Services.IStaffService service)
+        public WorkGroup(LR.Services.IWorkGroupService service)
         {
-            InitializeComponent();      
+            InitializeComponent();
             this._service = service;
-            List<StaffState> stateSource = new List<StaffState>()
+            List<WorkGroupState> stateSource = new List<WorkGroupState>()
             {
-                new StaffState(){ Name = LR.Services.Extends.GetName(LR.Entity.Staff.StaffState.Normal), ID = 0, Value = (int)LR.Entity.Staff.StaffState.Normal},
-                new StaffState() { Name = LR.Services.Extends.GetName(LR.Entity.Staff.StaffState.Dimission), ID = 1, Value = (int)LR.Entity.Staff.StaffState.Dimission}
+                new WorkGroupState(){ Name = LR.Services.Extends.GetName(LR.Entity.WorkGroup.WorkGroupState.Normal), ID = 0, Value = (int)LR.Entity.WorkGroup.WorkGroupState.Normal},
+                new WorkGroupState() { Name = LR.Services.Extends.GetName(LR.Entity.WorkGroup.WorkGroupState.Dismiss), ID = 1, Value = (int)LR.Entity.WorkGroup.WorkGroupState.Dismiss}
             };
             cboState.ItemsSource = stateSource;
             cboState.DisplayMemberPath = "Name";
             cboState.SelectedValuePath = "Value";
             cboState.SelectedIndex = 0;
-            this.Loaded += StaffControl_Loaded;
+            this.Loaded += RoomControl_Loaded;
         }
-
-        private void StaffControl_Loaded(object sender, RoutedEventArgs e)
-        {
-            this.InitListView();
-        }        
 
         private void InitListView()
         {
             lvwShow.Items.Clear();
-            List<LR.Entity.Staff> di = this._service.List();
+            List<LR.Entity.WorkGroup> di = this._service.List();
             for (int i = 0; i < di.Count; i++)
             {
                 lvwShow.Items.Add(new
-                {
-                    No = di[i].No,
+                {                    
                     Name = di[i].Name,
-                    IdenNo = di[i].IdenNo,
-                    MobileNo = di[i].MobileNo,
-                    Referrer = di[i].ReferrerID,
-                    WorkGrop = di[i].WorkGroupID,
-                    Level = di[i].StaffLevelID,
-                    EntryTime = di[i].EntryTime,
+                    Manager = di[i].ManagerID,
+                    Assistant = di[i].AssistantID,
                     State = di[i].State
                 });
             }
@@ -82,14 +71,9 @@ namespace LR.WpfApp.Controls
             {
                 string s = lvwShow.Items[lvwShow.SelectedIndex].ToString();
                 string[] ss = s.Split(',');
-                txtNo.Text = ss[0].Split('=')[1].Trim();
-                txtName.Text = ss[1].Split('=')[1].Trim();
-                txtIdenNo.Text = ss[2].Split('=')[1].Trim();
-                txtMobileNo.Text = ss[3].Split('=')[1].Trim();
-                txtReferrer.Text = ss[4].Split('=')[1].Trim();
-                txtWorkGroup.Text = ss[5].Split('=')[1].Trim();
-                txtLevel.Text = ss[6].Split('=')[1].Trim();
-                dpEntryTime.Text = ss[7].Split('=')[1].Trim();
+                txtName.Text = ss[0].Split('=')[1].Trim();
+                txtManager.Text = ss[1].Split('=')[1].Trim();
+                txtAssitant.Text = ss[2].Split('=')[1].Trim();
                 cboState.SelectedValue = ss[4].Split('=')[1].Trim('}').Trim();
             }
         }
@@ -99,14 +83,9 @@ namespace LR.WpfApp.Controls
             #region 控件列表集合
             List<Control> con_list = new List<Control>()
             {
-                txtNo,
                 txtName,
-                txtIdenNo,
-                txtMobileNo,
-                txtReferrer,
-                txtWorkGroup,
-                txtLevel,
-                dpEntryTime,
+                txtManager,
+                txtAssitant,
                 cboState
             };
             #endregion
@@ -127,16 +106,12 @@ namespace LR.WpfApp.Controls
                         return;
                     }
             }
-            LR.Entity.Staff staff = new LR.Entity.Staff();
-            staff.No = txtNo.Text;
-            staff.Name = txtName.Text;
-            staff.IdenNo = txtIdenNo.Text;
-            staff.MobileNo = txtMobileNo.Text;
-            staff.ReferrerID = Guid.Parse(txtReferrer.Text); //TODO
-            staff.WorkGroupID = Guid.Parse(txtWorkGroup.Text); //TODO
-            staff.StaffLevelID = Guid.Parse(txtLevel.Text);
-            staff.State = int.Parse(cboState.Text);
-            this._service.Update(staff);
+            LR.Entity.WorkGroup workgroup = new LR.Entity.WorkGroup();
+            workgroup.Name = txtName.Text;
+            workgroup.ManagerID = staffService.Single(item => item.Name == txtManager.Text).ID;
+            workgroup.AssistantID = staffService.Single(item => item.Name == txtAssitant.Text).ID;
+            workgroup.State = int.Parse(cboState.Text);
+            this._service.Update(workgroup);
             this.InitListView();
         }
 
@@ -145,14 +120,9 @@ namespace LR.WpfApp.Controls
             #region 控件列表集合
             List<Control> con_list = new List<Control>()
             {
-                txtNo,
                 txtName,
-                txtIdenNo,
-                txtMobileNo,
-                txtReferrer,
-                txtWorkGroup,
-                txtLevel,
-                dpEntryTime,
+                txtManager,
+                txtAssitant,
                 cboState
             };
             #endregion
@@ -173,25 +143,22 @@ namespace LR.WpfApp.Controls
                         return;
                     }
             }
-            LR.Entity.Staff staff = new LR.Entity.Staff();
-            staff.No = txtNo.Text;
-            staff.Name = txtName.Text;
-            staff.IdenNo = txtIdenNo.Text;
-            staff.MobileNo = txtMobileNo.Text;
-            staff.ReferrerID = Guid.Parse(txtReferrer.Text); //TODO
-            staff.WorkGroupID = Guid.Parse(txtWorkGroup.Text); //TODO
-            staff.StaffLevelID = Guid.Parse(txtLevel.Text);
-            staff.State = int.Parse(cboState.Text);
-            this._service.Update(staff);            
+            LR.Entity.WorkGroup workgroup = new LR.Entity.WorkGroup();
+            workgroup.ID = this._service.Single(item => item.Name == txtName.Text).ID;
+            workgroup.Name = txtName.Text;
+            workgroup.ManagerID = staffService.Single(item=>item.Name == txtManager.Text).ID;
+            workgroup.AssistantID = staffService.Single(item=>item.Name == txtAssitant.Text).ID;            
+            workgroup.State = int.Parse(cboState.Text);
+            this._service.Update(workgroup);
             this.InitListView();
         }
 
         private void btnDelete_Click(object sender, RoutedEventArgs e)
         {
-            LR.Entity.Staff staff = new LR.Entity.Staff();
-            staff.State = 400;
-            staff.ID = this._service.Single(item => item.No == staff.No).ID;
-            this._service.Update(staff);
+            LR.Entity.WorkGroup workgroup = new LR.Entity.WorkGroup();
+            workgroup.State = 400;
+            workgroup.ID = this._service.Single(item => item.Name == workgroup.Name).ID;
+            this._service.Update(workgroup);
             this.InitListView();
         }
     }

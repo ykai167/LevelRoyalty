@@ -10,6 +10,7 @@ namespace LR.Services
     public partial interface IService<T> : IDisposable where T : LR.Entity.UpdateEntity<Guid, Guid>, new()
     {
         T Single(Guid id);
+        T Single(Expression<Func<T, bool>> exp);
         List<T> PageList(int pageIndex, int pageSize = 20);
         List<T> List();
         void Update(T entity);

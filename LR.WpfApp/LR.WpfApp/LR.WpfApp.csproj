@@ -71,11 +71,17 @@
     <Compile Include="Controls\RoyaltyConfigControl.xaml.cs">
       <DependentUpon>RoyaltyConfigControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\RoyaltyControl.xaml.cs">
+      <DependentUpon>RoyaltyControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\StaffLevelControl.xaml.cs">
       <DependentUpon>StaffLevelControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="Controls\StaffControl.xaml.cs">
       <DependentUpon>StaffControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\WorkGroup.xaml.cs">
+      <DependentUpon>WorkGroup.xaml</DependentUpon>
     </Compile>
     <Compile Include="Models\LayOutViewModel.cs" />
     <Compile Include="Models\TabSource.cs" />
@@ -109,11 +115,19 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Controls\RoyaltyControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Controls\StaffLevelControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Controls\StaffControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\WorkGroup.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -166,6 +180,9 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <None Include="Data\royalty.sqlite">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>

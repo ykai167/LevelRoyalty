@@ -5,10 +5,47 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:LR.WpfApp"
         mc:Ignorable="d"
-        Title="LoginWindow" Height="450" Width="800">
+        WindowStartupLocation="CenterScreen" MouseMove="Window_MouseMove"
+        Title="LoginWindow" Height="480" Width="780">
     <Grid>
-        <Button x:Name="button" Content="普通管理员" HorizontalAlignment="Left" Margin="404,261,0,0" VerticalAlignment="Top" Width="75" Click="button_Click"/>
-        <Button x:Name="button1" Content="超级管理员" HorizontalAlignment="Left" Margin="223,261,0,0" VerticalAlignment="Top" Width="75" Click="button1_Click"/>
-
+        <StackPanel Orientation="Horizontal">
+            <Label x:Name="labelSys" Content="KTV分级提成管理系统" Width="230" Height="40" 
+                   FontSize="22" FontFamily="宋体-方正超大字符集" 
+                   Margin="275,90,10,0" VerticalAlignment="Top" ToolTip="当前登陆界面"/>
+            <Label Name="labelUserName" Content="用户名：" Width="80" Height="30" 
+                   FontSize="19" FontFamily="宋体"
+                   Margin="-440,-20,0,0"/>
+            <Label Name="labelPwd" Content="密  码：" Width="80" Height="30" 
+                   FontSize="19" FontFamily="宋体"
+                   Margin="-440,95,0,0" />
+        </StackPanel>
+        <StackPanel Orientation="Vertical">
+            <TextBox Name="txtBoxUserName" Width="190" Height="25" 
+                     VerticalContentAlignment="Center"  FontSize="16" FontFamily="宋体"
+                     Margin="100,199,10,10" VerticalAlignment="Center"
+                     TextChanged="txtBoxUserName_TextChanged"/>
+            <PasswordBox Name="txtBoxPwd" Width="190" Height="25" PasswordChar="*" FontFamily="宋体"
+                         VerticalContentAlignment="Center"  FontSize="16"
+                         Margin="100,25,10,10" VerticalAlignment="Center" 
+                         PasswordChanged="txtBoxPwd_PasswordChanged"/>
+        </StackPanel>
+        <StackPanel Orientation="Horizontal">
+            <Button Name="btnLogin"  FontSize="21" Width="90" Height="35" IsDefault="True"
+                    IsEnabled="True" BorderBrush="Transparent" Click="btnLogin_Click"
+                    Margin="250,200,0,0" VerticalAlignment="Center" Content="登陆">
+            </Button>
+            <Button Name="btnCancel" FontSize="21" Width="90" Height="35"
+                    IsEnabled="True" BorderBrush="Transparent" Click="btnCancel_Click"
+                    Margin="100,200,0,0"  Content="取消">
+            </Button>
+        </StackPanel>
+        <StackPanel Orientation="Vertical">
+            <Label Name="userNameTip"  Margin="410,199,10,10"
+                   FontSize="15" FontFamily="宋体" Foreground="Red" Height="25" Width="120"
+                   HorizontalAlignment="Center" />
+            <Label Name="pwdTip"  Margin="410,25,10,10"
+                   FontSize="15" FontFamily="宋体" Foreground="Red" Height="25" Width="110"
+                   HorizontalAlignment="Center" />
+        </StackPanel>
     </Grid>
 </Window>

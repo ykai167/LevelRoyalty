@@ -1,4 +1,6 @@
-﻿using System;
+﻿using LR.Repositories;
+using LR.Services;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -9,7 +11,7 @@ namespace LR.Entity
     /// <summary>
     /// 房间
     /// </summary>
-    public class Room : UpdateNamingEntity<Guid, Guid>
+    public partial class Room : UpdateNamingEntity<Guid, Guid>
     {
         /// <summary>
         /// 编号
@@ -25,5 +27,16 @@ namespace LR.Entity
         /// 说明
         /// </summary>
         public string Summary { get; set; }
+    }
+
+    public partial class Room
+    {
+        public enum RoomState
+        {
+            [EnumName(Name = "正常")]
+            Normal = LR.Entity.DataState.Normal,
+            [EnumName(Name = "删除")]
+            Delete = LR.Entity.DataState.Delete,
+        }
     }
 }
