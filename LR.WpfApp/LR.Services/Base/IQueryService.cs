@@ -10,7 +10,7 @@ namespace LR.Services
 {
     public partial interface IQueryService<T> : IDisposable where T : LR.Entity.IDEntity<Guid>, new()
     {
-        List<T> All();
+        List<T> List();
         T Single(Guid id);
         T Single(Expression<Func<T, bool>> exp);
         List<T> PageList(int pageIndex, int pageSize = 20);
@@ -55,7 +55,7 @@ namespace LR.Services
             return db.Context.Queryable<T>().Single(exp);
         }
 
-        public List<T> All()
+        public List<T> List()
         {
             return this.Queryable.ToList();
         }

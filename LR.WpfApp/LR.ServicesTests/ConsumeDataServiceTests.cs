@@ -29,12 +29,12 @@ namespace LR.Services.Tests
         {
             var service = Tools.DIHelper.GetInstance<IWorkGroupService>();
 
-            var old = service.All();
+            var old = service.List();
 
-            var mcategory = Tools.DIHelper.GetInstance<IWorkGroupManagerCategoryService>().All();
+            var mcategory = Tools.DIHelper.GetInstance<IWorkGroupManagerCategoryService>().List();
             var newID = service.Insert(new WorkGroup { Name = "青年组" });
 
-            var staffs = Tools.DIHelper.GetInstance<IStaffService>().All();
+            var staffs = Tools.DIHelper.GetInstance<IStaffService>().List();
             for (int i = 0; i < staffs.Count; i++)
             {
                 if (i % 2 == 0)
@@ -47,7 +47,7 @@ namespace LR.Services.Tests
                 }
             }
 
-            var currenty = service.All();
+            var currenty = service.List();
 
             Assert.IsTrue(currenty.Count - old.Count == 1);
         }

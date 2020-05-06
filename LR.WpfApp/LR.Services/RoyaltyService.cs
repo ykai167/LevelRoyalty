@@ -7,11 +7,11 @@ using System.Threading.Tasks;
 
 namespace LR.Services
 {
-    public interface IRoyaltyService : IQueryService<Royalty>
+    public interface IRoyaltyService : IUpdateService<Royalty>
     {
     }
 
-    public class RoyaltyService : InsertServiceBase<Royalty>, IRoyaltyService
+    public class RoyaltyService : UpdateServiceBase<Royalty>, IRoyaltyService
     {
         public RoyaltyService()
         {

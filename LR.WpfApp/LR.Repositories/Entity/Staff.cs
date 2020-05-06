@@ -1,4 +1,5 @@
-﻿using System;
+﻿using LR.Repositories;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -9,7 +10,7 @@ namespace LR.Entity
     /// <summary>
     /// 员工
     /// </summary>
-    public class Staff : UpdateNamingEntity<Guid, Guid>
+    public partial class Staff : UpdateNamingEntity<Guid, Guid>
     {
         /// <summary>
         /// 员工号
@@ -47,4 +48,14 @@ namespace LR.Entity
         public DateTime EntryTime { get; set; }
     }
 
+    public partial class Staff
+    {
+        public enum StaffState
+        {
+            [EnumName(Name = "正常")]
+            Normal = LR.Entity.DataState.Normal,
+            [EnumName(Name = "离职")]
+            Dimission = LR.Entity.DataState.Delete,
+        }
+    }
 }

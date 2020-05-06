@@ -13,7 +13,7 @@ namespace LR.Models
 
         static LevelModel()
         {
-            var list = LR.Tools.DIHelper.GetInstance<IStaffLevelService>().All().OrderBy(item => item.Order).Select(item => new LevelModel
+            var list = LR.Tools.DIHelper.GetInstance<IStaffLevelService>().List().OrderBy(item => item.Order).Select(item => new LevelModel
             {
                 ID = item.ID,
                 Name = item.Name,

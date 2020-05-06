@@ -1,4 +1,5 @@
-﻿using System;
+﻿using LR.Repositories;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,7 +9,7 @@ namespace LR.Entity
     /// <summary>
     /// 提成数据,及时记录
     /// </summary>
-    public class Royalty : IDEntity<Guid>
+    public partial class Royalty : UpdateEntity<Guid, Guid>
     {
         /// <summary>
         /// 员工ID
@@ -35,5 +36,16 @@ namespace LR.Entity
         /// 结算编号
         /// </summary>
         public int SettleNum { get; set; }
+    }
+
+    public partial class Royalty
+    {
+        public enum RoyaltyState
+        {
+            [EnumName(Name = "正常")]
+            Normal = LR.Entity.DataState.Normal,
+            [EnumName(Name = "作废")]
+            Abandon= LR.Entity.DataState.Delete,
+        }
     }
 }

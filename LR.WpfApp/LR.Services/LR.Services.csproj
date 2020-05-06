@@ -45,8 +45,6 @@
     <Compile Include="Base\IInsertService.cs" />
     <Compile Include="Models\OperateResult.cs" />
     <Compile Include="Models\WorkGroupModel.cs" />
-    <Compile Include="WorkGroupService.cs" />
-    <Compile Include="RoyaltyService.cs" />
     <Compile Include="SettleBatchService.cs" />
     <Compile Include="Models\RoyaltyConfigModel.cs" />
     <Compile Include="Models\StaffModel.cs" />
@@ -56,6 +54,8 @@
     <Compile Include="WorkGroupManagerCategoryService.cs" />
     <Compile Include="RoyaltyConfigService.cs" />
     <Compile Include="StaffLevelService.cs" />
+    <Compile Include="AdminService.cs" />
+    <Compile Include="Attribute.cs" />
     <Compile Include="ConsumeDataService.cs" />
     <Compile Include="Data\Administrator.cs" />
     <Compile Include="Data\MemoryData.cs" />
@@ -65,9 +65,11 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RoomCategoryService.cs" />
     <Compile Include="RoomService.cs" />
+    <Compile Include="RoyaltyService.cs" />
     <Compile Include="StaffService.cs" />
     <Compile Include="calss.cs" />
     <Compile Include="Enums\StaffState.cs" />
+    <Compile Include="WorkGroupService.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\LR.Repositories\LR.Repositories.csproj">

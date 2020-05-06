@@ -13,7 +13,7 @@ namespace LR.Services
         IEnumerable<RoyaltyConfigModel> data;
         public RoyaltyConfigs()
         {
-            var royaltyConfigList = Tools.DIHelper.GetInstance<IRoyaltyConfigService>().All();
+            var royaltyConfigList = Tools.DIHelper.GetInstance<IRoyaltyConfigService>().List();
             var temp = new List<RoyaltyConfigModel>();
             var array = new[] {
                 (int)RoyaltyType.Reservation,
@@ -78,7 +78,7 @@ namespace LR.Services
 
         public void ReloadStaffs()
         {
-            this.Staffs = Tools.DIHelper.GetInstance<IStaffService>().All().Select(item => new StaffModel
+            this.Staffs = Tools.DIHelper.GetInstance<IStaffService>().List().Select(item => new StaffModel
             {
                 ID = item.ID,
                 Name = item.Name,

@@ -21,7 +21,7 @@ namespace LR.WpfApp.Controls
     [UserControlUse(UseTo.MainWindow, TabHeader = "房间管理")]
     public partial class RoomControl : UserControl
     {
-        LR.Services.RoomService service;
+        LR.Services.IRoomService _service;
         LR.Services.RoomCategoryService cateservice = new Services.RoomCategoryService();
 
         public class RoomState
@@ -31,14 +31,14 @@ namespace LR.WpfApp.Controls
             public int Value { get; set; }
         }
 
-        public RoomControl(LR.Services.IRoomService _service)
+        public RoomControl(LR.Services.IRoomService service)
         {
             InitializeComponent();
-            this.service = (LR.Services.RoomService)_service;
-            List<RoomState> stateSource = new List<RoomState>()
+            this._service = service;
+            List<RoomState> stateSource =  new List<RoomState>()
             {
-                new RoomState(){ Name = "正常", ID = 0, Value = 200},
-                new RoomState() { Name = "删除", ID = 1, Value = 400}
+                new RoomState(){ Name = LR.Services.Extends.GetName(LR.Entity.Room.RoomState.Normal), ID = 0, Value = (int)LR.Entity.Room.RoomState.Normal},
+                new RoomState() { Name = LR.Services.Extends.GetName(LR.Entity.Room.RoomState.Delete), ID = 1, Value = (int)LR.Entity.Room.RoomState.Delete}
             };
             cboState.ItemsSource = stateSource;
             cboState.DisplayMemberPath = "Name";
@@ -50,7 +50,7 @@ namespace LR.WpfApp.Controls
         private void InitListView()
         {
             lvwShow.Items.Clear();
-            List<LR.Entity.Room> di = this.service.All();
+            List<LR.Entity.Room> di = this._service.List();
             for (int i = 0; i < di.Count; i++)
             {
                 lvwShow.Items.Add(new
@@ -117,7 +117,7 @@ namespace LR.WpfApp.Controls
             room.CategoryID = new Guid(); //TODO
             room.Summary = txtSummary.Text;
             room.State = int.Parse(cboState.Text);
-            this.service.Insert(room);
+            this._service.Insert(room);
             this.InitListView();
         }
 
@@ -151,13 +151,13 @@ namespace LR.WpfApp.Controls
                     }
             }
             LR.Entity.Room room = new LR.Entity.Room();
-            var id = this.service.Single(item => item.No == txtNo.Text).ID;
+            room.ID = this._service.Single(item => item.No == txtNo.Text).ID;
             room.No = txtNo.Text;
             room.Name = txtName.Text;
             room.CategoryID = new Guid(); //TODO
             room.Summary = txtSummary.Text;
             room.State = int.Parse(cboState.Text);
-            this.service.Update(id , room);
+            this._service.Update(room.ID, room);
             this.InitListView();
         }
 
@@ -165,8 +165,8 @@ namespace LR.WpfApp.Controls
         {
             LR.Entity.Room room = new LR.Entity.Room();
             room.State = 400;
-            var id = this.service.Single(item => item.No == room.No).ID;
-            this.service.Update(id, new { room.ID });
+            room.ID = this._service.Single(item => item.No == room.No).ID;
+            this._service.Update(room.ID, room);
             this.InitListView();
         }
     }
