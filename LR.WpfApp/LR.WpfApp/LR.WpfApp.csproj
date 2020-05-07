@@ -80,8 +80,8 @@
     <Compile Include="Controls\StaffControl.xaml.cs">
       <DependentUpon>StaffControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Controls\WorkGroup.xaml.cs">
-      <DependentUpon>WorkGroup.xaml</DependentUpon>
+    <Compile Include="Controls\WorkGroupControl.xaml.cs">
+      <DependentUpon>WorkGroupControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="Models\LayOutViewModel.cs" />
     <Compile Include="Models\TabSource.cs" />
@@ -127,7 +127,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Controls\WorkGroup.xaml">
+    <Page Include="Controls\WorkGroupControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

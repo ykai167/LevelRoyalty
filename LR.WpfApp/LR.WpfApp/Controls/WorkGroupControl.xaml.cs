@@ -19,7 +19,7 @@ namespace LR.WpfApp.Controls
     /// WorkGroup.xaml 的交互逻辑
     /// </summary>
     [UserControlUse(UseTo.MainWindow, TabHeader = "工作组管理")]
-    public partial class WorkGroup : UserControl
+    public partial class WorkGroupControl : UserControl
     {
         LR.Services.IWorkGroupService _service;
         LR.Services.StaffService staffService = new Services.StaffService();
@@ -31,7 +31,7 @@ namespace LR.WpfApp.Controls
             public int Value { get; set; }
         }
 
-        public WorkGroup(LR.Services.IWorkGroupService service)
+        public WorkGroupControl(LR.Services.IWorkGroupService service)
         {
             InitializeComponent();
             this._service = service;
