@@ -61,13 +61,15 @@ namespace LR.Services.Tests
         {
             var service = Tools.DIHelper.GetInstance<IConsumeDataService>();
             var old = service.List().Count();
+            var room = Tools.DIHelper.GetInstance<IRoomService>().List().LastOrDefault();
             for (int i = 0; i < 10; i++)
             {
                 var list = Tools.DIHelper.GetInstance<IStaffService>().List();
                 service.Insert(new ConsumeData
                 {
                     StaffID = list[new Random().Next(0, list.Count)].ID,
-                    Amount = new Random().Next(100, 500)
+                    Amount = new Random().Next(100, 500),
+                    RoomID = room.ID
                 }); ;
             }
 
