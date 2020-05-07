@@ -10,6 +10,7 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
 using System.Windows.Shapes;
 
 namespace LR.WpfApp.Controls
@@ -17,7 +18,8 @@ namespace LR.WpfApp.Controls
     /// <summary>
     /// WorkGroup.xaml 的交互逻辑
     /// </summary>
-    public partial class WorkGroup : Window
+    [UserControlUse(UseTo.MainWindow, TabHeader = "工作组管理")]
+    public partial class WorkGroup : UserControl
     {
         LR.Services.IWorkGroupService _service;
         LR.Services.StaffService staffService = new Services.StaffService();
@@ -52,7 +54,7 @@ namespace LR.WpfApp.Controls
             for (int i = 0; i < di.Count; i++)
             {
                 lvwShow.Items.Add(new
-                {                    
+                {
                     Name = di[i].Name,
                     Manager = di[i].ManagerID,
                     Assistant = di[i].AssistantID,
@@ -146,8 +148,8 @@ namespace LR.WpfApp.Controls
             LR.Entity.WorkGroup workgroup = new LR.Entity.WorkGroup();
             workgroup.ID = this._service.Single(item => item.Name == txtName.Text).ID;
             workgroup.Name = txtName.Text;
-            workgroup.ManagerID = staffService.Single(item=>item.Name == txtManager.Text).ID;
-            workgroup.AssistantID = staffService.Single(item=>item.Name == txtAssitant.Text).ID;            
+            workgroup.ManagerID = staffService.Single(item => item.Name == txtManager.Text).ID;
+            workgroup.AssistantID = staffService.Single(item => item.Name == txtAssitant.Text).ID;
             workgroup.State = int.Parse(cboState.Text);
             this._service.Update(workgroup.ID, workgroup);
             this.InitListView();
