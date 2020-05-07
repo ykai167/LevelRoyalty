@@ -50,6 +50,7 @@
     <Compile Include="DataContext.cs" />
     <Compile Include="Entity\Room.cs" />
     <Compile Include="Entity\Royalty.cs" />
+    <Compile Include="Entity\RoyaltySettle.cs" />
     <Compile Include="Entity\Staff.cs" />
     <Compile Include="Entity\WorkGroup.cs" />
     <Compile Include="Entity\WorkGroupManagerCategory.cs" />

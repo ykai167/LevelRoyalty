@@ -125,7 +125,7 @@ namespace LR.WpfApp.Controls
             royalty.Percent = decimal.Parse(txtPercent.Text);
             royalty.SettleNum = int.Parse(txtSettleNum.Text); //TODO            
             royalty.State = int.Parse(cboState.Text);
-            this._service.Insert(royalty);
+            //this._service.Insert(royalty);
             this.InitListView();
         }
 
@@ -167,7 +167,7 @@ namespace LR.WpfApp.Controls
             royalty.Percent = decimal.Parse(txtPercent.Text);
             royalty.SettleNum = int.Parse(txtSettleNum.Text); //TODO            
             royalty.State = int.Parse(cboState.Text);
-            this._service.Update(royalty.ID, royalty);
+            //this._service.Update(royalty.ID, royalty);
             this.InitListView();
         }
 
@@ -176,7 +176,7 @@ namespace LR.WpfApp.Controls
             LR.Entity.Royalty royalty = new LR.Entity.Royalty();
             royalty.State = 400;
             royalty.ID = this._service.Single(item => item.ConsumeDataID == royalty.ConsumeDataID).ID;
-            this._service.Update(royalty.ID, royalty);
+            //this._service.Update(royalty.ID, royalty);
             this.InitListView();
         }
     }

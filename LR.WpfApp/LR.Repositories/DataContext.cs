@@ -33,6 +33,7 @@ namespace LR.Repositories
         public SimpleClient<Entity.Room> Rooms => new SimpleClient<Entity.Room>(context);
         public SimpleClient<Entity.RoomCategory> RoomCategories => new SimpleClient<Entity.RoomCategory>(context);
         public SimpleClient<Entity.Royalty> Royalties => new SimpleClient<Entity.Royalty>(context);
+        public SimpleClient<Entity.RoyaltySettle> RoyaltySettles => new SimpleClient<Entity.RoyaltySettle>(context);
         public SimpleClient<Entity.RoyaltyConfig> RoyaltyConfigs => new SimpleClient<Entity.RoyaltyConfig>(context);
         public SimpleClient<Entity.SettleBatch> SettleBatchs => new SimpleClient<Entity.SettleBatch>(context);
         public SimpleClient<Entity.Staff> Staffs => new SimpleClient<Entity.Staff>(context);

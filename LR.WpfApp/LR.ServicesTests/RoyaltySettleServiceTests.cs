@@ -9,15 +9,13 @@ using System.Threading.Tasks;
 namespace LR.Services.Tests
 {
     [TestClass()]
-    public class MemoryDataTests : TestBase
+    public class RoyaltySettleServiceTests : TestBase
     {
-       
         [TestMethod()]
-        public void ReloadStaffsTest()
+        public void SettlementTest()
         {
-
-            var mamery = LR.Services.MemoryData.Current;
-            Assert.IsNotNull(mamery);
+            var result = Tools.DIHelper.GetInstance<IRoyaltySettleService>().Settlement();
+            Assert.IsTrue(result.Success);
         }
     }
 }

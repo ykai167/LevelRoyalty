@@ -21,6 +21,7 @@ namespace LR.WpfApp.Controls
     class MessageHelper
     {
         public string GroupName { get; set; }
+
         public string Name { get; set; }
     }
     /// <summary>
@@ -139,11 +140,11 @@ namespace LR.WpfApp.Controls
                             }
                             break;
                         case RoyaltyType.Transcend:
-                            if (LevelModel.Min == null)
+                            var level4 = LevelModel.Min?.Upper;
+                            if (level4 == null)
                             {
                                 break;
                             }
-                            var level4 = LevelModel.Min.Upper;
                             while (level4.Upper != null)
                             {
                                 grid.RowDefinitions.Add(new RowDefinition());

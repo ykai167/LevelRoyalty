@@ -1,4 +1,5 @@
 ﻿using LR.Entity;
+using LR.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,28 +8,50 @@ using System.Threading.Tasks;
 
 namespace LR.Services
 {
-    public interface ISettleBatchService : IUpdateService<SettleBatch>
+    public interface ISettleBatchService : IQueryService<SettleBatch>
     {
-        int GetCurrentNum();
     }
-
     public class SettleBatchService : UpdateServiceBase<SettleBatch>, ISettleBatchService
     {
-        public int GetCurrentNum()
+        public SettleBatchService(Repositories.DataContext context) : base(context)
         {
-            var temp = this.Context.SettleBatchs.GetSingle(p => !p.IsHistory);
-            if (temp == null)
+
+        }
+        /// <summary>
+        /// 获取或生成一个账期号
+        /// </summary>
+        /// <returns></returns>
+        internal SettleBatch GetOrGenCurrent()
+        {
+            var current = this.Single(p => !p.IsHistory);
+            if (current == null)
             {
                 var now = DateTime.Now;
-                this.Insert(temp = new SettleBatch
+
+                var last = this.Queryable.OrderBy(p => p.CreateDate, SqlSugar.OrderByType.Desc).First();
+                Func<int> fnNum = () =>
                 {
-                    Num = now.Year * 10000 + now.Month * 100 + 1,
+                    return now.Year * 10000 + now.Month * 100 + 1;
+                };
+                int num = 0;
+                if (last == null)
+                {
+                    num = fnNum();
+                }
+                else
+                {
+                    num = last.Num / 10000 == now.Year && (last.Num - now.Year * 10000) / 100 == now.Month ? last.Num + 1 : fnNum();
+                }
+
+                this.Insert(current = new SettleBatch
+                {
+                    Num = num,
                     StartTime = now,
                     IsHistory = false,
                     State = (int)DataState.Normal
                 });
             }
-            return temp.Num;
+            return current;
         }
     }
 }

@@ -9,10 +9,9 @@ using LR.Entity;
 
 namespace LR.Services.Tests
 {
-    [TestClass()]
-    public class ConsumeDataServiceTests
+    public class TestBase
     {
-        public ConsumeDataServiceTests()
+        public TestBase()
         {
             var baseType = typeof(LR.Services.IQueryService<>);
             var types = baseType.Assembly.GetTypes()
@@ -24,6 +23,11 @@ namespace LR.Services.Tests
 
             LR.Services.Administrator.Current = new Administrator();
         }
+    }
+    [TestClass()]
+    public class ConsumeDataServiceTests : TestBase
+    {
+
         [TestMethod()]
         public void AddWorkGroupDataTest()
         {
@@ -56,14 +60,19 @@ namespace LR.Services.Tests
         public void InsertTest()
         {
             var service = Tools.DIHelper.GetInstance<IConsumeDataService>();
-
-            service.Insert(new ConsumeData
+            var old = service.List().Count();
+            for (int i = 0; i < 10; i++)
             {
-                StaffID = Guid.Parse("a5c5ae5f-7b56-4516-8ce3-a7d503de9755"),
-                Amount = 100
-            });
+                var list = Tools.DIHelper.GetInstance<IStaffService>().List();
+                service.Insert(new ConsumeData
+                {
+                    StaffID = list[new Random().Next(0, list.Count)].ID,
+                    Amount = new Random().Next(100, 500)
+                }); ;
+            }
 
-            Assert.Fail();
+
+            Assert.IsTrue(service.List().Count() > old);
         }
     }
 }

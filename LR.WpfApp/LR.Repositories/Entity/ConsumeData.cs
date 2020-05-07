@@ -24,5 +24,10 @@ namespace LR.Entity
         /// 金额
         /// </summary>
         public decimal Amount { get; set; }
+
+        /// <summary>
+        /// 账期
+        /// </summary>
+        public int SettleNum { get; set; }
     }
 }

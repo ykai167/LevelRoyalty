@@ -25,13 +25,13 @@ namespace LR.WpfApp
         {
             InitializeComponent();
         }
-        
+
         private void btnLogin_Click(object sender, RoutedEventArgs e)
         {
             LR.Entity.Admin admin = new LR.Entity.Admin
             {
                 Name = txtBoxUserName.Text,
-                Password = txtBoxPwd.Password,                
+                Password = txtBoxPwd.Password,
             };
 
             int i = this._service.Check(admin);
@@ -64,13 +64,13 @@ namespace LR.WpfApp
             }
             else
             {
-                LR.Services.AdminType type = (Services.AdminType)this._service.Single(item=>item.Name==admin.Name && item.Password==admin.Password).Type;
+                LR.Services.AdminType type = (Services.AdminType)this._service.Single(item => item.Name == admin.Name && item.Password == admin.Password).Type;
                 LR.Services.Administrator.Current = new Services.Administrator
                 {
                     Name = admin.Name,
                     Type = type
                 };
-            }            
+            }
             DialogResult = true;
             this.Close();
         }
@@ -106,6 +106,30 @@ namespace LR.WpfApp
                 this.DragMove();
             }
             catch { }
-        }        
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            LR.Services.Administrator.Current = new Services.Administrator
+            {
+                Name = "超级",
+                Type = Services.AdminType.Super
+            };
+
+            DialogResult = true;
+            this.Close();
+        }
+
+        private void Button_Click_1(object sender, RoutedEventArgs e)
+        {
+            LR.Services.Administrator.Current = new Services.Administrator
+            {
+                Name = "阿三",
+                Type = Services.AdminType.Ordin
+            };
+
+            DialogResult = true;
+            this.Close();
+        }
     }
 }

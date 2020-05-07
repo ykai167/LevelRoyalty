@@ -44,7 +44,10 @@
     <Compile Include="Base\IUpdateService.cs" />
     <Compile Include="Base\IInsertService.cs" />
     <Compile Include="Models\OperateResult.cs" />
+    <Compile Include="Models\RoyaltyModel.cs" />
+    <Compile Include="Models\RoyaltyStatisticsModel.cs" />
     <Compile Include="Models\WorkGroupModel.cs" />
+    <Compile Include="RoyaltySettleService.cs" />
     <Compile Include="SettleBatchService.cs" />
     <Compile Include="Models\RoyaltyConfigModel.cs" />
     <Compile Include="Models\StaffModel.cs" />

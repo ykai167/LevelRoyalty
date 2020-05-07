@@ -38,6 +38,8 @@
                     IsEnabled="True" BorderBrush="Transparent" Click="btnCancel_Click"
                     Margin="100,200,0,0"  Content="取消">
             </Button>
+            <Button Content="超级" Click="Button_Click"></Button>
+            <Button Content="普通" Click="Button_Click_1"></Button>
         </StackPanel>
         <StackPanel Orientation="Vertical">
             <Label Name="userNameTip"  Margin="410,199,10,10"
