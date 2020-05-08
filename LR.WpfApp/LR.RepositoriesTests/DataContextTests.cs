@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using LR.Entity;
 
 namespace LR.Repositories.Tests
 {
@@ -12,6 +13,30 @@ namespace LR.Repositories.Tests
     public partial class DataContextTests
     {
 
+        [TestMethod()]
+        public void RoomAddTest()
+        {
+            var context = new LR.Repositories.DataContext(true);
+            var roomcategory = new RoomCategory
+            {
+                ID = Guid.NewGuid(),
+                Name = "一等",
+                State = LR.Entity.DataState.Normal,
+                MinCharge = 200
+            };
+            context.RoomCategories.Insert(roomcategory);
+
+            context.Rooms.Insert(new Room
+            {
+                CategoryID = roomcategory.ID,
+                ID = Guid.NewGuid(),
+                No = "001",
+                Name = "歌厅",
+                State = DataState.Normal,
+                Summary = "ceshi"
+            });
+            Assert.IsTrue(context.Rooms.Count(p => true) > 0);
+        }
 
         [TestMethod()]
         public void WorkgroyManagerCategoryAddTest()
