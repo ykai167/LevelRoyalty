@@ -17,7 +17,7 @@ namespace LR.Services
         OperateResult CancelManager(Guid groupID, Guid staffID, Guid managerCategoryID);
     }
 
-    class WorkGroupMemberService : UpdateServiceBase<WorkGroupMember>
+    public class WorkGroupMemberService : UpdateServiceBase<WorkGroupMember>
     {
         public WorkGroupMemberService(Repositories.DataContext context) : base(context)
         {

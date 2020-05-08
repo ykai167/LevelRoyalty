@@ -64,13 +64,22 @@ namespace LR.Services.Tests
             var room = Tools.DIHelper.GetInstance<IRoomService>().List().LastOrDefault();
             for (int i = 0; i < 10; i++)
             {
-                var list = Tools.DIHelper.GetInstance<IStaffService>().List();
-                service.Insert(new ConsumeData
+                var list = Tools.DIHelper.GetInstance<WorkGroupMemberService>().List();
+                if (list.Count > 0)
                 {
-                    StaffID = list[new Random().Next(0, list.Count)].ID,
-                    Amount = new Random().Next(100, 500),
-                    RoomID = room.ID
-                }); ;
+                    service.Insert(new ConsumeData
+                    {
+                        StaffID = list.FirstOrDefault(p => p.CategoryID != new Guid()).StaffID,
+                        Amount = new Random().Next(100, 500),
+                        RoomID = room.ID
+                    });
+                    service.Insert(new ConsumeData
+                    {
+                        StaffID = list[new Random().Next(0, list.Count > 3 ? 3 : list.Count)].StaffID,
+                        Amount = new Random().Next(100, 500),
+                        RoomID = room.ID
+                    });
+                }
             }
 
 

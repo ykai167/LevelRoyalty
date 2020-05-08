@@ -21,20 +21,31 @@ namespace LR.WpfApp
     public partial class SuperAdminWindow : Window
     {
         TabSource[] sources = TabSource.GetTabSources(Controls.UseTo.SuperAdminWindow);
+
         public SuperAdminWindow()
         {
             InitializeComponent();
+            this.Loaded += MainWindow_Loaded;
             foreach (var item in sources)
             {
-                var TabItem = new TabItem { Header = item.Header, Content = Tools.DIHelper.GetInstance(item.ControlType) };
+                var TabItem = new TabItem { Header = item.Header };
                 this.tabMain.Items.Add(TabItem);
                 this.tabMain.SelectionChanged += TabMain_SelectionChanged;
             }
         }
 
+        private void MainWindow_Loaded(object sender, RoutedEventArgs e)
+        {
+            this.tabMain.SelectionChanged += TabMain_SelectionChanged;
+        }
+
         private void TabMain_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            (this.tabMain.Items[this.tabMain.SelectedIndex] as TabItem).Content = Tools.DIHelper.GetInstance(sources[this.tabMain.SelectedIndex].ControlType);
+            if (e.OriginalSource is TabControl)
+            {
+                (this.tabMain.Items[this.tabMain.SelectedIndex] as TabItem).Content = Tools.DIHelper.GetInstance(sources[this.tabMain.SelectedIndex].ControlType);
+            }
+            e.Handled = true;
         }
     }
 }

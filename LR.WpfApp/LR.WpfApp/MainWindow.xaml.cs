@@ -1,4 +1,5 @@
-﻿using System;
+﻿using LR.WpfApp.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -20,18 +21,17 @@ namespace LR.WpfApp
     /// </summary>
     public partial class MainWindow : Window
     {
+        TabSource[] sources = TabSource.GetTabSources(Controls.UseTo.MainWindow);
+
         public MainWindow()
         {
             InitializeComponent();
             this.Loaded += MainWindow_Loaded;
-            foreach (var item in Models.TabSource.GetTabSources(Controls.UseTo.MainWindow))
+            foreach (var item in sources)
             {
-                var TabItem = new TabItem
-                {
-                    Header = item.Header,
-                    Content = Tools.DIHelper.GetInstance(item.ControlType)
-                };
+                var TabItem = new TabItem { Header = item.Header };
                 this.tabMain.Items.Add(TabItem);
+                this.tabMain.SelectionChanged += TabMain_SelectionChanged;
             }
         }
 
@@ -42,7 +42,11 @@ namespace LR.WpfApp
 
         private void TabMain_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            //var aaa = (this.tabMain.Items[this.tabMain.SelectedIndex] as ContentControl).Content.;
+            if (e.OriginalSource is TabControl)
+            {
+                (this.tabMain.Items[this.tabMain.SelectedIndex] as TabItem).Content = Tools.DIHelper.GetInstance(sources[this.tabMain.SelectedIndex].ControlType);
+            }
+            e.Handled = true;
         }
     }
 }
