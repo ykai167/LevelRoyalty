@@ -71,6 +71,9 @@
     <Compile Include="Controls\common\StatusBarControl.xaml.cs">
       <DependentUpon>StatusBarControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\CurrentSettleControl.xaml.cs">
+      <DependentUpon>CurrentSettleControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\RoomControl.xaml.cs">
       <DependentUpon>RoomControl.xaml</DependentUpon>
     </Compile>
@@ -93,6 +96,7 @@
       <DependentUpon>WorkGroup.xaml</DependentUpon>
     </Compile>
     <Compile Include="Models\LayOutViewModel.cs" />
+    <Compile Include="Models\CurrentSettleControlViewModel.cs" />
     <Compile Include="Models\RoyaltySettleControlViewModel.cs" />
     <Compile Include="Models\TabSource.cs" />
     <Compile Include="SuperAdminWindow.xaml.cs">
@@ -114,6 +118,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Controls\common\StatusBarControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\CurrentSettleControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

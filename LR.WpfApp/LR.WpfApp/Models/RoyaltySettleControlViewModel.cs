@@ -21,7 +21,7 @@ namespace LR.WpfApp.Models
             }).ToArray();
             var num = this.batchs.FirstOrDefault()?.Num ?? 0;
             this.Rows = _royaltySettleService.GetSettles(num)
-                .Select(item => new RoyaltySettleModel
+                .Select(item => new RoyaltySettleExpendModel
                 {
                     StaffID = item.StaffID,
                     StaffName = MemoryData.Current.Staffs.FirstOrDefault(p => p.ID == item.StaffID)?.Name,
@@ -30,7 +30,12 @@ namespace LR.WpfApp.Models
                     Reservation = item.Items.FirstOrDefault(p => p.Key == RoyaltyType.Reservation).Value,
                     Transcend = item.Items.FirstOrDefault(p => p.Key == RoyaltyType.Transcend).Value,
                     WorkGroup = item.Items.FirstOrDefault(p => p.Key == RoyaltyType.WorkGroup).Value,
-                    Total = item.Total
+                    Total = item.Total,
+                    IsExpend = item.IsExpend,
+                    IsSelf = item.IsSelf,
+                    Receiver = item.Receiver,
+                    ExpendTime = item.ModifyDate
+
                 }).ToList();
             this.BatchSelectedCommand = new Prism.Commands.DelegateCommand<object>(BatchSelected);
         }
@@ -45,7 +50,7 @@ namespace LR.WpfApp.Models
             set { batchs = value; }
         }
 
-        public List<RoyaltySettleModel> Rows { get; set; }
+        public List<RoyaltySettleExpendModel> Rows { get; set; }
         void BatchSelected(object num)
         {
         }
@@ -57,28 +62,25 @@ namespace LR.WpfApp.Models
         public string BeginEnd { get; set; }
     }
 
-    public class RoyaltySettleModel
+    public class RoyaltySettleExpendModel: RoyaltySettleModel
     {
-        /// <summary>
-        /// 提成员工ID
-        /// </summary>
-        public Guid StaffID { get; set; }
+        
 
         /// <summary>
-        /// 提成员工
+        /// 是否已支出
         /// </summary>
-        public string StaffName { get; set; }
+        public bool IsExpend { get; set; }
 
-        public decimal Reservation { get; set; }
+        /// <summary>
+        /// 是否本人领取
+        /// </summary>
+        public bool IsSelf { get; set; }
 
-        public decimal Administration { get; set; }
+        /// <summary>
+        /// 实际领取人
+        /// </summary>
+        public string Receiver { get; set; }
 
-        public decimal Cooperation { get; set; }
-
-        public decimal Transcend { get; set; }
-
-        public decimal WorkGroup { get; set; }
-
-        public decimal Total { get; set; }
+        public DateTime ExpendTime { get; set; }
     }
 }

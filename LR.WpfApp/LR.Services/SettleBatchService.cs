@@ -10,6 +10,7 @@ namespace LR.Services
 {
     public interface ISettleBatchService : IQueryService<SettleBatch>
     {
+        SettleBatch GetOrGenCurrent();
     }
     public class SettleBatchService : UpdateServiceBase<SettleBatch>, ISettleBatchService
     {
@@ -21,7 +22,7 @@ namespace LR.Services
         /// 获取或生成一个账期号
         /// </summary>
         /// <returns></returns>
-        internal SettleBatch GetOrGenCurrent()
+        public SettleBatch GetOrGenCurrent()
         {
             var current = this.Single(p => !p.IsHistory);
             if (current == null)
