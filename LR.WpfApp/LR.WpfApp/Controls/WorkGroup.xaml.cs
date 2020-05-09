@@ -1,4 +1,5 @@
-﻿using System;
+﻿using LR.Tools;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -22,145 +23,67 @@ namespace LR.WpfApp.Controls
     public partial class WorkGroup : UserControl
     {
         LR.Services.IWorkGroupService _service;
-        LR.Services.StaffService staffService = new Services.StaffService();
-
-        public class WorkGroupState
-        {
-            public int ID { get; set; }
-            public String Name { get; set; }
-            public int Value { get; set; }
-        }
 
         public WorkGroup(LR.Services.IWorkGroupService service)
         {
             InitializeComponent();
             this._service = service;
-            List<WorkGroupState> stateSource = new List<WorkGroupState>()
+            InitListView();
+            this.lvwShow.SelectionChanged += LvwShow_SelectionChanged1;
+        }
+
+        Guid editID;
+        private void LvwShow_SelectionChanged1(object sender, SelectionChangedEventArgs e)
+        {
+            if (sender == this.lvwShow && this.lvwShow.SelectedItem != null)
             {
-                new WorkGroupState(){ Name = LR.Services.Extends.GetName(LR.Entity.WorkGroup.WorkGroupState.Normal), ID = 0, Value = (int)LR.Entity.WorkGroup.WorkGroupState.Normal},
-                new WorkGroupState() { Name = LR.Services.Extends.GetName(LR.Entity.WorkGroup.WorkGroupState.Dismiss), ID = 1, Value = (int)LR.Entity.WorkGroup.WorkGroupState.Dismiss}
-            };
-            cboState.ItemsSource = stateSource;
-            cboState.DisplayMemberPath = "Name";
-            cboState.SelectedValuePath = "Value";
-            cboState.SelectedIndex = 0;
-            this.Loaded += RoomControl_Loaded;
+                this.txtName.Text = this.lvwShow.SelectedItem.GetValue("Name")?.ToString();
+                this.editID = (Guid)this.lvwShow.SelectedItem.GetValue("ID");
+                this.btnSave.Visibility = this.btnDelete.Visibility = Visibility.Visible;
+
+                //加载成员
+                this.lvwStaff.ItemsSource = this._service.GetMembers(editID);
+            }
         }
 
         private void InitListView()
         {
-            lvwShow.Items.Clear();
-            List<LR.Entity.WorkGroup> di = this._service.List();
-            for (int i = 0; i < di.Count; i++)
-            {
-                lvwShow.Items.Add(new
-                {
-                    Name = di[i].Name,
-                    Manager = di[i].ManagerID,
-                    Assistant = di[i].AssistantID,
-                    State = di[i].State
-                });
-            }
+            this.txtName.Text = "";
+            this.btnAdd.IsEnabled = true;
+            this.btnSave.Visibility = this.btnDelete.Visibility = Visibility.Hidden;
+            this.lvwStaff.ItemsSource = null;
+            this.lvwShow.ItemsSource = this._service.GetAll();
         }
-        private void RoomControl_Loaded(object sender, RoutedEventArgs e)
-        {
-            this.InitListView();
-        }
-
-        private void LvwShow_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            if (lvwShow.SelectedItems.Count > 0)
-            {
-                string s = lvwShow.Items[lvwShow.SelectedIndex].ToString();
-                string[] ss = s.Split(',');
-                txtName.Text = ss[0].Split('=')[1].Trim();
-                txtManager.Text = ss[1].Split('=')[1].Trim();
-                txtAssitant.Text = ss[2].Split('=')[1].Trim();
-                cboState.SelectedValue = ss[4].Split('=')[1].Trim('}').Trim();
-            }
-        }
-
         private void btnAdd_Click(object sender, RoutedEventArgs e)
         {
-            #region 控件列表集合
-            List<Control> con_list = new List<Control>()
-            {
-                txtName,
-                txtManager,
-                txtAssitant,
-                cboState
-            };
-            #endregion
-            foreach (Control item in con_list)
-            {
-                if (item is TextBox)
-                    if (((TextBox)item).Text == "")
-                    {
-                        Tip p = new Tip("请把信息填写完整 !");
-                        p.ShowDialog();
-                        return;
-                    }
-                if (item is ComboBox)
-                    if (((ComboBox)item).Text == "")
-                    {
-                        Tip p = new Tip("请把信息填写完整 !");
-                        p.ShowDialog();
-                        return;
-                    }
-            }
-            LR.Entity.WorkGroup workgroup = new LR.Entity.WorkGroup();
-            workgroup.Name = txtName.Text;
-            workgroup.ManagerID = staffService.Single(item => item.Name == txtManager.Text).ID;
-            workgroup.AssistantID = staffService.Single(item => item.Name == txtAssitant.Text).ID;
-            workgroup.State = int.Parse(cboState.Text);
-            this._service.Insert(workgroup);
-            this.InitListView();
+            this.btnDelete.Visibility = Visibility.Hidden;
+            this.btnSave.Visibility = Visibility.Visible;
+            this.editID = new Guid();
+            this.lvwShow.SelectedItem = null;
+            this.txtName.Text = "";
         }
 
         private void btnUpdate_Click(object sender, RoutedEventArgs e)
         {
-            #region 控件列表集合
-            List<Control> con_list = new List<Control>()
+            if (string.IsNullOrWhiteSpace(this.txtName.Text))
             {
-                txtName,
-                txtManager,
-                txtAssitant,
-                cboState
-            };
-            #endregion
-            foreach (Control item in con_list)
-            {
-                if (item is TextBox)
-                    if (((TextBox)item).Text == "")
-                    {
-                        Tip p = new Tip("请把信息填写完整 !");
-                        p.ShowDialog();
-                        return;
-                    }
-                if (item is ComboBox)
-                    if (((ComboBox)item).Text == "")
-                    {
-                        Tip p = new Tip("请把信息填写完整 !");
-                        p.ShowDialog();
-                        return;
-                    }
+                MessageBox.Show("未输入或输入无效", "提示");
+                return;
             }
-            LR.Entity.WorkGroup workgroup = new LR.Entity.WorkGroup();
-            workgroup.ID = this._service.Single(item => item.Name == txtName.Text).ID;
-            workgroup.Name = txtName.Text;
-            workgroup.ManagerID = staffService.Single(item => item.Name == txtManager.Text).ID;
-            workgroup.AssistantID = staffService.Single(item => item.Name == txtAssitant.Text).ID;
-            workgroup.State = int.Parse(cboState.Text);
-            this._service.Update(workgroup.ID, workgroup);
+            if (this.editID == new Guid())
+            {
+                this._service.Insert(new Entity.WorkGroup { Name = this.txtName.Text });
+            }
+            else
+            {
+                this._service.Update(editID, new { Name = this.txtName.Text });
+            }
             this.InitListView();
         }
 
         private void btnDelete_Click(object sender, RoutedEventArgs e)
         {
-            LR.Entity.WorkGroup workgroup = new LR.Entity.WorkGroup();
-            workgroup.State = 400;
-            workgroup.ID = this._service.Single(item => item.Name == workgroup.Name).ID;
-            this._service.Update(workgroup.ID, workgroup);
+            this._service.Update(this.editID, new { State = (int)LR.Services.DataState.Delete });
             this.InitListView();
         }
     }

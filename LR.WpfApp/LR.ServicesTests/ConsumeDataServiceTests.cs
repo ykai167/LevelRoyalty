@@ -36,7 +36,7 @@ namespace LR.Services.Tests
             var old = service.List();
 
             var mcategory = Tools.DIHelper.GetInstance<IWorkGroupManagerCategoryService>().List();
-            var newID = service.Insert(new WorkGroup { Name = "青年组" });
+            var newID = service.Insert(new WorkGroup { Name = "青年组2" });
 
             var staffs = Tools.DIHelper.GetInstance<IStaffService>().List();
             for (int i = 0; i < staffs.Count; i++)

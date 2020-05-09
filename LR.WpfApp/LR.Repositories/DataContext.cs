@@ -17,8 +17,13 @@ namespace LR.Repositories
                 ConnectionString = $"DataSource={Tools.ConfigHelper.AppSettings["sqliteConnectionString"] ?? System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "data.db")}",
                 InitKeyType = InitKeyType.Attribute,
                 DbType = DbType.Sqlite,
-                IsAutoCloseConnection = true
+                IsAutoCloseConnection = true,
+
             });
+
+            this.context.Aop.OnLogExecuting = (str, arry) =>
+            {
+            };
 
             if (createTabel)
             {

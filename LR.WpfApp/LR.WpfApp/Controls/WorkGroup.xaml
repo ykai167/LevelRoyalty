@@ -8,47 +8,49 @@
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid Margin="15,0,0,0">
         <Grid.RowDefinitions>
+            <RowDefinition  Height="50px"/>
             <RowDefinition  Height="*"/>
-            <RowDefinition  Height="2*"/>
         </Grid.RowDefinitions>
-        <Grid Grid.Row="0" Margin="0,10,10.333,10" HorizontalAlignment="Right" Width="765">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="*"/>
-                <RowDefinition Height="*"/>
-                <RowDefinition Height="*"/>
-            </Grid.RowDefinitions>
+        <Grid Grid.Row="0">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="60"/>
-                <ColumnDefinition Width="120"/>
-                <ColumnDefinition Width="60"/>
-                <ColumnDefinition Width="120"/>
                 <ColumnDefinition Width="60"/>
                 <ColumnDefinition Width="120"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
-            <Label Content="组名"  Grid.Row="0" Grid.Column="0" Height="25" Width="65"/>
-            <TextBox x:Name="txtName" Grid.Row="0" Grid.Column="1" Height="25" Width="100"/>
-            <Label Content="妈咪" Grid.Row="0" Grid.Column="2" Height="25" Width="65"/>
-            <TextBox x:Name="txtManager"  Grid.Row="0" Grid.Column="3" Height="25" Width="100"/>
-            <Label Content="助理" Grid.Row="0" Grid.Column="4" Height="25" Width="65"/>
-            <TextBox x:Name="txtAssitant" Grid.Row="0" Grid.Column="5" Height="25" Width="160"/>
-            <Label Content="状态"  Grid.Row="1" Grid.Column="0" Height="25" Width="65"/>
-            <ComboBox x:Name="cboState" Grid.Row="1" Grid.Column="1" Height="25" Width="100" ItemsSource="{Binding}" DataContext="{Binding}"/>
-
-            <Button x:Name="btnAdd" Grid.Row="0" Grid.Column="6" Content="新增" Height="25" Width="60" Click="btnAdd_Click" />
-            <Button x:Name="btnUpdate" Grid.Row="1" Grid.Column="6" Content="修改" Height="25" Width="60" Click="btnUpdate_Click"/>
-            <Button x:Name="btnDelete" Grid.Row="2" Grid.Column="6" Content="删除" Height="25" Width="60" Click="btnDelete_Click"/>
+            <Label Content="名称"  Grid.Row="0" Grid.Column="0" Height="25" Width="65"/>
+            <TextBox x:Name="txtName" Grid.Row="0" Grid.Column="1" Height="25"></TextBox>
+            <StackPanel Grid.Row="0" Grid.Column="2" Orientation="Horizontal">
+                <Button x:Name="btnAdd"  Content="新增" Height="25" Width="60" Click="btnAdd_Click" Margin="10" />
+                <Button x:Name="btnSave"  Content="保存" Height="25" Width="60" Click="btnUpdate_Click"  Margin="10"/>
+                <Button x:Name="btnDelete" Content="删除" Height="25" Width="60" Click="btnDelete_Click"  Margin="10"/>
+            </StackPanel>
         </Grid>
-        <ListView Grid.Row="1" Name="lvwShow" Margin="0,25,0,0"
-                    SelectionChanged="LvwShow_SelectionChanged">
-            <ListView.View>
-                <GridView>
-                    <GridViewColumn Header="工作组" Width="75" DisplayMemberBinding="{Binding Path=Name}" />
-                    <GridViewColumn Header="妈咪" Width="75" DisplayMemberBinding="{Binding Path=Manager}"/>
-                    <GridViewColumn Header="助理" Width="75" DisplayMemberBinding="{Binding Path=Assitant}"/>
-                    <GridViewColumn Header="状态" Width="75"     DisplayMemberBinding="{Binding Path=State}"/>
-                </GridView>
-            </ListView.View>
-        </ListView>
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"></ColumnDefinition>
+                <ColumnDefinition Width="2*"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <ListView Name="lvwShow" >
+                <ListView.View>
+                    <GridView>
+                        <GridViewColumn Header="工作组" Width="75" DisplayMemberBinding="{Binding Path=Name}" />
+                        <GridViewColumn Header="创建人" Width="75" DisplayMemberBinding="{Binding Path=Admin}" />
+                        <GridViewColumn Header="创建时间" Width="75" DisplayMemberBinding="{Binding Path=CreateDate}"/>
+                        <GridViewColumn Header="修改时间" Width="75" DisplayMemberBinding="{Binding Path=ModifyDate}"/>
+                    </GridView>
+                </ListView.View>
+            </ListView>
+            <ListView Name="lvwStaff" Grid.Column="1" Margin="10,0,0,0">
+                <ListView.View>
+                    <GridView>
+                        <GridViewColumn Header="组员姓名" Width="75" DisplayMemberBinding="{Binding Path=Name}" />
+                        <GridViewColumn Header="身份" Width="75" DisplayMemberBinding="{Binding Path=ManagerName}"/>
+                        <GridViewColumn Header="添加人" Width="75" DisplayMemberBinding="{Binding Path=Admin}"/>
+                        <GridViewColumn Header="添加时间" Width="75" DisplayMemberBinding="{Binding Path=CreateDate}"/>
+                        <GridViewColumn Header="修改时间" Width="75" DisplayMemberBinding="{Binding Path=ModifyDate}"/>
+                    </GridView>
+                </ListView.View>
+            </ListView>
+        </Grid>
     </Grid>
 </UserControl>
