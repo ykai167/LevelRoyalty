@@ -83,7 +83,6 @@ namespace LR.Services
                     Json = item.Items.Json()
                 }).ToArray());
 
-                var updateObj = new { };
                 //2.当前账期结束
                 settleBatchService.Update(currentSettle.ID, new
                 {

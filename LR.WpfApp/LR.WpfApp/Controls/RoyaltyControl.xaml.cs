@@ -18,7 +18,7 @@ namespace LR.WpfApp.Controls
     /// <summary>
     /// RoyaltyControl.xaml 的交互逻辑
     /// </summary>    
-    [UserControlUse(UseTo.MainWindow, TabHeader = "员工管理")]
+    //[UserControlUse(UseTo.MainWindow, TabHeader = "员工管理")]
     public partial class RoyaltyControl : UserControl
     {
         LR.Services.IRoyaltyService _service;

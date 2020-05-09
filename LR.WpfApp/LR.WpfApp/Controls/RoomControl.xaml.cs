@@ -18,7 +18,7 @@ namespace LR.WpfApp.Controls
     /// <summary>
     /// RoomControl.xaml 的交互逻辑
     /// </summary>
-    [UserControlUse(UseTo.MainWindow, TabHeader = "房间管理")]
+    [UserControlUse(UseTo.MainWindow, TabHeader = "房间管理", Order = 15)]
     public partial class RoomControl : UserControl
     {
         LR.Services.IRoomService _service;
@@ -35,7 +35,7 @@ namespace LR.WpfApp.Controls
         {
             InitializeComponent();
             this._service = service;
-            List<RoomState> stateSource =  new List<RoomState>()
+            List<RoomState> stateSource = new List<RoomState>()
             {
                 new RoomState(){ Name = LR.Services.Extends.GetName(LR.Entity.Room.RoomState.Normal), ID = 0, Value = (int)LR.Entity.Room.RoomState.Normal},
                 new RoomState() { Name = LR.Services.Extends.GetName(LR.Entity.Room.RoomState.Delete), ID = 1, Value = (int)LR.Entity.Room.RoomState.Delete}

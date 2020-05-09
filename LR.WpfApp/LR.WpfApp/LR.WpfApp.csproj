@@ -74,6 +74,12 @@
     <Compile Include="Controls\CurrentSettleControl.xaml.cs">
       <DependentUpon>CurrentSettleControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\ManagerCategoryControl.xaml.cs">
+      <DependentUpon>ManagerCategoryControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\RoomCategoryControl.xaml.cs">
+      <DependentUpon>RoomCategoryControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\RoomControl.xaml.cs">
       <DependentUpon>RoomControl.xaml</DependentUpon>
     </Compile>
@@ -122,6 +128,14 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Controls\CurrentSettleControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\ManagerCategoryControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\RoomCategoryControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -18,7 +18,7 @@ namespace LR.WpfApp.Controls
     /// <summary>
     /// CurrentSettleControl.xaml 的交互逻辑
     /// </summary>    
-    [UserControlUse(UseTo.MainWindow, TabHeader = "当前账期")]
+    [UserControlUse(UseTo.MainWindow, TabHeader = "当前账期", Order = 3)]
     public partial class CurrentSettleControl : UserControl
     {
         public CurrentSettleControl()
@@ -31,7 +31,7 @@ namespace LR.WpfApp.Controls
 
         private void DgSettle_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            
+
         }
     }
 }
