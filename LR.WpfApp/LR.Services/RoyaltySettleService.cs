@@ -1,5 +1,6 @@
 ﻿using LR.Entity;
 using LR.Models;
+using LR.Tools;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,6 +18,8 @@ namespace LR.Services
         /// 当前账期结算
         /// </summary>
         OperateResult Settlement();
+
+        RoyaltyStatisticsModel[] GetSettles(int settleNum);
     }
 
     public class RoyaltySettleService : UpdateServiceBase<RoyaltySettle>, IRoyaltySettleService
@@ -25,6 +28,36 @@ namespace LR.Services
         {
             throw new Exception("非法操作");
         }
+
+        public RoyaltyStatisticsModel[] GetSettles(int settleNum)
+        {
+            return this.Context.Context.Queryable<RoyaltySettle, Staff>((r, s) => r.SettleNum == settleNum && r.StaffID == s.ID)
+                .Select((r, s) => new
+                {
+                    ID = r.ID,
+                    StaffID = r.StaffID,
+                    StaffName = s.Name,
+                    r.Json,
+                    CreateDate = r.CreateDate,
+                    IsExpend = r.IsExpend,
+                    IsSelf = r.IsSelf,
+                    Receiver = r.Receiver,
+                    ModifyDate = r.ModifyDate
+                }).ToArray()
+                .Select((r) => new RoyaltyStatisticsModel
+                {
+                    ID = r.ID,
+                    StaffID = r.StaffID,
+                    StaffName = r.StaffName,
+                    Items = r.Json.JsonTo<KeyValuePair<RoyaltyType, decimal>[]>(),
+                    CreateDate = r.CreateDate,
+                    IsExpend = r.IsExpend,
+                    IsSelf = r.IsSelf,
+                    Receiver = r.Receiver,
+                    ModifyDate = r.ModifyDate
+                }).ToArray();
+        }
+
         public OperateResult Settlement()
         {
             var currentSettle = new SettleBatchService(this.Context).GetOrGenCurrent();
@@ -47,7 +80,7 @@ namespace LR.Services
                     SettleNum = currentSettle.Num,
                     StaffID = item.StaffID,
                     State = (int)DataState.Normal,
-                    Total = item.Total
+                    Json = item.Items.Json()
                 }).ToArray());
 
                 var updateObj = new { };

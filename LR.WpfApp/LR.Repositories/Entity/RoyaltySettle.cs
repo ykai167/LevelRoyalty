@@ -16,14 +16,20 @@ namespace LR.Entity
         public Guid StaffID { get; set; }
 
         /// <summary>
+        /// 员工姓名
+        /// </summary>
+        [SqlSugar.SugarColumn(IsIgnore = true)]
+        public string StaffName { get; set; }
+
+        /// <summary>
         /// 结算账期
         /// </summary>
         public int SettleNum { get; set; }
 
         /// <summary>
-        /// 总金额
+        /// 各项奖励合计Json
         /// </summary>
-        public decimal Total { get; set; }
+        public string Json { get; set; }
 
         /// <summary>
         /// 是否已支出

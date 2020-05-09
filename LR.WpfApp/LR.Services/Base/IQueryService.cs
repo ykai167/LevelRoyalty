@@ -10,7 +10,7 @@ namespace LR.Services
 {
     public partial interface IQueryService<T> : IDisposable where T : LR.Entity.IDEntity<Guid>, new()
     {
-        List<T> List();
+        List<T> List(Expression<Func<T, bool>> exp = null);
         T Single(Guid id);
         T Single(Expression<Func<T, bool>> exp);
         List<T> PageList(int pageIndex, int pageSize = 20);
@@ -55,9 +55,9 @@ namespace LR.Services
             return db.Context.Queryable<T>().Single(exp);
         }
 
-        public List<T> List()
+        public virtual List<T> List(Expression<Func<T, bool>> exp = null)
         {
-            return this.Queryable.ToList();
+            return exp == null ? this.Queryable.ToList() : this.Queryable.Where(exp).ToList();
         }
 
         public void Dispose()

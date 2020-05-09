@@ -67,7 +67,8 @@ namespace LR.Services
                     StaffID = g.Key.StaffID,
                     StaffName = g.Key.StaffName,
                     SettleNum = settleNum,
-                    Total = g.Sum(p => p.Royalty)
+                    Items = g.GroupBy(p => p.RoyaltyType)
+                    .Select(p => new KeyValuePair<RoyaltyType, decimal>(p.Key, p.Sum(r => r.Royalty))).ToArray()
                 }).ToList();
         }
     }

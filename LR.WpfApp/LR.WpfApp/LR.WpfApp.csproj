@@ -35,8 +35,14 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Prism, Version=7.2.0.1422, Culture=neutral, PublicKeyToken=40ee6c3a2184dc59, processorArchitecture=MSIL">
+      <HintPath>..\packages\Prism.Core.7.2.0.1422\lib\net45\Prism.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
+    <Reference Include="System.ValueTuple, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.ValueTuple.4.5.0\lib\netstandard1.0\System.ValueTuple.dll</HintPath>
+    </Reference>
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Core" />
@@ -65,6 +71,9 @@
     <Compile Include="Controls\common\StatusBarControl.xaml.cs">
       <DependentUpon>StatusBarControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\CurrentSettleControl.xaml.cs">
+      <DependentUpon>CurrentSettleControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\RoomControl.xaml.cs">
       <DependentUpon>RoomControl.xaml</DependentUpon>
     </Compile>
@@ -73,6 +82,9 @@
     </Compile>
     <Compile Include="Controls\RoyaltyControl.xaml.cs">
       <DependentUpon>RoyaltyControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\RoyaltySettleControl.xaml.cs">
+      <DependentUpon>RoyaltySettleControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="Controls\StaffLevelControl.xaml.cs">
       <DependentUpon>StaffLevelControl.xaml</DependentUpon>
@@ -84,6 +96,8 @@
       <DependentUpon>WorkGroupControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="Models\LayOutViewModel.cs" />
+    <Compile Include="Models\CurrentSettleControlViewModel.cs" />
+    <Compile Include="Models\RoyaltySettleControlViewModel.cs" />
     <Compile Include="Models\TabSource.cs" />
     <Compile Include="SuperAdminWindow.xaml.cs">
       <DependentUpon>SuperAdminWindow.xaml</DependentUpon>
@@ -107,6 +121,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Controls\CurrentSettleControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Controls\RoomControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -118,6 +136,10 @@
     <Page Include="Controls\RoyaltyControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\RoyaltySettleControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="Controls\StaffLevelControl.xaml">
       <SubType>Designer</SubType>
@@ -183,6 +205,7 @@
     <None Include="Data\royalty.sqlite">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
