@@ -75,6 +75,7 @@
   <ItemGroup>
     <Compile Include="Attribute.cs" />
     <Compile Include="Class1.cs" />
+    <Compile Include="Class2.cs" />
     <Compile Include="ConfigHelper.cs" />
     <Compile Include="DIHelper.cs" />
     <Compile Include="ExcelHelper.cs" />

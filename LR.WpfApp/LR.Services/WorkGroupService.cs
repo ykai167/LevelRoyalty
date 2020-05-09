@@ -1,5 +1,6 @@
 ﻿using LR.Entity;
 using LR.Models;
+using SqlSugar;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,6 +16,8 @@ namespace LR.Services
         OperateResult RemoveMember(Guid groupID, Guid staffID);
         OperateResult SetManager(Guid groupID, Guid staffID, Guid managerCategoryID);
         OperateResult CancelManager(Guid groupID, Guid staffID, Guid managerCategoryID);
+        object[] GetAll();
+        object[] GetMembers(Guid groupID);
     }
 
     public class WorkGroupMemberService : UpdateServiceBase<WorkGroupMember>
@@ -169,6 +172,39 @@ namespace LR.Services
         WorkGroupMember GetManager(WorkGroupMemberService service, Guid groupID, Guid categoryID)
         {
             return service.Single(p => p.WorkGroupID == groupID && p.CategoryID == categoryID);
+        }
+
+        public object[] GetAll()
+        {
+            return this.Context.Context.Queryable<Entity.WorkGroup, Entity.Admin>((w, a) => w.State == LR.Entity.DataState.Normal && w.OperatorID == a.ID).Select((w, a) => new
+            {
+                w.ID,
+                w.Name,
+                w.CreateDate,
+                w.ModifyDate,
+                Admin = a.Name
+            }).ToArray();
+        }
+
+        public object[] GetMembers(Guid groupID)
+        {
+            return this.Context.Context
+                .Queryable<Entity.WorkGroupMember, Entity.Staff, Entity.Admin, Entity.WorkGroupManagerCategory>((w, s, a, wc) => new JoinQueryInfos(
+                 JoinType.Left, w.StaffID == s.ID,
+                 JoinType.Left, w.OperatorID == a.ID,
+                 JoinType.Left, w.CategoryID == wc.ID))
+                .Where(w => w.WorkGroupID == groupID)
+                .Select((w, s, a, wc) => new
+                {
+                    w.ID,
+                    w.WorkGroupID,
+                    w.StaffID,
+                    s.Name,
+                    ManagerName = wc.Name,
+                    Admin = a.Name,
+                    w.CreateDate,
+                    w.ModifyDate
+                }).ToArray();
         }
     }
 }

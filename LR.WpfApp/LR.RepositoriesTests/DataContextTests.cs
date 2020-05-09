@@ -60,6 +60,9 @@ namespace LR.Repositories.Tests
 
             Assert.IsTrue(context.WorkGroupManagerCategories.Count(p => p.State == 200) == 2);
         }
+
+
+
         [TestMethod()]
         public void StaffAddTest()
         {
