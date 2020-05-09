@@ -1,5 +1,4 @@
-﻿using LR.Services;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -17,15 +16,14 @@ using System.Windows.Shapes;
 namespace LR.WpfApp.Controls
 {
     /// <summary>
-    /// RoyaltySettleControl.xaml 的交互逻辑
-    /// </summary>    
-    [UserControlUse(UseTo.MainWindow, TabHeader = "奖励发放", Order = 5)]
-    public partial class RoyaltySettleControl : UserControl
+    /// ManagerCategoryControl.xaml 的交互逻辑
+    /// </summary>
+    [UserControlUse(UseTo.SuperAdminWindow, TabHeader = "工作组管理员类别", Order = 20)]
+    public partial class ManagerCategoryControl : UserControl
     {
-        public RoyaltySettleControl()
+        public ManagerCategoryControl()
         {
             InitializeComponent();
-            this.DataContext = Tools.DIHelper.GetInstance<Models.RoyaltySettleControlViewModel>();
         }
     }
 }

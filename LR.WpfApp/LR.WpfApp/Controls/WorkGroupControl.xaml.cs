@@ -18,8 +18,9 @@ namespace LR.WpfApp.Controls
     /// <summary>
     /// WorkGroup.xaml 的交互逻辑
     /// </summary>
-    [UserControlUse(UseTo.MainWindow, TabHeader = "工作组管理")]
-    public partial class WorkGroupControl : UserControl
+
+    [UserControlUse(UseTo.MainWindow, TabHeader = "工作组管理", Order = 20)]
+    public partial class WorkGroup : UserControl
     {
         LR.Services.IWorkGroupService _service;
         LR.Services.StaffService staffService = new Services.StaffService();

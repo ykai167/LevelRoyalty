@@ -27,7 +27,7 @@ namespace LR.WpfApp.Controls
     /// <summary>
     /// RoyaltyConfiControl.xaml 的交互逻辑
     /// </summary>
-    [UserControlUse(UseTo.SuperAdminWindow, TabHeader = "奖励参数设置")]
+    [UserControlUse(UseTo.SuperAdminWindow, TabHeader = "奖励参数", Order = 5)]
     public partial class RoyaltyConfigControl : UserControl
     {
         IRoyaltyConfigService _service;

@@ -18,7 +18,7 @@ namespace LR.WpfApp.Controls
     /// <summary>
     /// StaffControl.xaml 的交互逻辑
     /// </summary>
-    [UserControlUse(UseTo.MainWindow, TabHeader = "员工管理")]
+    [UserControlUse(UseTo.MainWindow, TabHeader = "员工管理", Order = 10)]
     public partial class StaffControl : UserControl
     {
         LR.Services.IStaffService _service;
@@ -32,7 +32,7 @@ namespace LR.WpfApp.Controls
 
         public StaffControl(LR.Services.IStaffService service)
         {
-            InitializeComponent();      
+            InitializeComponent();
             this._service = service;
             List<StaffState> stateSource = new List<StaffState>()
             {
@@ -49,7 +49,7 @@ namespace LR.WpfApp.Controls
         private void StaffControl_Loaded(object sender, RoutedEventArgs e)
         {
             this.InitListView();
-        }        
+        }
 
         private void InitListView()
         {
@@ -183,7 +183,7 @@ namespace LR.WpfApp.Controls
             staff.WorkGroupID = Guid.Parse(txtWorkGroup.Text); //TODO
             staff.StaffLevelID = Guid.Parse(txtLevel.Text);
             staff.State = int.Parse(cboState.Text);
-            this._service.Update(id, staff);            
+            this._service.Update(id, staff);
             this.InitListView();
         }
 

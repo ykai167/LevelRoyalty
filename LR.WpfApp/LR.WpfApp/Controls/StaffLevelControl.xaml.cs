@@ -18,7 +18,7 @@ namespace LR.WpfApp.Controls
     /// <summary>
     /// StaffCategoryControl.xaml 的交互逻辑
     /// </summary>
-    [UserControlUse(UseTo.SuperAdminWindow, TabHeader = "员工级别设置")]
+    [UserControlUse(UseTo.SuperAdminWindow, TabHeader = "员工级别", Order = 10)]
     public partial class StaffLevelControl : UserControl
     {
         public StaffLevelControl()
