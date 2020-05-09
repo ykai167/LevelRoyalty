@@ -102,6 +102,9 @@
     <Compile Include="Models\CurrentSettleControlViewModel.cs" />
     <Compile Include="Models\RoyaltySettleControlViewModel.cs" />
     <Compile Include="Models\TabSource.cs" />
+    <Compile Include="PagerTest.xaml.cs">
+      <DependentUpon>PagerTest.xaml</DependentUpon>
+    </Compile>
     <Compile Include="SuperAdminWindow.xaml.cs">
       <DependentUpon>SuperAdminWindow.xaml</DependentUpon>
     </Compile>
@@ -124,9 +127,8 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Controls\CurrentSettleControl.xaml">
-    </Page>
-    <Page Include="Controls\PageControl.xaml">
+    <Page Include="Controls\CurrentSettleControl.xaml"></Page>
+    <Page Include="Controls\PageControl.xaml"></Page>
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -180,6 +182,10 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="PagerTest.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="SuperAdminWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
