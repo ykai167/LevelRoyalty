@@ -62,6 +62,9 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Controls\Attributes\UserControlUseAttribute.cs" />
+    <Compile Include="Controls\Buttons.xaml.cs">
+      <DependentUpon>Buttons.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\ConsumeDataControl.xaml.cs">
       <DependentUpon>ConsumeDataControl.xaml</DependentUpon>
     </Compile>
@@ -115,6 +118,10 @@
       <DependentUpon>Tip.xaml</DependentUpon>
     </Compile>
     <Page Include="Controls\AdminsControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\Buttons.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -235,7 +242,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\LR.Repositories\LR.Repositories.csproj">
-      <Project>{00D10E9A-7351-484C-B36A-7A9BC3ABAD16}</Project>
+      <Project>{00d10e9a-7351-484c-b36a-7a9bc3abad16}</Project>
       <Name>LR.Repositories</Name>
     </ProjectReference>
     <ProjectReference Include="..\LR.Services\LR.Services.csproj">

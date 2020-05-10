@@ -20,11 +20,7 @@
             <Label Content="名称"  Height="25" Width="65"/>
             <TextBox x:Name="txtName"  Height="25" Width="150"></TextBox>
         </StackPanel>
-        <StackPanel Grid.Row="1" Grid.Column="0" Orientation="Horizontal">
-            <Button x:Name="btnAdd"  Content="新增" Height="25" Width="60" Click="btnAdd_Click" Margin="0 0 10 0" />
-            <Button x:Name="btnSave"  Content="保存" Height="25" Width="60" Click="btnUpdate_Click"  Margin="0 0 10 0"/>
-            <Button x:Name="btnDelete" Content="删除" Height="25" Width="60" Click="btnDelete_Click"  Margin="0 0 10 0"/>
-        </StackPanel>
+        <local:Buttons Grid.Row="1" x:Name="btns"/>
         <StackPanel Grid.Row="1" Grid.Column="1" Orientation="Horizontal">
             <Button x:Name="btnSet"  Content="设置为管理员" Height="25" MinWidth="60"  Margin="0 0 10 0" />
             <Button x:Name="btnCancel"  Content="取消管理员" Height="25" MinWidth="60"  Margin="0 0 10 0" />

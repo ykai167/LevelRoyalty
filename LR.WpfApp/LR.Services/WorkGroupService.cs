@@ -18,6 +18,7 @@ namespace LR.Services
         OperateResult CancelManager(Guid memberID);
         object[] GetAll();
         object[] GetMembers(Guid groupID);
+        OperateResult Delete(Guid groupID);
     }
 
     public class WorkGroupMemberService : DeleteServiceBase<WorkGroupMember>
@@ -74,12 +75,25 @@ namespace LR.Services
                 return new OperateResult("员工已在该组", false);
             }
 
-            var id = memberService.Insert(new WorkGroupMember
+            try
             {
-                WorkGroupID = groupID,
-                StaffID = staffID
-            });
-            return new InsertResult(id);
+                this.Context.Context.Ado.BeginTran();
+                memberService.Delete(item => item.StaffID == staffID);
+                var id = memberService.Insert(new WorkGroupMember
+                {
+                    WorkGroupID = groupID,
+                    StaffID = staffID
+                });
+                this.Context.Context.Ado.CommitTran();
+                return new InsertResult(id);
+            }
+            catch (Exception e)
+            {
+                this.Context.Context.Ado.RollbackTran();
+                throw e;
+            }
+
+
         }
 
         public OperateResult RemoveMember(Guid memberID)
@@ -170,6 +184,23 @@ namespace LR.Services
                     w.CreateDate,
                     w.ModifyDate
                 }).ToArray();
+        }
+
+        public OperateResult Delete(Guid groupID)
+        {
+            try
+            {
+                this.Context.Context.Ado.BeginTran();
+                base.Update(groupID, new { State = Entity.DataState.Delete });
+                this.memberService.Delete(p => p.WorkGroupID == groupID);
+                this.Context.Context.Ado.CommitTran();
+                return new OperateResult();
+            }
+            catch (Exception e)
+            {
+                this.Context.Context.Ado.RollbackTran();
+                throw e;
+            }
         }
     }
 }

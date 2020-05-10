@@ -53,5 +53,4 @@ namespace LR.Models
             return $"{ID}\t{Name}\t{Level}\t[{string.Join(",", Subs.AsEnumerable())}]";
         }
     }
-
 }

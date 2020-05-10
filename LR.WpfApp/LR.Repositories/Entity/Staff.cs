@@ -31,31 +31,9 @@ namespace LR.Entity
         /// 推荐人ID
         /// </summary>
         public Guid ReferrerID { get; set; }
-
-        /// <summary>
-        /// 工作组ID
-        /// </summary>
-        public Guid WorkGroupID { get; set; }
-
-        /// <summary>
-        /// 员工级别ID
-        /// </summary>
-        public Guid StaffLevelID { get; set; }
-
         /// <summary>
         /// 入职时间
         /// </summary>
-        public DateTime EntryTime { get; set; }
-    }
-
-    public partial class Staff
-    {
-        public enum StaffState
-        {
-            [EnumName(Name = "正常")]
-            Normal = LR.Entity.DataState.Normal,
-            [EnumName(Name = "离职")]
-            Dimission = LR.Entity.DataState.Delete,
-        }
+        public DateTime? EntryTime { get; set; }
     }
 }

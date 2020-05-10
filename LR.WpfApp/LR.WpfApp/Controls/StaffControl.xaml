@@ -4,14 +4,13 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:LR.WpfApp.Controls"
-             mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800">
-    <Grid Margin="15,0,0,0">
+             mc:Ignorable="d" >
+    <Grid Margin="10">
         <Grid.RowDefinitions>
+            <RowDefinition  Height="120"/>
             <RowDefinition  Height="*"/>
-            <RowDefinition  Height="2*"/>
         </Grid.RowDefinitions>
-        <Grid Grid.Row="0" Margin="0,10,10.333,10">
+        <Grid Grid.Row="0" Margin="10">
             <Grid.RowDefinitions>
                 <RowDefinition Height="*"/>
                 <RowDefinition Height="*"/>
@@ -19,44 +18,50 @@
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="60"/>
-                <ColumnDefinition Width="100"/>
-                <ColumnDefinition Width="60"/>
-                <ColumnDefinition Width="100"/>
+                <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="60"/>
                 <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="60"/>
                 <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="30"/>
+                <ColumnDefinition Width="4*"/>
             </Grid.ColumnDefinitions>
-            <Label Content="工号"  Grid.Row="0" Grid.Column="0" Height="25" Width="65"/>
-            <TextBox x:Name="txtNo" Grid.Row="0" Grid.Column="1" Height="25" Width="100"/>
-            <Label Content="姓名"  Grid.Row="0" Grid.Column="2" Height="25" Width="65"/>
-            <TextBox x:Name="txtName" Grid.Row="0" Grid.Column="3" Height="25" Width="100"/>
-            <Label Content="身份证" Grid.Row="0" Grid.Column="4" Height="25" Width="65"/>
-            <TextBox x:Name="txtIdenNo"  Grid.Row="0" Grid.Column="5" Height="25" Width="160"/>
-            <Label Content="推荐人" Grid.Row="1" Grid.Column="0" Height="25" Width="65"/>
-            <ComboBox x:Name="txtReferrer" Grid.Row="1" Grid.Column="1" Height="25" Width="160"/>
-            <Label Content="手机号" Grid.Row="1" Grid.Column="4"  Height="25" Width="160"/>
-            <TextBox x:Name="txtMobileNo" Grid.Row="1" Grid.Column="5" Height="25" Width="160"/>
-
-            <Label Content="入职时间"  Grid.Row="1" Grid.Column="2" Height="25" Width="65"/>
-            <DatePicker x:Name="dpEntryTime" Grid.Row="1" Grid.Column="3" Height="25" Width="100"/>
-
-            <Button x:Name="btnAdd" Grid.Row="0" Grid.Column="6" Content="新增" Height="25" Width="60" Click="btnAdd_Click" />
-            <Button x:Name="btnUpdate" Grid.Row="1" Grid.Column="6" Content="修改" Height="25" Width="60" Click="btnUpdate_Click"/>
-            <Button x:Name="btnDelete" Grid.Row="2" Grid.Column="6" Content="删除" Height="25" Width="60" Click="btnDelete_Click"/>
+            <Label Content="工号"  Grid.Row="0" Grid.Column="0" Height="25" />
+            <TextBox x:Name="txtNo" Grid.Row="0" Grid.Column="1" Height="25" />
+            <Label Content="姓名"  Grid.Row="0" Grid.Column="2" Height="25" />
+            <TextBox x:Name="txtName" Grid.Row="0" Grid.Column="3" Height="25" />
+            <Label Content="身份证" Grid.Row="1" Grid.Column="0" Height="25" />
+            <TextBox x:Name="txtIdenNo"  Grid.Row="1" Grid.Column="1" Height="25" />
+            <Label Content="手机号" Grid.Row="1" Grid.Column="2"  Height="25" />
+            <TextBox x:Name="txtMobileNo" Grid.Row="1" Grid.Column="3" Height="25" />
+            <Label Content="入职时间"  Grid.Row="0" Grid.Column="4" Height="25" />
+            <DatePicker x:Name="dpEntryTime" Grid.Row="0" Grid.Column="5" Height="25"/>
+            <local:Buttons Grid.Row="2" Grid.ColumnSpan="6" x:Name="btns"/>
+            <StackPanel Grid.Row="0" Grid.Column="7" Orientation="Horizontal">
+                <Label Name="lblReferer" Content="设置推荐人"  Height="25" MinWidth="80"/>
+                <ComboBox Height="25" MinWidth="100" Name="cbxRefererID"></ComboBox>
+            </StackPanel>
+            <StackPanel Grid.Row="1" Grid.Column="7" Orientation="Horizontal">
+                <Label Name="lblGroup" Content="设置工作组"  Height="25"  MinWidth="80"/>
+                <ComboBox Height="25" MinWidth="100" Name="cbxWorkGroupID"></ComboBox>
+            </StackPanel>
+            <StackPanel Grid.Row="2" Grid.Column="7" Orientation="Horizontal">
+                <Label Name="lblState" Content="设置状态"  Height="25"  MinWidth="80"/>
+                <ComboBox Height="25" MinWidth="100" Name="cbxState"></ComboBox>
+            </StackPanel>
         </Grid>
-        <ListView Grid.Row="1" Name="lvwShow" 
-                  
-                    SelectionChanged="LvwShow_SelectionChanged">
+        <ListView Grid.Row="1" Name="lvwShow" SelectionChanged="LvwShow_SelectionChanged">
             <ListView.View>
                 <GridView>
                     <GridViewColumn Header="工号" DisplayMemberBinding="{Binding Path=No}" />
                     <GridViewColumn Header="姓名" DisplayMemberBinding="{Binding Path=Name}"/>
                     <GridViewColumn Header="身份证号" DisplayMemberBinding="{Binding Path=IdenNo}"/>
                     <GridViewColumn Header="手机号" DisplayMemberBinding="{Binding Path=MobileNo}"/>
-                    <GridViewColumn Header="推荐人" DisplayMemberBinding="{Binding Path=Referrer}"/>
-                    <GridViewColumn Header="工作组" DisplayMemberBinding="{Binding Path=Group}"/>
+                    <GridViewColumn Header="工作组" DisplayMemberBinding="{Binding Path=GroupName}"/>
                     <GridViewColumn Header="员工级别" DisplayMemberBinding="{Binding Path=Level}"/>
                     <GridViewColumn Header="入职时间" DisplayMemberBinding="{Binding Path=EntryTime}"/>
+                    <GridViewColumn Header="推荐人" DisplayMemberBinding="{Binding Path=Referrer}"/>
+                    <GridViewColumn Header="状态" DisplayMemberBinding="{Binding Path=StateName}"/>
                     <GridViewColumn Header="操作人" DisplayMemberBinding="{Binding Path=Admin}"/>
                     <GridViewColumn Header="创建时间" DisplayMemberBinding="{Binding Path=CreateDate}"/>
                     <GridViewColumn Header="修改时间" DisplayMemberBinding="{Binding Path=ModifyDate}"/>

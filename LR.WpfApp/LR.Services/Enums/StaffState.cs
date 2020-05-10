@@ -12,6 +12,8 @@ namespace LR.Services
         Normal = LR.Entity.DataState.Normal,
         [EnumName(Name = "离职")]
         Quit = LR.Entity.DataState.Disable,
+        [EnumName(Name = "删除")]
+        Delete = LR.Entity.DataState.Delete,
     }
 
     public enum DataState

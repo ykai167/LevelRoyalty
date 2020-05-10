@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
+using LR.Entity;
 using LR.Models;
 
 namespace LR.Services
@@ -62,6 +62,33 @@ namespace LR.Services
         }
     }
 
+    public static class StaffsExtends
+    {
+        /// <summary>
+        /// 获取可以作为上级的人
+        /// </summary>
+        /// <returns></returns>
+        public static IEnumerable<StaffModel> GetReferrers(this IEnumerable<StaffModel> all, Guid staffID)
+        {
+            List<Guid> list = new List<Guid>();
+            var currenty = all.First(p => p.ID == staffID);
+            Add(currenty, list);
+            return all.Where(p => p.ID != staffID && !list.Contains(p.ID));
+        }
+
+        static void Add(StaffModel current, List<Guid> list)
+        {
+            if (current.Subs != null)
+            {
+                foreach (var item in current.Subs)
+                {
+                    list.Add(item.ID);
+                    Add(item, list);
+                }
+            }
+        }
+
+    }
     public class MemoryData
     {
         public IEnumerable<StaffModel> Staffs;
@@ -78,12 +105,13 @@ namespace LR.Services
 
         public void ReloadStaffs()
         {
-            this.Staffs = Tools.DIHelper.GetInstance<IStaffService>().List().Select(item => new StaffModel
-            {
-                ID = item.ID,
-                Name = item.Name,
-                ReferrerID = item.ReferrerID
-            }).ToArray();
+            this.Staffs = Tools.DIHelper.GetInstance<IStaffService>().List(p => p.State == LR.Entity.DataState.Normal)
+                .Select(item => new StaffModel
+                {
+                    ID = item.ID,
+                    Name = item.Name,
+                    ReferrerID = item.ReferrerID
+                }).ToArray();
 
             foreach (var item in this.Staffs)
             {
