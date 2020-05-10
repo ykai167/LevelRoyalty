@@ -1,4 +1,7 @@
-﻿using System;
+﻿using LR.Services;
+using LR.Tools;
+using LR.WpfApp.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -21,17 +24,25 @@ namespace LR.WpfApp.Controls
     [UserControlUse(UseTo.MainWindow, TabHeader = "当前账期", Order = 3)]
     public partial class CurrentSettleControl : UserControl
     {
+        CurrentSettleControlViewModel vm;
         public CurrentSettleControl()
         {
             InitializeComponent();
-            this.DataContext = Tools.DIHelper.GetInstance<Models.CurrentSettleControlViewModel>();
-            this.dgSettle.SelectionMode = DataGridSelectionMode.Single;
-            this.dgSettle.SelectionChanged += DgSettle_SelectionChanged;
+            this.DataContext = vm = Tools.DIHelper.GetInstance<Models.CurrentSettleControlViewModel>();
         }
 
-        private void DgSettle_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void LvwShow_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+            if (sender == this.lvwShow && this.lvwShow.SelectedItem != null)
+            {
+                vm.ChangeStaff(this.lvwShow.SelectedItem.GetObjectValue<Guid>("StaffID"));
+            }
+        }
 
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            Tools.DIHelper.GetInstance<IRoyaltySettleService>().Settlement();
+            this.DataContext = vm = Tools.DIHelper.GetInstance<Models.CurrentSettleControlViewModel>();
         }
     }
 }

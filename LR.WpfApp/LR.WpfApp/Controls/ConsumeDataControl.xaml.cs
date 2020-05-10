@@ -1,4 +1,5 @@
-﻿using System;
+﻿using LR.Tools;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -22,26 +23,123 @@ namespace LR.WpfApp.Controls
     public partial class ConsumeDataControl : UserControl
     {
         LR.Services.IConsumeDataService _service;
-        public ConsumeDataControl(LR.Services.IConsumeDataService service)
+        int curentPage = 1;
+        int pageSize = Tools.ConfigHelper.AppSettings.PageSize;
+        public ConsumeDataControl(
+            LR.Services.IConsumeDataService service,
+            LR.Services.IStaffService _sService,
+            LR.Services.IRoomService _rService)
         {
             this._service = service;
             InitializeComponent();
-            this.Loaded += ConsumeDataControl_Loaded;
+            InitData();
+
+            this.cbxRoom.ItemsSource = _rService.List().Select(p => new { name = p.Name, id = p.ID });
+            this.cbxRoom.DisplayMemberPath = "name";
+            this.cbxRoom.SelectedValuePath = "id";
+            this.cbxRoom.SelectedIndex = 0;
+
+            this.cbxStaff.ItemsSource = _sService.List().Select(p => new { name = p.Name, id = p.ID });
+            this.cbxStaff.DisplayMemberPath = "name";
+            this.cbxStaff.SelectedValuePath = "id";
+            this.cbxStaff.SelectedIndex = 0;
+
+            this.btns.OnAdd += Btns_OnAdd;
+            this.btns.OnDelete += Btns_OnDelete; ;
+            this.btns.OnSave += Btns_OnSave; ;
+
+            this.ucPager.FirstPage += UcPager_FirstPage;
+            this.ucPager.LastPage += UcPager_LastPage;
+            this.ucPager.PreviousPage += UcPager_PreviousPage;
+            this.ucPager.NextPage += UcPager_NextPage;
         }
 
-        private void ConsumeDataControl_Loaded(object sender, RoutedEventArgs e)
+        private void Btns_OnSave(object sender, EventArgs e)
         {
-            this.dgData.DataContext = this._service.PageList(1);
+            decimal amount;
+            if (!decimal.TryParse(this.txtAmount.Text, out amount))
+            {
+                MessageBox.Show("金额输入错误", "错误");
+                return;
+            }
+            var entity = new Entity.ConsumeData
+            {
+                Amount = amount,
+                RoomID = (Guid)this.cbxRoom.SelectedValue,
+                StaffID = (Guid)this.cbxStaff.SelectedValue
+            };
+            if (entity.RoomID == new Guid() || entity.StaffID == new Guid())
+            {
+                MessageBox.Show("数据不完整", "错误");
+                return;
+            }
+            if (this.ID == new Guid())
+            {
+                this._service.Insert(entity);
+            }
+            else
+            {
+                this._service.Update(ID, new { entity.RoomID, entity.StaffID, entity.Amount });
+            }
+            InitData();
         }
 
-        private void btnAdd_Click(object sender, RoutedEventArgs e)
+        private void Btns_OnDelete(object sender, EventArgs e)
         {
-
+            this._service.Delete(ID);
+            InitData();
         }
 
-        private void benEdit_Click(object sender, RoutedEventArgs e)
+        private void Btns_OnAdd(object sender, EventArgs e)
         {
+            this.txtAmount.Text = "";
+            this.cbxRoom.SelectedValue = null;
+            this.cbxStaff.SelectedValue = null;
+        }
 
+        private void UcPager_NextPage(object sender, RoutedEventArgs e)
+        {
+            this.curentPage = page.TotalPage > this.curentPage ? this.curentPage + 1 : this.curentPage;
+            InitData();
+        }
+
+        private void UcPager_PreviousPage(object sender, RoutedEventArgs e)
+        {
+            this.curentPage = this.curentPage > 1 ? this.curentPage - 1 : this.curentPage;
+            InitData();
+        }
+
+        private void UcPager_LastPage(object sender, RoutedEventArgs e)
+        {
+            this.curentPage = page.TotalPage;
+            InitData();
+        }
+
+        private void UcPager_FirstPage(object sender, RoutedEventArgs e)
+        {
+            this.curentPage = 1;
+            InitData();
+        }
+
+        Guid ID;
+        private void LvwShow_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (sender == this.lvwShow && this.lvwShow.SelectedItem != null)
+            {
+                this.ID = this.lvwShow.SelectedItem.GetObjectValue<Guid>(nameof(ID));
+                this.txtAmount.Text = this.lvwShow.SelectedItem.GetObjectValue("Amount")?.ToString();
+                this.cbxStaff.SelectedValue = this.lvwShow.SelectedItem.GetObjectValue("StaffID");
+                this.cbxRoom.SelectedValue = this.lvwShow.SelectedItem.GetObjectValue("RoomID");
+            }
+        }
+
+        Pager<object> page;
+        void InitData()
+        {
+            page = this._service.GetPage(curentPage, pageSize);
+            this.ucPager.TotalPage = page.TotalPage.ToString();
+            this.ucPager.CurrentPage = this.curentPage.ToString();
+            this.lvwShow.ItemsSource = page;
         }
     }
 }

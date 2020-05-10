@@ -6,9 +6,14 @@ using System.Threading.Tasks;
 
 namespace LR.Models
 {
-    public class StaffModel
+    public class StaffBase
     {
+        public Guid ID { get; set; }
         public string Name { get; set; }
+    }
+
+    public class StaffModel : StaffBase
+    {
         LevelModel _level;
         public LevelModel Level
         {
@@ -45,7 +50,6 @@ namespace LR.Models
         }
         //[Newtonsoft.Json.JsonIgnore]
         public StaffModel[] Subs { get; set; }
-        public Guid ID { get; set; }
         public Guid ReferrerID { get; set; }
         public StaffModel Referrer { get; set; }
         public override string ToString()

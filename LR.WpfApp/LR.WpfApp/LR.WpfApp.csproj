@@ -62,7 +62,7 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Controls\Attributes\UserControlUseAttribute.cs" />
-    <Compile Include="Controls\Buttons.xaml.cs">
+    <Compile Include="Controls\common\Buttons.xaml.cs">
       <DependentUpon>Buttons.xaml</DependentUpon>
     </Compile>
     <Compile Include="Controls\ConsumeDataControl.xaml.cs">
@@ -77,7 +77,7 @@
     <Compile Include="Controls\CurrentSettleControl.xaml.cs">
       <DependentUpon>CurrentSettleControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Controls\PageControl.xaml.cs">
+    <Compile Include="Controls\common\PageControl.xaml.cs">
       <DependentUpon>PageControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="Controls\ManagerCategoryControl.xaml.cs">
@@ -121,7 +121,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Controls\Buttons.xaml">
+    <Page Include="Controls\common\Buttons.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -139,7 +139,7 @@
     </Page>
     <Page Include="Controls\CurrentSettleControl.xaml">
     </Page>
-    <Page Include="Controls\PageControl.xaml">
+    <Page Include="Controls\common\PageControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -74,11 +74,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Attribute.cs" />
-    <Compile Include="Class1.cs" />
-    <Compile Include="Class2.cs" />
+    <Compile Include="JsonExtends.cs" />
+    <Compile Include="ObjectExtends.cs" />
     <Compile Include="ConfigHelper.cs" />
     <Compile Include="DIHelper.cs" />
     <Compile Include="ExcelHelper.cs" />
+    <Compile Include="Pager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

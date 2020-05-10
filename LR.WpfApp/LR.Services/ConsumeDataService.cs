@@ -12,14 +12,32 @@ namespace LR.Services
 
     public interface IConsumeDataService : IUpdateService<ConsumeData>
     {
-
+        LR.Tools.Pager<object> GetPage(int pageIndex, int pageSize);
+        void Delete(Guid id);
     }
     public class ConsumeDataService : UpdateServiceBase<ConsumeData>, IConsumeDataService
     {
         IWorkGroupService _workGroupService;
-        public ConsumeDataService(IWorkGroupService workGroupService)
+        public ConsumeDataService()
         {
-            this._workGroupService = workGroupService;
+            this._workGroupService = new WorkGroupService(this.Context);
+        }
+
+
+        public void Delete(Guid id)
+        {
+            try
+            {
+                this.Context.Context.Ado.BeginTran();
+                this.Context.Context.Deleteable<Entity.Royalty>(p => p.ConsumeDataID == id).ExecuteCommand();
+                this.Update(id, new { State = Entity.DataState.Delete });
+                this.Context.Context.Ado.CommitTran();
+            }
+            catch (Exception e)
+            {
+                this.Context.Context.Ado.RollbackTran();
+                throw e;
+            }
         }
 
         public override void Update(Guid id, object columData)
@@ -136,7 +154,7 @@ namespace LR.Services
         {
             var royaltyService = new RoyaltyService(this.Context);
 
-            Action<Models.RoyaltyConfigModel, Models.StaffModel> insert = (config, accept) =>
+            Action<Models.RoyaltyConfigModel, Models.StaffBase> insert = (config, accept) =>
             {
                 royaltyService.Insert(new Royalty
                 {
@@ -172,7 +190,7 @@ namespace LR.Services
             while (current != null && current.Referrer != null)
             {
                 var refferrer = current.Referrer;
-                if (current.Level != Models.LevelModel.Min && refferrer.Level >= current.Level)
+                if (current.Level != Models.LevelModel.Min && refferrer.Level != Models.LevelModel.Min && refferrer.Level <= current.Level)
                 {
                     var type = refferrer.Level == current.Level ? RoyaltyType.Cooperation : RoyaltyType.Transcend;
                     var config = MemoryData.Current.RoyaltyConfigs[type, refferrer.Level, current.Level];
@@ -194,6 +212,26 @@ namespace LR.Services
                     insert(config, item);
                 }
             }
+        }
+
+        public LR.Tools.Pager<object> GetPage(int pageIndex, int pageSize)
+        {
+            var query = this.Context.Context.Queryable<Entity.ConsumeData, Entity.Room, Entity.Staff, Entity.Admin>((d, r, s, a) => d.RoomID == r.ID && d.StaffID == s.ID && d.OperatorID == a.ID)
+                .Select((d, r, s, a) => new
+                {
+                    d.ID,
+                    d.Amount,
+                    d.CreateDate,
+                    d.ModifyDate,
+                    RoomID = r.ID,
+                    RoomNo = r.No,
+                    RoomName = r.Name,
+                    StaffID = s.ID,
+                    StaffName = s.Name,
+                    StaffNo = s.No,
+                    Admin = a.Name
+                });
+            return new Tools.Pager<object>(query.OrderBy(d => d.CreateDate, SqlSugar.OrderByType.Desc).ToPageList(pageIndex, pageSize), pageSize, query.Count());
         }
     }
 }

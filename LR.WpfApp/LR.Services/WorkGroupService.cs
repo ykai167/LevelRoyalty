@@ -37,6 +37,11 @@ namespace LR.Services
         {
             memberService = new WorkGroupMemberService(this.Context);
         }
+        public WorkGroupService(Repositories.DataContext context) : base(context)
+        {
+            memberService = new WorkGroupMemberService(this.Context);
+        }
+
 
         public Models.WorkGroupMemberModel[] GetManagers(Guid staffID)
         {
@@ -50,8 +55,8 @@ namespace LR.Services
                         .ToArray();
                 return array.Select(wgm => new WorkGroupMemberModel
                 {
+                    ID = wgm.StaffID,
                     GroupID = wgm.WorkGroupID,
-                    StaffID = wgm.StaffID,
                     Category = WorkGroupManagerCategoryModel.WorkGroupManagerCategories.FirstOrDefault(p => p.ID == wgm.CategoryID)
                 }).ToArray();
             }

@@ -21,5 +21,21 @@ namespace LR.Tools
                 return System.Configuration.ConfigurationManager.AppSettings[key];
             }
         }
+
+        public int PageSize
+        {
+            get
+            {
+                int r;
+                if (int.TryParse(Tools.ConfigHelper.AppSettings["pageSize"], out r))
+                {
+                    return r;
+                }
+                else
+                {
+                    return 20;
+                }
+            }
+        }
     }
 }

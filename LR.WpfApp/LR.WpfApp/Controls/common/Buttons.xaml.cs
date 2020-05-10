@@ -23,7 +23,7 @@ namespace LR.WpfApp.Controls
         public Buttons()
         {
             InitializeComponent();
-            this.btnSave.Visibility = this.btnDelete.Visibility = Visibility.Hidden;
+            this.tbxInfo.Visibility = this.btnSave.Visibility = this.btnDelete.Visibility = Visibility.Collapsed;
         }
 
         private void btnAdd_Click(object sender, RoutedEventArgs e)
@@ -31,8 +31,13 @@ namespace LR.WpfApp.Controls
             if (sender == this.btnAdd)
             {
                 this.OnAdd?.Invoke(this, e);
-                this.btnDelete.Visibility = Visibility.Hidden;
-                this.btnSave.Visibility = Visibility.Visible;
+                this.tbxInfo.Text = "[新增状态]";
+                this.btnDelete.Visibility
+                    = this.btnAdd.Visibility
+                    = Visibility.Collapsed;
+                this.tbxInfo.Visibility
+                    = this.btnSave.Visibility
+                    = Visibility.Visible;
                 e.Handled = true;
             }
         }
@@ -42,7 +47,8 @@ namespace LR.WpfApp.Controls
             if (sender == this.btnSave)
             {
                 this.OnSave?.Invoke(this, e);
-                this.btnSave.Visibility = this.btnDelete.Visibility = Visibility.Hidden;
+                this.tbxInfo.Visibility = this.btnSave.Visibility = this.btnDelete.Visibility = Visibility.Collapsed;
+                this.btnAdd.Visibility = Visibility.Visible;
                 e.Handled = true;
             }
         }
@@ -52,7 +58,7 @@ namespace LR.WpfApp.Controls
             if (sender == this.btnDelete)
             {
                 this.OnDelete?.Invoke(this, e);
-                this.btnSave.Visibility = this.btnDelete.Visibility = Visibility.Hidden;
+                this.btnSave.Visibility = this.btnDelete.Visibility = Visibility.Collapsed;
                 e.Handled = true;
             }
         }
@@ -63,7 +69,11 @@ namespace LR.WpfApp.Controls
 
         public void SetEdit()
         {
-            this.btnSave.Visibility = this.btnDelete.Visibility = Visibility.Visible;
+            this.tbxInfo.Visibility
+                = this.btnAdd.Visibility
+                = this.btnSave.Visibility
+                = this.btnDelete.Visibility = Visibility.Visible;
+            this.tbxInfo.Text = "[编辑状态]";
         }
     }
 }
