@@ -74,6 +74,9 @@
     <Compile Include="Controls\CurrentSettleControl.xaml.cs">
       <DependentUpon>CurrentSettleControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\PageControl.xaml.cs">
+      <DependentUpon>PageControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\ManagerCategoryControl.xaml.cs">
       <DependentUpon>ManagerCategoryControl.xaml</DependentUpon>
     </Compile>
@@ -98,8 +101,8 @@
     <Compile Include="Controls\StaffControl.xaml.cs">
       <DependentUpon>StaffControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Controls\WorkGroup.xaml.cs">
-      <DependentUpon>WorkGroup.xaml</DependentUpon>
+    <Compile Include="Controls\WorkGroupControl.xaml.cs">
+      <DependentUpon>WorkGroupControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="Models\LayOutViewModel.cs" />
     <Compile Include="Models\CurrentSettleControlViewModel.cs" />
@@ -128,6 +131,8 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Controls\CurrentSettleControl.xaml">
+    </Page>
+    <Page Include="Controls\PageControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -163,7 +168,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Controls\WorkGroup.xaml">
+    <Page Include="Controls\WorkGroupControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
