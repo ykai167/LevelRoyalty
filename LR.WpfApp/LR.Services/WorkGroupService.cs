@@ -13,14 +13,14 @@ namespace LR.Services
     {
         WorkGroupMemberModel[] GetManagers(Guid staffID);
         OperateResult AddMember(Guid groupID, Guid staffID);
-        OperateResult RemoveMember(Guid groupID, Guid staffID);
-        OperateResult SetManager(Guid groupID, Guid staffID, Guid managerCategoryID);
-        OperateResult CancelManager(Guid groupID, Guid staffID, Guid managerCategoryID);
+        OperateResult RemoveMember(Guid memberID);
+        OperateResult SetManager(Guid memberID, Guid managerCategoryID);
+        OperateResult CancelManager(Guid memberID);
         object[] GetAll();
         object[] GetMembers(Guid groupID);
     }
 
-    public class WorkGroupMemberService : UpdateServiceBase<WorkGroupMember>
+    public class WorkGroupMemberService : DeleteServiceBase<WorkGroupMember>
     {
         public WorkGroupMemberService(Repositories.DataContext context) : base(context)
         {
@@ -30,9 +30,11 @@ namespace LR.Services
 
     public class WorkGroupService : UpdateServiceBase<WorkGroup>, IWorkGroupService
     {
+        WorkGroupMemberService memberService;
+
         public WorkGroupService()
         {
-
+            memberService = new WorkGroupMemberService(this.Context);
         }
 
         public Models.WorkGroupMemberModel[] GetManagers(Guid staffID)
@@ -66,15 +68,13 @@ namespace LR.Services
                 return check;
             }
 
-            var service = new WorkGroupMemberService(this.Context);
-
-            WorkGroupMember member = GetStaff(service, groupID, staffID);
+            WorkGroupMember member = GetStaff(groupID, staffID);
             if (member != null)
             {
                 return new OperateResult("员工已在该组", false);
             }
 
-            var id = service.Insert(new WorkGroupMember
+            var id = memberService.Insert(new WorkGroupMember
             {
                 WorkGroupID = groupID,
                 StaffID = staffID
@@ -82,72 +82,39 @@ namespace LR.Services
             return new InsertResult(id);
         }
 
-        public OperateResult RemoveMember(Guid groupID, Guid staffID)
+        public OperateResult RemoveMember(Guid memberID)
         {
-            var chack = CheckGroup(groupID);
-            if (!chack.Success)
+            if (memberID == Guid.NewGuid())
             {
-                return chack;
+                return new OperateResult("未选择员工", false);
             }
-
-            var service = new WorkGroupMemberService(this.Context);
-            var member = GetStaff(service, groupID, staffID);
-            if (member == null)
-            {
-                return new OperateResult("组内不存在该员工", false);
-            }
-
-            service.Update(member.ID, new { State = DataState.Delete });
+            memberService.Delete(memberID);
             return new OperateResult("操作成功");
         }
 
-        public OperateResult SetManager(Guid groupID, Guid staffID, Guid managerCategoryID)
+        public OperateResult SetManager(Guid memberID, Guid managerCategoryID)
         {
-            var chack = CheckGroup(groupID);
-            if (!chack.Success)
+            if (managerCategoryID == new Guid())
             {
-                return chack;
+                return new OperateResult("管理员选择错误", false);
             }
-            var service = new WorkGroupMemberService(this.Context);
 
-            var manager = GetManager(service, groupID, managerCategoryID);
+            //检查是否已设置
+            var member = memberService.Single(p => p.ID == memberID);
+
+            var manager = this.GetManager(member.WorkGroupID, managerCategoryID);
             if (manager != null)
             {
-                return new OperateResult("已设置该类别的管理员,先取消再操作", false);
+                return new OperateResult("该组已设置改类管理员", false);
             }
 
-            var member = GetStaff(service, groupID, staffID);
-            if (member == null)
-            {
-                return new OperateResult("组内没有此员工", false);
-            }
-
-            service.Update(member.ID, new { CategoryID = managerCategoryID });
+            memberService.Update(memberID, new { CategoryID = managerCategoryID });
             return new OperateResult();
         }
 
-        public OperateResult CancelManager(Guid groupID, Guid staffID, Guid managerCategoryID)
+        public OperateResult CancelManager(Guid memberID)
         {
-            var chack = CheckGroup(groupID);
-            if (!chack.Success)
-            {
-                return chack;
-            }
-            var service = new WorkGroupMemberService(this.Context);
-
-            var member = GetStaff(service, groupID, staffID);
-            if (member == null)
-            {
-                return new OperateResult("组内没有此员工", false);
-            }
-
-            var manager = GetManager(service, groupID, managerCategoryID);
-            if (manager == null)
-            {
-                return new OperateResult("该组未设置该类别管理员", false);
-            }
-
-            service.Update(manager.ID, new { CategoryID = new Guid() });
+            memberService.Update(memberID, new { CategoryID = new Guid() });
             return new OperateResult();
         }
 
@@ -164,14 +131,14 @@ namespace LR.Services
             }
         }
 
-        WorkGroupMember GetStaff(WorkGroupMemberService service, Guid groupID, Guid staffID)
+        WorkGroupMember GetStaff(Guid groupID, Guid staffID)
         {
-            return service.Single(p => p.WorkGroupID == groupID && p.StaffID == staffID);
+            return memberService.Single(p => p.WorkGroupID == groupID && p.StaffID == staffID);
         }
 
-        WorkGroupMember GetManager(WorkGroupMemberService service, Guid groupID, Guid categoryID)
+        WorkGroupMember GetManager(Guid groupID, Guid categoryID)
         {
-            return service.Single(p => p.WorkGroupID == groupID && p.CategoryID == categoryID);
+            return memberService.Single(p => p.WorkGroupID == groupID && p.CategoryID == categoryID);
         }
 
         public object[] GetAll()
@@ -193,12 +160,10 @@ namespace LR.Services
                  JoinType.Left, w.StaffID == s.ID,
                  JoinType.Left, w.OperatorID == a.ID,
                  JoinType.Left, w.CategoryID == wc.ID))
-                .Where(w => w.WorkGroupID == groupID)
+                .Where(w => w.State == Entity.DataState.Normal && w.WorkGroupID == groupID)
                 .Select((w, s, a, wc) => new
                 {
-                    w.ID,
-                    w.WorkGroupID,
-                    w.StaffID,
+                    MemberID = w.ID,
                     s.Name,
                     ManagerName = wc.Name,
                     Admin = a.Name,

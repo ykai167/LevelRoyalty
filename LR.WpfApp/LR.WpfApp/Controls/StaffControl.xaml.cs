@@ -34,15 +34,7 @@ namespace LR.WpfApp.Controls
         {
             InitializeComponent();
             this._service = service;
-            List<StaffState> stateSource = new List<StaffState>()
-            {
-                new StaffState(){ Name = LR.Services.Extends.GetName(LR.Entity.Staff.StaffState.Normal), ID = 0, Value = (int)LR.Entity.Staff.StaffState.Normal},
-                new StaffState() { Name = LR.Services.Extends.GetName(LR.Entity.Staff.StaffState.Dimission), ID = 1, Value = (int)LR.Entity.Staff.StaffState.Dimission}
-            };
-            cboState.ItemsSource = stateSource;
-            cboState.DisplayMemberPath = "Name";
-            cboState.SelectedValuePath = "Value";
-            cboState.SelectedIndex = 0;
+           
             this.Loaded += StaffControl_Loaded;
         }
 
@@ -87,10 +79,7 @@ namespace LR.WpfApp.Controls
                 txtIdenNo.Text = ss[2].Split('=')[1].Trim();
                 txtMobileNo.Text = ss[3].Split('=')[1].Trim();
                 txtReferrer.Text = ss[4].Split('=')[1].Trim();
-                txtWorkGroup.Text = ss[5].Split('=')[1].Trim();
-                txtLevel.Text = ss[6].Split('=')[1].Trim();
                 dpEntryTime.Text = ss[7].Split('=')[1].Trim();
-                cboState.SelectedValue = ss[4].Split('=')[1].Trim('}').Trim();
             }
         }
 
@@ -104,10 +93,7 @@ namespace LR.WpfApp.Controls
                 txtIdenNo,
                 txtMobileNo,
                 txtReferrer,
-                txtWorkGroup,
-                txtLevel,
                 dpEntryTime,
-                cboState
             };
             #endregion
             foreach (Control item in con_list)
@@ -133,9 +119,6 @@ namespace LR.WpfApp.Controls
             staff.IdenNo = txtIdenNo.Text;
             staff.MobileNo = txtMobileNo.Text;
             staff.ReferrerID = Guid.Parse(txtReferrer.Text); //TODO
-            staff.WorkGroupID = Guid.Parse(txtWorkGroup.Text); //TODO
-            staff.StaffLevelID = Guid.Parse(txtLevel.Text);
-            staff.State = int.Parse(cboState.Text);
             this._service.Insert(staff);
             this.InitListView();
         }
@@ -150,10 +133,7 @@ namespace LR.WpfApp.Controls
                 txtIdenNo,
                 txtMobileNo,
                 txtReferrer,
-                txtWorkGroup,
-                txtLevel,
                 dpEntryTime,
-                cboState
             };
             #endregion
             foreach (Control item in con_list)
@@ -180,9 +160,6 @@ namespace LR.WpfApp.Controls
             staff.IdenNo = txtIdenNo.Text;
             staff.MobileNo = txtMobileNo.Text;
             staff.ReferrerID = Guid.Parse(txtReferrer.Text); //TODO
-            staff.WorkGroupID = Guid.Parse(txtWorkGroup.Text); //TODO
-            staff.StaffLevelID = Guid.Parse(txtLevel.Text);
-            staff.State = int.Parse(cboState.Text);
             this._service.Update(id, staff);
             this.InitListView();
         }

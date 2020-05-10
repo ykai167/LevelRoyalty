@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -47,4 +48,31 @@ namespace LR.Services
         }
     }
 
+    public interface IDeleteService<T> : IUpdateService<T> where T : LR.Entity.UpdateEntity<Guid, Guid>, new()
+    {
+        void Delete(Guid id);
+        void Delete(Expression<Func<T, bool>> expression);
+    }
+
+    public partial class DeleteServiceBase<T> : UpdateServiceBase<T>, IDeleteService<T> where T : LR.Entity.UpdateEntity<Guid, Guid>, new()
+    {
+        public DeleteServiceBase()
+        {
+
+        }
+        public DeleteServiceBase(Repositories.DataContext context) : base(context)
+        {
+
+        }
+
+        public virtual void Delete(Guid id)
+        {
+            this.Context.Context.Deleteable<T>().Where(item => item.ID == id).ExecuteCommand();
+        }
+
+        public void Delete(Expression<Func<T, bool>> expression)
+        {
+            this.Context.Context.Deleteable<T>().Where(expression).ExecuteCommand();
+        }
+    }
 }
