@@ -10,7 +10,7 @@ namespace LR.Services
 {
     public interface IRoyaltyService : IQueryService<Royalty>
     {
-        object[] Detaile(Guid staffID, int settleNum);
+        List<object> Detaile(Guid staffID, int settleNum);
         List<RoyaltyStatisticsModel> Statistics(int settleNum);
     }
 
@@ -26,7 +26,7 @@ namespace LR.Services
 
         }
 
-        public object[] Detaile(Guid staffID, int settleNum)
+        public List<object> Detaile(Guid staffID, int settleNum)
         {
             var data = this.Context.Context
                 .Queryable<Royalty, ConsumeData, Staff>((r, c, s) => c.ID == r.ConsumeDataID && r.StaffID == s.ID)
@@ -40,7 +40,7 @@ namespace LR.Services
                     r.Percent,
                     RoyaltyType = (RoyaltyType)r.RoyaltyType,
                 }).ToArray()
-                .Select(p => new
+                .Select(p => (object)new
                 {
                     p.StaffName,
                     p.Amount,
@@ -48,7 +48,7 @@ namespace LR.Services
                     p.Percent,
                     RoyaltyType = p.RoyaltyType.GetName(),
                     Total = p.Amount * p.Percent
-                }).ToArray();
+                }).ToList();
 
             return data;
         }

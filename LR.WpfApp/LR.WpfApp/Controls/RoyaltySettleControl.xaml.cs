@@ -1,4 +1,6 @@
 ﻿using LR.Services;
+using LR.Tools;
+using LR.WpfApp.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -22,10 +24,25 @@ namespace LR.WpfApp.Controls
     [UserControlUse(UseTo.MainWindow, TabHeader = "奖励发放", Order = 5)]
     public partial class RoyaltySettleControl : UserControl
     {
+        RoyaltySettleControlViewModel vm;
         public RoyaltySettleControl()
         {
             InitializeComponent();
-            this.DataContext = Tools.DIHelper.GetInstance<Models.RoyaltySettleControlViewModel>();
+            this.DataContext = vm = Tools.DIHelper.GetInstance<Models.RoyaltySettleControlViewModel>();
+            this.cbx.SelectionChanged += Cbx_SelectionChanged;
+        }
+
+        private void Cbx_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            vm.ChangeBatch(this.cbx.SelectedItem.GetObjectValue<int>("Num"));
+        }
+
+        private void LvwShow_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (sender == this.lvwShow && this.lvwShow.SelectedItem != null)
+            {
+                vm.ChangeStaff(this.lvwShow.SelectedItem.GetObjectValue<Guid>("StaffID"));
+            }
         }
     }
 }

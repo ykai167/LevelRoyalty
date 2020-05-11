@@ -47,9 +47,9 @@ namespace LR.WpfApp.Models
         void BatchSelected(object num)
         {
         }
-        private object[] detailes;
+        private List<object> detailes;
 
-        public object[] Detailes
+        public List<object> Detailes
         {
             get { return detailes; }
             set { detailes = value; base.RaisePropertyChanged(); }
