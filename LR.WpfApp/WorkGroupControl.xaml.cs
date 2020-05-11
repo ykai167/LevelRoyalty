@@ -22,75 +22,31 @@ namespace LR.WpfApp.Controls
     /// </summary>
 
     [UserControlUse(UseTo.MainWindow, TabHeader = "工作组管理", Order = 20)]
-    public partial class WorkGroupControl : UserControl
+    public partial class WorkGroup : UserControl
     {
         IWorkGroupService _service;
         IWorkGroupManagerCategoryService _wService;
         IWorkGroupService _mService;
 
-        public WorkGroupControl(IWorkGroupService service,
+<<<<<<< HEAD:LR.WpfApp/LR.WpfApp/Controls/WorkGroup.xaml.cs
+        public WorkGroup(IWorkGroupService service,
                 IWorkGroupManagerCategoryService wService,
                 IWorkGroupService mService)
+=======
+        public WorkGroupControl(LR.Services.IWorkGroupService service)
+>>>>>>> origin/master:LR.WpfApp/LR.WpfApp/Controls/WorkGroupControl.xaml.cs
         {
             InitializeComponent();
             this._wService = wService;
             this._mService = mService;
             this._service = service;
-            var managerC = _wService.List();
-            if (managerC.Count > 0)
-            {
-                this.cbxManager.ItemsSource = managerC;
-                this.cbxManager.SelectedIndex = 0;
-            }
+            this.cbxManager.ItemsSource = _wService.List();
             InitListView();
             this.lvwShow.SelectionChanged += LvwShow_SelectionChanged1;
             this.lvwStaff.SelectionChanged += LvwStaff_SelectionChanged;
             this.btnSet.Click += Btn_Click;
             this.btnCancel.Click += Btn_Click;
             this.btnRemove.Click += Btn_Click;
-
-            this.btns.OnSave += Btns_OnSave;
-            this.btns.OnDelete += Btns_OnDelete;
-            this.btns.OnAdd += Btns_OnAdd;
-        }
-
-        private void Btns_OnAdd(object sender, EventArgs e)
-        {
-            this.groupID = new Guid();
-            this.lvwShow.SelectedItem = null;
-            this.txtName.Text = "";
-        }
-
-        private void Btns_OnDelete(object sender, EventArgs e)
-        {
-            var r = this._service.Delete(this.groupID);
-            if (r.Success)
-            {
-                this.InitListView();
-            }
-            else
-            {
-                MessageBox.Show(r.Message, "错误");
-                return;
-            }
-        }
-
-        private void Btns_OnSave(object sender, EventArgs e)
-        {
-            if (string.IsNullOrWhiteSpace(this.txtName.Text))
-            {
-                MessageBox.Show("未输入或输入无效", "提示");
-                return;
-            }
-            if (this.groupID == new Guid())
-            {
-                this._service.Insert(new Entity.WorkGroup { Name = this.txtName.Text });
-            }
-            else
-            {
-                this._service.Update(groupID, new { Name = this.txtName.Text });
-            }
-            this.InitListView();
         }
 
         private void Btn_Click(object sender, RoutedEventArgs e)
@@ -141,7 +97,7 @@ namespace LR.WpfApp.Controls
         {
             if (sender == this.lvwStaff && this.lvwStaff.SelectedItem != null)
             {
-                MemberID = this.lvwStaff.SelectedItem.GetObjectValue<Guid>(nameof(MemberID));
+                MemberID = (Guid)this.lvwStaff.SelectedItem.GetValue(nameof(MemberID));
             }
         }
 
@@ -150,20 +106,63 @@ namespace LR.WpfApp.Controls
         {
             if (sender == this.lvwShow && this.lvwShow.SelectedItem != null)
             {
-                this.txtName.Text = this.lvwShow.SelectedItem.GetObjectValue("Name")?.ToString();
-                this.groupID = (Guid)this.lvwShow.SelectedItem.GetObjectValue("ID");
+                this.txtName.Text = this.lvwShow.SelectedItem.GetValue("Name")?.ToString();
+                this.groupID = (Guid)this.lvwShow.SelectedItem.GetValue("ID");
+                this.btnSave.Visibility = this.btnDelete.Visibility = Visibility.Visible;
 
                 //加载成员
                 this.lvwStaff.ItemsSource = this._service.GetMembers(groupID);
-                this.btns.SetEdit();
             }
         }
 
         private void InitListView()
         {
             this.txtName.Text = "";
+            this.btnAdd.IsEnabled = true;
+            this.btnSave.Visibility = this.btnDelete.Visibility = Visibility.Hidden;
             this.lvwStaff.ItemsSource = null;
             this.lvwShow.ItemsSource = this._service.GetAll();
+        }
+        private void btnAdd_Click(object sender, RoutedEventArgs e)
+        {
+            if (sender == this.btnAdd)
+            {
+                this.btnDelete.Visibility = Visibility.Hidden;
+                this.btnSave.Visibility = Visibility.Visible;
+                this.groupID = new Guid();
+                this.lvwShow.SelectedItem = null;
+                this.txtName.Text = "";
+            }
+        }
+
+        private void btnUpdate_Click(object sender, RoutedEventArgs e)
+        {
+            if (sender == this.btnSave)
+            {
+                if (string.IsNullOrWhiteSpace(this.txtName.Text))
+                {
+                    MessageBox.Show("未输入或输入无效", "提示");
+                    return;
+                }
+                if (this.groupID == new Guid())
+                {
+                    this._service.Insert(new Entity.WorkGroup { Name = this.txtName.Text });
+                }
+                else
+                {
+                    this._service.Update(groupID, new { Name = this.txtName.Text });
+                }
+                this.InitListView();
+            }
+        }
+
+        private void btnDelete_Click(object sender, RoutedEventArgs e)
+        {
+            if (sender == this.btnDelete)
+            {
+                this._service.Update(this.groupID, new { State = (int)DataState.Delete });
+                this.InitListView();
+            }
         }
     }
 }

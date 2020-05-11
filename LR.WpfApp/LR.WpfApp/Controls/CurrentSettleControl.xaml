@@ -16,7 +16,7 @@
             <TextBlock Text="{Binding Batch.Num}" VerticalAlignment="Center" Margin="10,0,0,0"></TextBlock>
             <Label Width="80px" HorizontalContentAlignment="Right" HorizontalAlignment="Center" VerticalAlignment="Center">开始时间：</Label>
             <TextBlock Text="{Binding Batch.BeginEnd}" VerticalAlignment="Center" Margin="10,0,0,0"></TextBlock>
-            <Button>结算</Button>
+            <Button Height="25" Width="60" Click="Button_Click">结算</Button>
         </StackPanel>
         <Grid Grid.Row="1">
             <Grid.ColumnDefinitions>
@@ -24,17 +24,30 @@
                 <ColumnDefinition></ColumnDefinition>
             </Grid.ColumnDefinitions>
             <GroupBox Header="当前账期列表" Grid.Column="0">
-                <DataGrid x:Name="dgSettle" ItemsSource="{Binding Rows}"></DataGrid>
-            </GroupBox>
-            <GroupBox Header="选择员工奖励明细" Grid.Column="1">
-                <ListView>
+                <ListView Grid.Row="1" Name="lvwShow" ItemsSource="{Binding Rows}" SelectionChanged="LvwShow_SelectionChanged">
                     <ListView.View>
                         <GridView>
-                            <GridViewColumn Header="房间号" Width="75" DisplayMemberBinding="{Binding Path=No}" />
-                            <GridViewColumn Header="名称" Width="75" DisplayMemberBinding="{Binding Path=Name}"/>
-                            <GridViewColumn Header="类别" Width="75" DisplayMemberBinding="{Binding Path=Type}"/>
-                            <GridViewColumn Header="说明" Width="75"     DisplayMemberBinding="{Binding Path=Summary}"/>
-                            <GridViewColumn Header="状态" Width="75"     DisplayMemberBinding="{Binding Path=State}"/>
+                            <GridViewColumn Header="姓名" DisplayMemberBinding="{Binding Path=StaffName}"/>
+                            <GridViewColumn Header="订房奖励" DisplayMemberBinding="{Binding Path=Reservation}"/>
+                            <GridViewColumn Header="管理奖励" DisplayMemberBinding="{Binding Path=Administration}"/>
+                            <GridViewColumn Header="协助奖励" DisplayMemberBinding="{Binding Path=Cooperation}"/>
+                            <GridViewColumn Header="超越奖励" DisplayMemberBinding="{Binding Path=Transcend}"/>
+                            <GridViewColumn Header="工作组管理奖励" DisplayMemberBinding="{Binding Path=WorkGroup}"/>
+                            <GridViewColumn Header="总金额" DisplayMemberBinding="{Binding Path=Total}"/>
+                        </GridView>
+                    </ListView.View>
+                </ListView>
+            </GroupBox>
+            <GroupBox Header="选择员工奖励明细" Grid.Column="1">
+                <ListView Name="lvwDetail" ItemsSource="{Binding Detailes}">
+                    <ListView.View>
+                        <GridView>
+                            <GridViewColumn Header="员工"  DisplayMemberBinding="{Binding Path=StaffName}" />
+                            <GridViewColumn Header="消费金额"  DisplayMemberBinding="{Binding Path=Amount}"/>
+                            <GridViewColumn Header="奖励类型"  DisplayMemberBinding="{Binding Path=RoyaltyType}"/>
+                            <GridViewColumn Header="比例"  DisplayMemberBinding="{Binding Path=Percent}"/>
+                            <GridViewColumn Header="奖励金额"   DisplayMemberBinding="{Binding Path=Total}"/>
+                            <GridViewColumn Header="时间"      DisplayMemberBinding="{Binding Path=CreateDate}"/>
                         </GridView>
                     </ListView.View>
                 </ListView>

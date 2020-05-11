@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace LR.Tools
 {
-    public static class Class1
+    public static class JsonExtends
     {
         public static string Json(this object obj)
         {

@@ -1,4 +1,5 @@
-﻿using LR.Services;
+﻿using LR.Entity;
+using LR.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -45,6 +46,18 @@ namespace LR.WpfApp.Models
         public List<RoyaltySettleModel> Rows { get; set; }
         void BatchSelected(object num)
         {
+        }
+        private object[] detailes;
+
+        public object[] Detailes
+        {
+            get { return detailes; }
+            set { detailes = value; base.RaisePropertyChanged(); }
+        }
+
+        public void ChangeStaff(Guid staffID)
+        {
+            this.Detailes = _royaltyService.Detaile(staffID, Batch.Num);
         }
     }
     public class RoyaltySettleModel

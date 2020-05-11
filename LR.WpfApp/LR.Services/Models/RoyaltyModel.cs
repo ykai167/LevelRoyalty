@@ -9,7 +9,7 @@ namespace LR.Models
     /// <summary>
     /// 提成明细
     /// </summary>
-    public class RoyaltyModel
+    public class _RoyaltyModel
     {
         /// <summary>
         /// 产生消费的员工ID

@@ -10,7 +10,7 @@ namespace LR.Services
 {
     public interface IRoyaltyService : IQueryService<Royalty>
     {
-        Models.RoyaltyModel[] Detaile(Guid staffID, int settleNum);
+        object[] Detaile(Guid staffID, int settleNum);
         List<RoyaltyStatisticsModel> Statistics(int settleNum);
     }
 
@@ -26,20 +26,28 @@ namespace LR.Services
 
         }
 
-        public RoyaltyModel[] Detaile(Guid staffID, int settleNum)
+        public object[] Detaile(Guid staffID, int settleNum)
         {
             var data = this.Context.Context
-                .Queryable<ConsumeData, Royalty, Staff>((c, r, s) => c.ID == r.ConsumeDataID && c.StaffID == s.ID)
-                .Where((c, r, s) => r.StaffID == staffID && r.SettleNum == settleNum)
-                .Select((c, r, s) => new RoyaltyModel
+                .Queryable<Royalty, ConsumeData, Staff>((r, c, s) => c.ID == r.ConsumeDataID && r.StaffID == s.ID)
+                .Where((r, c, s) => r.StaffID == staffID && r.SettleNum == settleNum)
+                .OrderBy(r => r.RoyaltyType)
+                .Select((r, c, s) => new
                 {
-                    StaffID = r.StaffID,
                     StaffName = s.Name,
-                    Amount = c.Amount,
-                    CreateTime = r.CreateDate,
-                    Percent = r.Percent,
-                    SettleNum = r.SettleNum,
-                    RoyaltyType = (RoyaltyType)r.RoyaltyType
+                    c.Amount,
+                    r.CreateDate,
+                    r.Percent,
+                    RoyaltyType = (RoyaltyType)r.RoyaltyType,
+                }).ToArray()
+                .Select(p => new
+                {
+                    p.StaffName,
+                    p.Amount,
+                    p.CreateDate,
+                    p.Percent,
+                    RoyaltyType = p.RoyaltyType.GetName(),
+                    Total = p.Amount * p.Percent
                 }).ToArray();
 
             return data;
@@ -48,9 +56,9 @@ namespace LR.Services
         public List<RoyaltyStatisticsModel> Statistics(int settleNum)
         {
             var data = this.Context.Context
-                .Queryable<ConsumeData, Royalty, Staff>((c, r, s) => c.ID == r.ConsumeDataID && c.StaffID == s.ID)
-                .Where((c, r, s) => r.SettleNum == settleNum)
-                .Select((c, r, s) => new RoyaltyModel
+                .Queryable<Royalty, ConsumeData, Staff>((r, c, s) => c.ID == r.ConsumeDataID && r.StaffID == s.ID)
+                .Where((r, c, s) => r.SettleNum == settleNum)
+                .Select((r, c, s) => new _RoyaltyModel
                 {
                     StaffID = r.StaffID,
                     StaffName = s.Name,
