@@ -10,7 +10,7 @@ namespace LR.Services
     {
     }
 
-    public class WorkGroupManagerCategoryService : UpdateServiceBase<LR.Entity.WorkGroupManagerCategory>, IWorkGroupManagerCategoryService
+    class WorkGroupManagerCategoryService : UpdateServiceBase<LR.Entity.WorkGroupManagerCategory>, IWorkGroupManagerCategoryService
     {
 
     }

@@ -15,7 +15,7 @@ namespace LR.Services
         LR.Tools.Pager<object> GetPage(int pageIndex, int pageSize);
         void Delete(Guid id);
     }
-    public class ConsumeDataService : UpdateServiceBase<ConsumeData>, IConsumeDataService
+    class ConsumeDataService : UpdateServiceBase<ConsumeData>, IConsumeDataService
     {
         IWorkGroupService _workGroupService;
         public ConsumeDataService()

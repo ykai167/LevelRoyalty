@@ -22,7 +22,7 @@ namespace LR.Services
         RoyaltyStatisticsModel[] GetSettles(int settleNum);
     }
 
-    public class RoyaltySettleService : UpdateServiceBase<RoyaltySettle>, IRoyaltySettleService
+    class RoyaltySettleService : UpdateServiceBase<RoyaltySettle>, IRoyaltySettleService
     {
         public override Guid Insert(RoyaltySettle entity)
         {

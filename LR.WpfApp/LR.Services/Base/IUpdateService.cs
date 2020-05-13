@@ -1,4 +1,5 @@
-﻿using SqlSugar;
+﻿using LR.Tools;
+using SqlSugar;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -35,6 +36,16 @@ namespace LR.Services
             {
                 dic[prop.Name] = prop.GetValue(columData);
             }
+            this.Context.Context.Insertable<Entity.Log>(new Entity.Log
+            {
+                Type = (int)LogType.Update,
+                CreateDate = DateTime.Now,
+                DataID = id,
+                OperatorID = Administrator.Current.ID,
+                ID = Guid.NewGuid(),
+                Table = typeof(T).Name,
+                Data = columData.Json()
+            }).ExecuteCommand();
             this.Context.Context.Updateable<T>(dic).Where(item => item.ID == id).ExecuteCommand();
         }
 
@@ -48,13 +59,13 @@ namespace LR.Services
         }
     }
 
-    public interface IDeleteService<T> : IUpdateService<T> where T : LR.Entity.UpdateEntity<Guid, Guid>, new()
+    internal interface IDeleteService<T> : IUpdateService<T> where T : LR.Entity.UpdateEntity<Guid, Guid>, new()
     {
         void Delete(Guid id);
         void Delete(Expression<Func<T, bool>> expression);
     }
 
-    public partial class DeleteServiceBase<T> : UpdateServiceBase<T>, IDeleteService<T> where T : LR.Entity.UpdateEntity<Guid, Guid>, new()
+    partial class DeleteServiceBase<T> : UpdateServiceBase<T>, IDeleteService<T> where T : LR.Entity.UpdateEntity<Guid, Guid>, new()
     {
         public DeleteServiceBase()
         {

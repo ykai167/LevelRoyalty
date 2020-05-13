@@ -9,27 +9,17 @@ namespace LR.Entity
     /// <summary>
     /// 日志:
     /// </summary>
-    public class Log : IDEntity<Guid>
+    public class Log : LogEntity<Guid, Guid, Guid>
     {
         /// <summary>
         /// 类型
         /// </summary>
-        public int Type { get; set; }
-        /// <summary>
-        /// 旧数据
-        /// </summary>
-        [SqlSugar.SugarColumn(IsNullable = true)]
-        public string Old { get; set; }
+        public string Table { get; set; }
 
         /// <summary>
         /// 新数据
         /// </summary>
-        [SqlSugar.SugarColumn(IsNullable = true)]
-        public string New { get; set; }
-
-        /// <summary>
-        /// 描述信息
-        /// </summary>
-        public string Summary { get; set; }        
+        [SqlSugar.SugarColumn(IsNullable = true, ColumnDataType = "TEXT")]
+        public string Data { get; set; }
     }
 }

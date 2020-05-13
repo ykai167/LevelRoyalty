@@ -1,4 +1,5 @@
-﻿using System;
+﻿using LR.Tools;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
@@ -30,6 +31,16 @@ namespace LR.Services
             }
             entity.CreateDate = DateTime.Now;
             this.Context.Context.Insertable<T>(entity).ExecuteCommand();
+            this.Context.Context.Insertable<LR.Entity.Log>(new Entity.Log
+            {
+                CreateDate = DateTime.Now,
+                ID = Guid.NewGuid(),
+                OperatorID = LR.Services.Administrator.Current.ID,
+                Table = typeof(T).Name,
+                Data = entity.Json(),
+                Type = (int)LogType.Insert,
+                DataID = entity.ID
+            }).ExecuteCommand();
             return entity.ID;
         }
     }

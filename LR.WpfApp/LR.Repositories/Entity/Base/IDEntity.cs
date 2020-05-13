@@ -12,4 +12,17 @@ namespace LR.Entity
         public TID ID { get; set; }
         public DateTime CreateDate { get; set; }
     }
+
+    public class LogEntity<TID, TDataID, TOperatorID> : IDEntity<TID>
+    {
+        public TDataID DataID { get; set; }
+        /// <summary>
+        /// 操作人
+        /// </summary>
+        public TOperatorID OperatorID { get; set; }
+        /// <summary>
+        /// 数据操作类型
+        /// </summary>
+        public int Type { get; set; }
+    }
 }

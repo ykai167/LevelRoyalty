@@ -12,7 +12,7 @@ namespace LR.Services
         LR.Entity.RoyaltyConfig GetConfig(RoyaltyType type, Guid acceptID, Guid expendID);
     }
 
-    public class RoyaltyConfigService : UpdateServiceBase<LR.Entity.RoyaltyConfig>, IRoyaltyConfigService
+    class RoyaltyConfigService : UpdateServiceBase<LR.Entity.RoyaltyConfig>, IRoyaltyConfigService
     {
         public RoyaltyConfig GetConfig(RoyaltyType type, Guid acceptID, Guid expendID)
         {

@@ -14,7 +14,7 @@ namespace LR.Services
         List<RoyaltyStatisticsModel> Statistics(int settleNum);
     }
 
-    public class RoyaltyService : InsertServiceBase<Royalty>, IRoyaltyService
+    class RoyaltyService : InsertServiceBase<Royalty>, IRoyaltyService
     {
         public RoyaltyService()
         {

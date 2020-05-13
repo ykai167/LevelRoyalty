@@ -8,24 +8,30 @@
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid Margin="15,0,0,0">
         <Grid.RowDefinitions>
-            <RowDefinition  Height="30px"/>
+            <RowDefinition  Height="90"/>
             <RowDefinition  Height="*"/>
         </Grid.RowDefinitions>
-        <StackPanel Orientation="Horizontal">
-            <Label Width="80px" HorizontalContentAlignment="Right" HorizontalAlignment="Center" VerticalAlignment="Center">选择账期：</Label>
-            <ComboBox Name="cbx" Width="200px" ItemsSource="{Binding Batchs}" 
+        <Grid Grid.Row="0" Margin="10">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
+            <StackPanel Orientation="Horizontal">
+                <Label Width="80px" HorizontalContentAlignment="Right" HorizontalAlignment="Center" VerticalAlignment="Center">选择账期：</Label>
+                <ComboBox Name="cbx" Width="200px" Height="25" ItemsSource="{Binding Batchs}" 
                       DisplayMemberPath="Num" 
                       SelectedValuePath="BeginEnd"   
                       SelectedIndex="0"
                       Margin="5,5,0,5">
-
-            </ComboBox>
-            <TextBlock Text="{Binding Path=SelectedValue, ElementName=cbx}" VerticalAlignment="Center" Margin="10,0,0,0"></TextBlock>
-        </StackPanel>
+                </ComboBox>
+                <TextBlock Text="{Binding Path=SelectedValue, ElementName=cbx}" VerticalAlignment="Center" Margin="10,0,0,0"></TextBlock>
+            </StackPanel>
+        </Grid>
         <Grid Grid.Row="1">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition></ColumnDefinition>
-                <ColumnDefinition></ColumnDefinition>
+                <ColumnDefinition Width="3*"></ColumnDefinition>
+                <ColumnDefinition Width="2*"></ColumnDefinition>
             </Grid.ColumnDefinitions>
             <GroupBox Header="当前账期列表" Grid.Column="0">
                 <ListView Grid.Row="1" Name="lvwShow" ItemsSource="{Binding Rows}" SelectionChanged="LvwShow_SelectionChanged">
@@ -38,15 +44,20 @@
                             <GridViewColumn Header="超越奖励" DisplayMemberBinding="{Binding Path=Transcend}"/>
                             <GridViewColumn Header="工作组管理奖励" DisplayMemberBinding="{Binding Path=WorkGroup}"/>
                             <GridViewColumn Header="总金额" DisplayMemberBinding="{Binding Path=Total}"/>
+                            <GridViewColumn Header="是否已发" DisplayMemberBinding="{Binding Path=Total}"/>
+                            <GridViewColumn Header="是否本人领取" DisplayMemberBinding="{Binding Path=Total}"/>
+                            <GridViewColumn Header="领取人" DisplayMemberBinding="{Binding Path=Total}"/>
+                            <GridViewColumn Header="操作人" DisplayMemberBinding="{Binding Path=Total}"/>
+                            <GridViewColumn Header="领取时间" DisplayMemberBinding="{Binding Path=Total}"/>
                         </GridView>
                     </ListView.View>
                 </ListView>
             </GroupBox>
-            <GroupBox Header="选择员工奖励明细" Grid.Column="1">
+            <GroupBox Header="所选员工奖励明细" Grid.Column="1">
                 <ListView Name="lvwDetail" ItemsSource="{Binding Detailes}">
                     <ListView.View>
                         <GridView>
-                            <GridViewColumn Header="员工"  DisplayMemberBinding="{Binding Path=StaffName}" />
+                            <GridViewColumn Header="订房员工"  DisplayMemberBinding="{Binding Path=StaffName}" />
                             <GridViewColumn Header="消费金额"  DisplayMemberBinding="{Binding Path=Amount}"/>
                             <GridViewColumn Header="奖励类型"  DisplayMemberBinding="{Binding Path=RoyaltyType}"/>
                             <GridViewColumn Header="比例"  DisplayMemberBinding="{Binding Path=Percent}"/>

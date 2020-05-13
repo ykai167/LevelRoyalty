@@ -12,7 +12,7 @@ namespace LR.Services
         object[] GetStaffs();
     }
 
-    public class StaffService : UpdateServiceBase<LR.Entity.Staff>, IStaffService
+    class StaffService : UpdateServiceBase<LR.Entity.Staff>, IStaffService
     {
         public object[] GetStaffs()
         {

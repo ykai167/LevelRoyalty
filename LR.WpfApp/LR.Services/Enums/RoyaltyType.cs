@@ -6,6 +6,26 @@ using System.Threading.Tasks;
 
 namespace LR.Services
 {
+    public enum LogType
+    {
+        /// <summary>
+        /// 新增
+        /// </summary>
+        [EnumName(Name = "新增")]
+        Insert,
+
+        /// <summary>
+        /// 更新
+        /// </summary>
+        [EnumName(Name = "更新")]
+        Update,
+        /// <summary>
+        /// 删除
+        /// </summary>
+        [EnumName(Name = "删除")]
+        Delete
+    }
+
     public enum RoyaltyType
     {
         /// <summary>

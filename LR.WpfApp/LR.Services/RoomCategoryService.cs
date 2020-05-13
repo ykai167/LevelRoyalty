@@ -10,7 +10,7 @@ namespace LR.Services
     {
 
     }
-    public class RoomCategoryService : UpdateServiceBase<LR.Entity.RoomCategory>, IRoomCategoryService
+    class RoomCategoryService : UpdateServiceBase<LR.Entity.RoomCategory>, IRoomCategoryService
     {
 
     }

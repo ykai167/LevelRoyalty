@@ -21,7 +21,10 @@ namespace LR.Services
         OperateResult Delete(Guid groupID);
     }
 
-    public class WorkGroupMemberService : DeleteServiceBase<WorkGroupMember>
+    public interface IWorkGroupMemberService : IQueryService<WorkGroupMember>
+    {
+    }
+    class WorkGroupMemberService : DeleteServiceBase<WorkGroupMember>, IWorkGroupMemberService
     {
         public WorkGroupMemberService(Repositories.DataContext context) : base(context)
         {
@@ -29,7 +32,7 @@ namespace LR.Services
         }
     }
 
-    public class WorkGroupService : UpdateServiceBase<WorkGroup>, IWorkGroupService
+    class WorkGroupService : UpdateServiceBase<WorkGroup>, IWorkGroupService
     {
         WorkGroupMemberService memberService;
 

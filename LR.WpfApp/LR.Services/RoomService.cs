@@ -10,7 +10,7 @@ namespace LR.Services
     {
 
     }
-    public class RoomService : UpdateServiceBase<LR.Entity.Room>, IRoomService
+    class RoomService : UpdateServiceBase<LR.Entity.Room>, IRoomService
     {
     }
 }

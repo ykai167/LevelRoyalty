@@ -10,7 +10,7 @@ namespace LR.Services
     {
     }
 
-    public class StaffLevelService : UpdateServiceBase<LR.Entity.StaffLevel>, IStaffLevelService
+    class StaffLevelService : UpdateServiceBase<LR.Entity.StaffLevel>, IStaffLevelService
     {
 
     }

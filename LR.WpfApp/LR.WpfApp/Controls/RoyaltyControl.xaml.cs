@@ -22,6 +22,7 @@ namespace LR.WpfApp.Controls
     public partial class RoyaltyControl : UserControl
     {
         LR.Services.IRoyaltyService _service;
+        LR.Services.IStaffService _staffservice;
 
         public class RoyaltyState
         {
@@ -30,10 +31,11 @@ namespace LR.WpfApp.Controls
             public int Value { get; set; }
         }
 
-        public RoyaltyControl(LR.Services.IRoyaltyService service)
+        public RoyaltyControl(LR.Services.IRoyaltyService service, LR.Services.IStaffService staffservice)
         {
             InitializeComponent();
             this._service = service;
+            this._staffservice = staffservice;
             List<RoyaltyState> stateSource = new List<RoyaltyState>()
             {
                 new RoyaltyState(){ Name = LR.Services.Extends.GetName(LR.Entity.Royalty.RoyaltyState.Normal), ID = 0, Value = (int)LR.Entity.Royalty.RoyaltyState.Normal},
@@ -119,7 +121,7 @@ namespace LR.WpfApp.Controls
                     }
             }
             LR.Entity.Royalty royalty = new LR.Entity.Royalty();
-            royalty.StaffID = new LR.Services.StaffService().Single(item=>item.Name==txtStaff.Text).ID;
+            royalty.StaffID = this._staffservice.Single(item => item.Name == txtStaff.Text).ID;
             royalty.ConsumeDataID = Guid.Parse(txtConsumeData.Text); //TODO
             royalty.RoyaltyType = int.Parse(txtRoyaltyType.Text); //TODO
             royalty.Percent = decimal.Parse(txtPercent.Text);
@@ -161,7 +163,7 @@ namespace LR.WpfApp.Controls
             }
             LR.Entity.Royalty royalty = new LR.Entity.Royalty();
             royalty.ID = this._service.Single(item => item.ConsumeDataID == royalty.ConsumeDataID).ID;
-            royalty.StaffID = new LR.Services.StaffService().Single(item => item.Name == txtStaff.Text).ID;
+            royalty.StaffID = this._staffservice.Single(item => item.Name == txtStaff.Text).ID;
             royalty.ConsumeDataID = Guid.Parse(txtConsumeData.Text); //TODO
             royalty.RoyaltyType = int.Parse(txtRoyaltyType.Text); //TODO
             royalty.Percent = decimal.Parse(txtPercent.Text);

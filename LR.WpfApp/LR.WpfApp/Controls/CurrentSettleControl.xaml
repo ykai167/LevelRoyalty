@@ -38,11 +38,11 @@
                     </ListView.View>
                 </ListView>
             </GroupBox>
-            <GroupBox Header="选择员工奖励明细" Grid.Column="1">
+            <GroupBox Header="所选员工奖励明细" Grid.Column="1">
                 <ListView Name="lvwDetail" ItemsSource="{Binding Detailes}">
                     <ListView.View>
                         <GridView>
-                            <GridViewColumn Header="员工"  DisplayMemberBinding="{Binding Path=StaffName}" />
+                            <GridViewColumn Header="订房员工"  DisplayMemberBinding="{Binding Path=StaffName}" />
                             <GridViewColumn Header="消费金额"  DisplayMemberBinding="{Binding Path=Amount}"/>
                             <GridViewColumn Header="奖励类型"  DisplayMemberBinding="{Binding Path=RoyaltyType}"/>
                             <GridViewColumn Header="比例"  DisplayMemberBinding="{Binding Path=Percent}"/>

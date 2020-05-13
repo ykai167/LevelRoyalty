@@ -22,7 +22,7 @@ namespace LR.WpfApp.Controls
     public partial class RoomControl : UserControl
     {
         LR.Services.IRoomService _service;
-        LR.Services.RoomCategoryService cateservice = new Services.RoomCategoryService();
+        LR.Services.IRoomCategoryService _cateservice;
 
         public class RoomState
         {
@@ -31,10 +31,11 @@ namespace LR.WpfApp.Controls
             public int Value { get; set; }
         }
 
-        public RoomControl(LR.Services.IRoomService service)
+        public RoomControl(LR.Services.IRoomService service, LR.Services.IRoomCategoryService cateservice)
         {
             InitializeComponent();
             this._service = service;
+            this._cateservice = cateservice;
             List<RoomState> stateSource = new List<RoomState>()
             {
                 new RoomState(){ Name = LR.Services.Extends.GetName(LR.Entity.Room.RoomState.Normal), ID = 0, Value = (int)LR.Entity.Room.RoomState.Normal},

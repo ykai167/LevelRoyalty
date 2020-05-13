@@ -12,7 +12,7 @@ namespace LR.Services
     {
         SettleBatch GetOrGenCurrent();
     }
-    public class SettleBatchService : UpdateServiceBase<SettleBatch>, ISettleBatchService
+    class SettleBatchService : UpdateServiceBase<SettleBatch>, ISettleBatchService
     {
         public SettleBatchService(Repositories.DataContext context) : base(context)
         {

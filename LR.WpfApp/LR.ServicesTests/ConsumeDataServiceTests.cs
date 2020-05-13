@@ -38,7 +38,7 @@ namespace LR.Services.Tests
             var mcategory = Tools.DIHelper.GetInstance<IWorkGroupManagerCategoryService>().List();
             var newID = service.Insert(new WorkGroup { Name = "青年组2" });
 
-           
+
 
             var currenty = service.List();
 
@@ -53,7 +53,7 @@ namespace LR.Services.Tests
             var room = Tools.DIHelper.GetInstance<IRoomService>().List().LastOrDefault();
             for (int i = 0; i < 10; i++)
             {
-                var list = Tools.DIHelper.GetInstance<WorkGroupMemberService>().List();
+                var list = Tools.DIHelper.GetInstance<IWorkGroupMemberService>().List();
                 if (list.Count > 0)
                 {
                     service.Insert(new ConsumeData

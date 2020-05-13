@@ -15,9 +15,6 @@ namespace LR.Models
 
     public class RoyaltyStatisticsModel : RoyaltySettle
     {
-        public Guid ID { get; set; }
-       
-
         public KeyValuePair<RoyaltyType, decimal>[] Items { get; set; }
 
         /// <summary>
