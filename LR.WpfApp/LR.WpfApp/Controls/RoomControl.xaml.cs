@@ -33,6 +33,13 @@ namespace LR.WpfApp.Controls
 
             this.cbxCategory.ItemsSource = cateservice.List();
             this.cbxCategory.DisplayMemberPath = "Name";
+
+            this.InitListView();
+
+            this.btns.OnSave += Btns_OnSave;
+            this.btns.OnDelete += Btns_OnDelete;
+            this.btns.OnAdd += Btns_OnAdd;
+            this.lvwShow.SelectionChanged += LvwShow_SelectionChanged1;
         }
         Guid ID;
         private void Btns_OnDelete(object sender, EventArgs e)
@@ -82,7 +89,7 @@ namespace LR.WpfApp.Controls
 
         private void InitListView()
         {
-            this.lvwShow.ItemsSource = this._service.List();
+            this.lvwShow.ItemsSource = this._service.GetAll();
         }
         private void LvwShow_SelectionChanged1(object sender, SelectionChangedEventArgs e)
         {
@@ -90,7 +97,8 @@ namespace LR.WpfApp.Controls
             {
                 this.txtNo.Text = this.lvwShow.SelectedItem.GetObjectValue<string>("No");
                 this.txtName.Text = this.lvwShow.SelectedItem.GetObjectValue<string>("Name");
-                this.ID = (Guid)this.lvwShow.SelectedItem.GetObjectValue("ID");
+                this.ID = this.lvwShow.SelectedItem.GetObjectValue<Guid>("ID");
+                this.txtSummary.Text = this.lvwShow.SelectedItem.GetObjectValue<string>("Summary");
 
                 //加载成员
                 this.btns.SetEdit();

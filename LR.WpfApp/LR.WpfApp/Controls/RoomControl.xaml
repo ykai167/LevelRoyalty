@@ -29,9 +29,10 @@
         <ListView Name="lvwShow" Grid.Row="3" Grid.Column="0" Margin="0 0 10 0">
             <ListView.View>
                 <GridView>
-                    <GridViewColumn Header="房间号" Width="75" DisplayMemberBinding="{Binding Path=Name}" />
+                    <GridViewColumn Header="房间号" Width="75" DisplayMemberBinding="{Binding Path=No}" />
                     <GridViewColumn Header="房间名称" Width="75" DisplayMemberBinding="{Binding Path=Name}" />
-                    <GridViewColumn Header="房间类型" Width="75" DisplayMemberBinding="{Binding Path=Name}" />
+                    <GridViewColumn Header="房间类型" Width="75" DisplayMemberBinding="{Binding Path=CategoryName}" />
+                    <GridViewColumn Header="说明" Width="75" DisplayMemberBinding="{Binding Path=Summary}"/>
                     <GridViewColumn Header="创建时间" Width="75" DisplayMemberBinding="{Binding Path=CreateDate}"/>
                     <GridViewColumn Header="修改时间" Width="75" DisplayMemberBinding="{Binding Path=ModifyDate}"/>
                 </GridView>
