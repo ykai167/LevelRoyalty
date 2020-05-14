@@ -71,7 +71,11 @@ namespace LR.Services
         public static IEnumerable<StaffModel> GetReferrers(this IEnumerable<StaffModel> all, Guid staffID)
         {
             List<Guid> list = new List<Guid>();
-            var currenty = all.First(p => p.ID == staffID);
+            var currenty = all.FirstOrDefault(p => p.ID == staffID);
+            if (currenty == null)
+            {
+                return new StaffModel[0];
+            }
             Add(currenty, list);
             return all.Where(p => p.ID != staffID && !list.Contains(p.ID));
         }

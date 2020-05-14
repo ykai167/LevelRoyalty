@@ -62,6 +62,12 @@ namespace LR.WpfApp.Controls
                 MessageBox.Show("金额输入错误", "错误");
                 return;
             }
+            if (this.cbxRoom.SelectedValue == null || this.cbxStaff.SelectedValue == null)
+            {
+                MessageBox.Show("未选择房间或员工", "错误");
+                return;
+            }
+
             var entity = new Entity.ConsumeData
             {
                 Amount = amount,

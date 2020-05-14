@@ -1,4 +1,5 @@
-﻿using SqlSugar;
+﻿using LR.Entity;
+using SqlSugar;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -64,7 +65,24 @@ namespace LR.Services
 
         public override void Update(Guid id, object columData)
         {
-            base.Update(id, columData);
+            Staff entity;
+            if (columData.GetType().GetProperty(nameof(entity.State)).GetValue(columData).Equals((int)StaffState.Quit))
+            {
+                //删除组,删除推荐人
+                this.Context.Context.Deleteable<Entity.WorkGroupMember>(p => p.StaffID == id).ExecuteCommand();
+                Dictionary<string, object> dic = new Dictionary<string, object>();
+                dic[nameof(entity.ReferrerID)] = new Guid();
+                foreach (var prop in columData.GetType().GetProperties())
+                {
+                    dic[prop.Name] = prop.GetValue(columData);
+                }
+                base.Update(id, dic);
+            }
+            else
+            {
+                base.Update(id, columData);
+            }
+
             MemoryData.Current.ReloadStaffs();
         }
         public override Guid Insert(Entity.Staff entity)

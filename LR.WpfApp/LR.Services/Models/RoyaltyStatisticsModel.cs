@@ -27,5 +27,7 @@ namespace LR.Models
                 return Items.Sum(p => p.Value);
             }
         }
+
+        public string Admin { get; set; }
     }
 }

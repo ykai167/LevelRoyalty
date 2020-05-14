@@ -29,20 +29,48 @@ namespace LR.WpfApp.Controls
         {
             InitializeComponent();
             this.DataContext = vm = Tools.DIHelper.GetInstance<Models.RoyaltySettleControlViewModel>();
-            this.cbx.SelectionChanged += Cbx_SelectionChanged;
+            //this.cbx.SelectionChanged += Cbx_SelectionChanged;
         }
 
-        private void Cbx_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void chkSelf_Checked(object sender, RoutedEventArgs e)
         {
-            vm.ChangeBatch(this.cbx.SelectedItem.GetObjectValue<int>("Num"));
-        }
-
-        private void LvwShow_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            if (sender == this.lvwShow && this.lvwShow.SelectedItem != null)
+            if (this.chkSelf.IsChecked.HasValue && this.vm.Current != null)
             {
-                vm.ChangeStaff(this.lvwShow.SelectedItem.GetObjectValue<Guid>("StaffID"));
+                if (this.chkSelf.IsChecked.Value)
+                {
+                    this.vm.Current.IsSelf = true;
+                    this.txtReceiver.Text = "";
+                }
+                else
+                {
+                    this.vm.Current.IsSelf = false;
+                }
+                this.vm.Current = this.vm.Current;
             }
         }
+
+        private void btnConmit_Click(object sender, RoutedEventArgs e)
+        {
+            string name = this.txtReceiver.Text;
+            if (!(this.chkSelf.IsChecked ?? false) && string.IsNullOrWhiteSpace(name))
+            {
+                MessageBox.Show("未输入领取人");
+                return;
+            }
+            this.vm.Expend(this.chkSelf.IsChecked ?? false, name);
+        }
+
+        //private void Cbx_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        //{
+        //    vm.ChangeBatch(this.cbx.SelectedItem.GetObjectValue<int>("Num"));
+        //}
+
+        //private void LvwShow_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        //{
+        //    if (sender == this.lvwShow && this.lvwShow.SelectedItem != null)
+        //    {
+        //        vm.ChangeStaff(this.lvwShow.SelectedItem.GetObjectValue<Guid>("StaffID"));
+        //    }
+        //}
     }
 }

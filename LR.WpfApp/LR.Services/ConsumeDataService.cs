@@ -48,6 +48,12 @@ namespace LR.Services
             {
                 throw new Exception("不存在记录");
             }
+
+            if (old.CreateDate.AddHours(1) < DateTime.Now)
+            {
+                throw new Exception("超过修改时限");
+            }
+
             var currentSettle = new SettleBatchService(this.Context).GetOrGenCurrent();
             if (old.SettleNum != currentSettle.Num)
             {

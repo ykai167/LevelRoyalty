@@ -6,49 +6,34 @@
              xmlns:local="clr-namespace:LR.WpfApp.Controls"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
-    <Grid Margin="15,0,0,0">
+    <Grid Margin="10">
         <Grid.RowDefinitions>
+            <RowDefinition  Height="40px"/>
+            <RowDefinition  Height="40px"/>
+            <RowDefinition  Height="40px"/>
             <RowDefinition  Height="*"/>
-            <RowDefinition  Height="2*"/>
         </Grid.RowDefinitions>
-        <Grid Grid.Row="0" Margin="0,10,10.333,10" >
-            <Grid.RowDefinitions>
-                <RowDefinition Height="*"/>
-                <RowDefinition Height="*"/>
-                <RowDefinition Height="*"/>
-            </Grid.RowDefinitions>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="60"/>
-                <ColumnDefinition Width="100"/>
-                <ColumnDefinition Width="60"/>
-                <ColumnDefinition Width="100"/>
-                <ColumnDefinition Width="60"/>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="*"/>
-            </Grid.ColumnDefinitions>
-            <Label Content="房间号"  Grid.Row="0" Grid.Column="0" Height="25" Width="65"/>
-            <TextBox x:Name="txtNo" Grid.Row="0" Grid.Column="1" Height="25" Width="100"/>
-            <Label Content="房间名称" Grid.Row="0" Grid.Column="2" Height="25" Width="65"/>
-            <TextBox x:Name="txtName"  Grid.Row="0" Grid.Column="3" Height="25" Width="100"/>
-            <Label Content="房间类型" Grid.Row="0" Grid.Column="4" Height="25" Width="65"/>
-            <ComboBox x:Name="cboType" Grid.Row="0" Grid.Column="5" Height="25" Width="160"/>
-            <Label Content="状态"  Grid.Row="1" Grid.Column="0" Height="25" Width="65"/>
-            <ComboBox x:Name="cboState" Grid.Row="1" Grid.Column="1" Height="25" Width="100" ItemsSource="{Binding}" DataContext="{Binding}"/>
-            <Label Content="说明" Grid.Row="1" Grid.Column="2"  Height="25" Width="160"/>
-            <TextBox x:Name="txtSummary" Grid.Row="1" Grid.RowSpan="2" Grid.Column="3" Grid.ColumnSpan="3" Margin="0,10,0,0" TextWrapping="WrapWithOverflow"/>
-            <Button x:Name="btnAdd" Grid.Row="0" Grid.Column="6" Content="新增" Height="25" Width="60" Click="btnAdd_Click" />
-            <Button x:Name="btnUpdate" Grid.Row="1" Grid.Column="6" Content="修改" Height="25" Width="60" Click="btnUpdate_Click"/>
-            <Button x:Name="btnDelete" Grid.Row="2" Grid.Column="6" Content="删除" Height="25" Width="60" Click="btnDelete_Click"/>
-        </Grid>
-        <ListView Grid.Row="1" Name="lvwShow" Margin="0,25,0,0"
-                    SelectionChanged="LvwShow_SelectionChanged">
+        <StackPanel Grid.Row="0" Grid.Column="0" Orientation="Horizontal">
+            <Label Content="房间号"  Height="25" Width="65"/>
+            <TextBox x:Name="txtNo"  Height="25" Width="150"></TextBox>
+            <Label Content="房间名称"  Height="25" Width="65"/>
+            <TextBox x:Name="txtName"  Height="25" Width="150"></TextBox>           
+        </StackPanel>
+        <StackPanel Grid.Row="1" Orientation="Horizontal">
+             <Label Content="房间类型"  Height="25" Width="65"/>
+            <ComboBox x:Name="cbxCategory"  Height="25" Width="150"></ComboBox>
+            <Label Content="说明"  Height="25" Width="65"/>
+            <TextBox x:Name="txtSummary"  Height="25" Width="300"></TextBox>
+        </StackPanel>
+        <local:Buttons Grid.Row="2" x:Name="btns"/>
+        <ListView Name="lvwShow" Grid.Row="3" Grid.Column="0" Margin="0 0 10 0">
             <ListView.View>
                 <GridView>
-                    <GridViewColumn Header="房间号" Width="75" DisplayMemberBinding="{Binding Path=No}" />
-                    <GridViewColumn Header="名称" Width="75" DisplayMemberBinding="{Binding Path=Name}"/>
-                    <GridViewColumn Header="类别" Width="75" DisplayMemberBinding="{Binding Path=Type}"/>
-                    <GridViewColumn Header="说明" Width="75"     DisplayMemberBinding="{Binding Path=Summary}"/>
-                    <GridViewColumn Header="状态" Width="75"     DisplayMemberBinding="{Binding Path=State}"/>
+                    <GridViewColumn Header="房间号" Width="75" DisplayMemberBinding="{Binding Path=Name}" />
+                    <GridViewColumn Header="房间名称" Width="75" DisplayMemberBinding="{Binding Path=Name}" />
+                    <GridViewColumn Header="房间类型" Width="75" DisplayMemberBinding="{Binding Path=Name}" />
+                    <GridViewColumn Header="创建时间" Width="75" DisplayMemberBinding="{Binding Path=CreateDate}"/>
+                    <GridViewColumn Header="修改时间" Width="75" DisplayMemberBinding="{Binding Path=ModifyDate}"/>
                 </GridView>
             </ListView.View>
         </ListView>

@@ -61,6 +61,7 @@ namespace LR.Services
                 .Select((r, c, s) => new _RoyaltyModel
                 {
                     StaffID = r.StaffID,
+                    StaffNo = s.No,
                     StaffName = s.Name,
                     Amount = c.Amount,
                     CreateTime = r.CreateDate,
@@ -69,10 +70,11 @@ namespace LR.Services
                     RoyaltyType = (RoyaltyType)r.RoyaltyType
                 }).ToArray();
 
-            return data.GroupBy(item => new { item.StaffID, item.StaffName })
+            return data.GroupBy(item => new { item.StaffID, item.StaffName, item.StaffNo })
                 .Select(g => new RoyaltyStatisticsModel
                 {
                     StaffID = g.Key.StaffID,
+                    StaffNo = g.Key.StaffNo,
                     StaffName = g.Key.StaffName,
                     SettleNum = settleNum,
                     Items = g.GroupBy(p => p.RoyaltyType)

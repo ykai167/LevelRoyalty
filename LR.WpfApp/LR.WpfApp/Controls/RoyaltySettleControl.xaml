@@ -16,16 +16,28 @@
                 <RowDefinition Height="*"/>
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
-
-            <StackPanel Orientation="Horizontal">
-                <Label Width="80px" HorizontalContentAlignment="Right" HorizontalAlignment="Center" VerticalAlignment="Center">选择账期：</Label>
-                <ComboBox Name="cbx" Width="200px" Height="25" ItemsSource="{Binding Batchs}" 
+            <StackPanel Grid.Row="0" Orientation="Horizontal">
+                <Label Content="选择账期：" Height="25" Width="65"/>
+                <ComboBox Name="cbx" Width="100px" Height="25" ItemsSource="{Binding Batchs}" 
                       DisplayMemberPath="Num" 
-                      SelectedValuePath="BeginEnd"   
-                      SelectedIndex="0"
-                      Margin="5,5,0,5">
+                      SelectedValuePath="BeginEnd" 
+                      SelectedItem="{Binding CurrentBatch}">
                 </ComboBox>
-                <TextBlock Text="{Binding Path=SelectedValue, ElementName=cbx}" VerticalAlignment="Center" Margin="10,0,0,0"></TextBlock>
+                <TextBlock Grid.Row="0" Grid.Column="4" Grid.ColumnSpan="4" Margin="10,0" Text="{Binding Path=SelectedValue, ElementName=cbx}" VerticalAlignment="Center"></TextBlock>
+            </StackPanel>
+            <StackPanel Grid.Row="1" Orientation="Horizontal">
+                <Label Content="当前员工：" Height="25"/>
+                <TextBlock Text="{Binding Current.StaffName}" VerticalAlignment="Center" Margin="0 0 20 0"></TextBlock>
+                <Label Content="员工号：" Height="25"/>
+                <TextBlock Text="{Binding Current.StaffNo}" VerticalAlignment="Center" Margin="0 0 20 0"></TextBlock>
+                <Label Content="是否本人：" Height="25" Width="65" Visibility="{Binding ShowChk}"/>
+                <CheckBox x:Name="chkSelf" IsChecked="{Binding Current.IsSelf}" VerticalAlignment="Center" Width="50" 
+                          Visibility="{Binding ShowChk}"  IsEnabled="{Binding Enabled}" 
+                          Checked="chkSelf_Checked"
+                          Unchecked="chkSelf_Checked"></CheckBox>
+                <Label Name="lblReceiver" Content="领取人：" Height="25" Visibility="{Binding ShowReceiver}" Width="65"/>
+                <TextBox x:Name="txtReceiver" Height="25" Width="100" Text="{Binding Current.Receiver}" Visibility="{Binding ShowReceiver}" IsEnabled="{Binding Enabled}"/>
+                <Button x:Name="btnConmit" Content="确认发放" Height="25" Margin="10,0" Visibility="{Binding ShowButton}" Click="btnConmit_Click"></Button>
             </StackPanel>
         </Grid>
         <Grid Grid.Row="1">
@@ -34,9 +46,12 @@
                 <ColumnDefinition Width="2*"></ColumnDefinition>
             </Grid.ColumnDefinitions>
             <GroupBox Header="当前账期列表" Grid.Column="0">
-                <ListView Grid.Row="1" Name="lvwShow" ItemsSource="{Binding Rows}" SelectionChanged="LvwShow_SelectionChanged">
+                <ListView Grid.Row="1" Name="lvwShow" 
+                          ItemsSource="{Binding Rows}"
+                          SelectedItem="{Binding Current}">
                     <ListView.View>
                         <GridView>
+                            <GridViewColumn Header="员工号" DisplayMemberBinding="{Binding Path=StaffNo}" FrameworkElement.FlowDirection="RightToLeft"/>
                             <GridViewColumn Header="姓名" DisplayMemberBinding="{Binding Path=StaffName}" FrameworkElement.FlowDirection="RightToLeft"/>
                             <GridViewColumn Header="订房奖励" DisplayMemberBinding="{Binding Path=Reservation}"/>
                             <GridViewColumn Header="管理奖励" DisplayMemberBinding="{Binding Path=Administration}"/>
@@ -44,11 +59,11 @@
                             <GridViewColumn Header="超越奖励" DisplayMemberBinding="{Binding Path=Transcend}"/>
                             <GridViewColumn Header="工作组管理奖励" DisplayMemberBinding="{Binding Path=WorkGroup}"/>
                             <GridViewColumn Header="总金额" DisplayMemberBinding="{Binding Path=Total}"/>
-                            <GridViewColumn Header="是否已发" DisplayMemberBinding="{Binding Path=Total}"/>
-                            <GridViewColumn Header="是否本人领取" DisplayMemberBinding="{Binding Path=Total}"/>
-                            <GridViewColumn Header="领取人" DisplayMemberBinding="{Binding Path=Total}"/>
-                            <GridViewColumn Header="操作人" DisplayMemberBinding="{Binding Path=Total}"/>
-                            <GridViewColumn Header="领取时间" DisplayMemberBinding="{Binding Path=Total}"/>
+                            <GridViewColumn Header="是否已发" DisplayMemberBinding="{Binding Path=Expend}"/>
+                            <GridViewColumn Header="是否本人领取" DisplayMemberBinding="{Binding Path=Self}"/>
+                            <GridViewColumn Header="领取人" DisplayMemberBinding="{Binding Path=Receiver}"/>
+                            <GridViewColumn Header="操作人" DisplayMemberBinding="{Binding Path=Admin}"/>
+                            <GridViewColumn Header="领取时间" DisplayMemberBinding="{Binding Path=ModifyDate}"/>
                         </GridView>
                     </ListView.View>
                 </ListView>

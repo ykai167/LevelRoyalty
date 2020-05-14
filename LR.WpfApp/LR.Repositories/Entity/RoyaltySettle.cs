@@ -14,7 +14,7 @@ namespace LR.Entity
         /// 员工ID
         /// </summary>
         public Guid StaffID { get; set; }
-
+        public string StaffNo { get; set; }
         /// <summary>
         /// 员工姓名
         /// </summary>

@@ -18,7 +18,10 @@ namespace LR.Repositories
                 InitKeyType = InitKeyType.Attribute,
                 DbType = DbType.Sqlite,
                 IsAutoCloseConnection = true,
-
+                MoreSettings = new ConnMoreSettings
+                {
+                    IsWithNoLockQuery = true
+                }
             });
 
             this.context.Aop.OnLogExecuting = (str, arry) =>

@@ -3,22 +3,26 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:LR.WpfApp.Controls"
-             mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800">
-    <Grid>
+             xmlns:local="clr-namespace:LR.WpfApp.Controls">
+    <Grid Margin="10">
         <Grid.RowDefinitions>
-            <RowDefinition Height="30"></RowDefinition>
-            <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition  Height="40px"/>
+            <RowDefinition  Height="40px"/>
+            <RowDefinition  Height="*"/>
         </Grid.RowDefinitions>
-        <StackPanel Grid.Row="0" Orientation="Horizontal">
-            <Button Content="增加"/>
-            <Button Content="修改"/>
+        <StackPanel Grid.Row="0" Grid.Column="0" Orientation="Horizontal">
+            <Label Content="用户名"  Height="25" Width="65"/>
+            <TextBox x:Name="txtName"  Height="25" Width="150"></TextBox>
         </StackPanel>
-        <DataGrid Grid.Row="1">
-            <DataGrid.Columns>
-                <DataGridTextColumn Header="用户名"></DataGridTextColumn>
-            </DataGrid.Columns>
-        </DataGrid>
+        <local:Buttons Grid.Row="1" x:Name="btns"/>
+        <ListView Name="lvwShow" Grid.Row="2" Grid.Column="0" Margin="0 0 10 0">
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn Header="用户名" Width="75" DisplayMemberBinding="{Binding Path=Name}" />
+                    <GridViewColumn Header="创建时间" Width="75" DisplayMemberBinding="{Binding Path=CreateDate}"/>
+                    <GridViewColumn Header="修改时间" Width="75" DisplayMemberBinding="{Binding Path=ModifyDate}"/>
+                </GridView>
+            </ListView.View>
+        </ListView>
     </Grid>
 </UserControl>

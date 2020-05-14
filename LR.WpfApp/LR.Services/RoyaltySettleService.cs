@@ -31,9 +31,10 @@ namespace LR.Services
 
         public RoyaltyStatisticsModel[] GetSettles(int settleNum)
         {
-            return this.Context.Context.Queryable<RoyaltySettle, Staff>((r, s) => r.SettleNum == settleNum && r.StaffID == s.ID)
-                .Select((r, s) => new
+            return this.Context.Context.Queryable<RoyaltySettle, Staff, Admin>((r, s, a) => r.SettleNum == settleNum && r.StaffID == s.ID && r.OperatorID == a.ID)
+                .Select((r, s, a) => new
                 {
+                    s.No,
                     ID = r.ID,
                     StaffID = r.StaffID,
                     StaffName = s.Name,
@@ -42,11 +43,13 @@ namespace LR.Services
                     IsExpend = r.IsExpend,
                     IsSelf = r.IsSelf,
                     Receiver = r.Receiver,
-                    ModifyDate = r.ModifyDate
+                    ModifyDate = r.ModifyDate,
+                    Admin = a.Name
                 }).ToArray()
                 .Select((r) => new RoyaltyStatisticsModel
                 {
                     ID = r.ID,
+                    StaffNo = r.No,
                     StaffID = r.StaffID,
                     StaffName = r.StaffName,
                     Items = r.Json.JsonTo<KeyValuePair<RoyaltyType, decimal>[]>(),
@@ -54,7 +57,8 @@ namespace LR.Services
                     IsExpend = r.IsExpend,
                     IsSelf = r.IsSelf,
                     Receiver = r.Receiver,
-                    ModifyDate = r.ModifyDate
+                    ModifyDate = r.ModifyDate,
+                    Admin = r.Admin
                 }).ToArray();
         }
 

@@ -21,7 +21,9 @@ namespace LR.WpfApp.Models
             this.Rows = _royaltyService.Statistics(current.Num)
                 .Select(item => new RoyaltySettleModel
                 {
+                    ID = item.ID,
                     StaffID = item.StaffID,
+                    StaffNo = item.StaffNo,
                     StaffName = MemoryData.Current.Staffs.FirstOrDefault(p => p.ID == item.StaffID)?.Name,
                     Administration = item.Items.FirstOrDefault(p => p.Key == RoyaltyType.Administration).Value,
                     Cooperation = item.Items.FirstOrDefault(p => p.Key == RoyaltyType.Cooperation).Value,
@@ -62,11 +64,12 @@ namespace LR.WpfApp.Models
     }
     public class RoyaltySettleModel
     {
+        public Guid ID { get; set; }
         /// <summary>
         /// 提成员工ID
         /// </summary>
         public Guid StaffID { get; set; }
-
+        public string StaffNo { get; set; }
         /// <summary>
         /// 提成员工
         /// </summary>

@@ -29,13 +29,22 @@ namespace LR.Services
         public virtual void Update(Guid id, object columData)
         {
             T t = null;
-            Dictionary<string, object> dic = new Dictionary<string, object>();
+            Dictionary<string, object> dic = null;
+            if (columData is Dictionary<string, object>)
+            {
+                dic = columData as Dictionary<string, object>;
+            }
+            else
+            {
+                dic = new Dictionary<string, object>();
+                foreach (var prop in columData.GetType().GetProperties())
+                {
+                    dic[prop.Name] = prop.GetValue(columData);
+                }
+            }
             dic[nameof(t.ModifyDate)] = DateTime.Now;
             dic[nameof(t.OperatorID)] = Administrator.Current.ID;
-            foreach (var prop in columData.GetType().GetProperties())
-            {
-                dic[prop.Name] = prop.GetValue(columData);
-            }
+
             this.Context.Context.Insertable<Entity.Log>(new Entity.Log
             {
                 Type = (int)LogType.Update,

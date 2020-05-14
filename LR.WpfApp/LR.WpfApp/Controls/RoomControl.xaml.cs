@@ -1,4 +1,5 @@
-﻿using System;
+﻿using LR.Tools;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -24,151 +25,76 @@ namespace LR.WpfApp.Controls
         LR.Services.IRoomService _service;
         LR.Services.IRoomCategoryService _cateservice;
 
-        public class RoomState
-        {
-            public int ID { get; set; }
-            public String Name { get; set; }
-            public int Value { get; set; }
-        }
-
         public RoomControl(LR.Services.IRoomService service, LR.Services.IRoomCategoryService cateservice)
         {
             InitializeComponent();
             this._service = service;
             this._cateservice = cateservice;
-            List<RoomState> stateSource = new List<RoomState>()
+
+            this.cbxCategory.ItemsSource = cateservice.List();
+            this.cbxCategory.DisplayMemberPath = "Name";
+        }
+        Guid ID;
+        private void Btns_OnDelete(object sender, EventArgs e)
+        {
+            this._service.Update(ID, new { State = (int)Services.StaffState.Delete });
+            this.InitListView();
+        }
+
+        private void Btns_OnAdd(object sender, EventArgs e)
+        {
+            this.ID = new Guid();
+            this.txtNo.Text = "";
+            this.txtName.Text = "";
+            this.cbxCategory.SelectedItem = null;
+        }
+
+        private void Btns_OnSave(object sender, EventArgs e)
+        {
+            if (this.cbxCategory.SelectedItem == null)
             {
-                new RoomState(){ Name = LR.Services.Extends.GetName(LR.Entity.Room.RoomState.Normal), ID = 0, Value = (int)LR.Entity.Room.RoomState.Normal},
-                new RoomState() { Name = LR.Services.Extends.GetName(LR.Entity.Room.RoomState.Delete), ID = 1, Value = (int)LR.Entity.Room.RoomState.Delete}
+                MessageBox.Show("未选择房间类型", "提示");
+                return;
+            }
+            LR.Entity.Room room = new LR.Entity.Room()
+            {
+                No = this.txtNo.Text,
+                Name = this.txtName.Text,
+                Summary = this.txtSummary.Text,
+                CategoryID = (this.cbxCategory.SelectedItem as Entity.RoomCategory).ID
             };
-            cboState.ItemsSource = stateSource;
-            cboState.DisplayMemberPath = "Name";
-            cboState.SelectedValuePath = "Value";
-            cboState.SelectedIndex = 0;
-            this.Loaded += RoomControl_Loaded;
+            if (this.ID == new Guid())
+            {
+                this._service.Insert(room);
+            }
+            else
+            {
+                this._service.Update(ID, new
+                {
+                    room.Name,
+                    room.No,
+                    room.Summary,
+                    room.CategoryID
+                });
+            }
+            this.InitListView();
         }
 
         private void InitListView()
         {
-            lvwShow.Items.Clear();
-            List<LR.Entity.Room> di = this._service.List();
-            for (int i = 0; i < di.Count; i++)
-            {
-                lvwShow.Items.Add(new
-                {
-                    No = di[i].No,
-                    Name = di[i].Name,
-                    Type = "包间", // cateservice.Single(di[i].CategoryID).Name,
-                    Summary = di[i].Summary,
-                    State = di[i].State
-                });
-            }
+            this.lvwShow.ItemsSource = this._service.List();
         }
-        private void RoomControl_Loaded(object sender, RoutedEventArgs e)
+        private void LvwShow_SelectionChanged1(object sender, SelectionChangedEventArgs e)
         {
-            this.InitListView();
-        }
+            if (sender == this.lvwShow && this.lvwShow.SelectedItem != null)
+            {
+                this.txtNo.Text = this.lvwShow.SelectedItem.GetObjectValue<string>("No");
+                this.txtName.Text = this.lvwShow.SelectedItem.GetObjectValue<string>("Name");
+                this.ID = (Guid)this.lvwShow.SelectedItem.GetObjectValue("ID");
 
-        private void LvwShow_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            if (lvwShow.SelectedItems.Count > 0)
-            {
-                string s = lvwShow.Items[lvwShow.SelectedIndex].ToString();
-                string[] ss = s.Split(',');
-                txtNo.Text = ss[0].Split('=')[1].Trim();
-                txtName.Text = ss[1].Split('=')[1].Trim();
-                cboType.Text = ss[2].Split('=')[1].Trim();
-                txtSummary.Text = ss[3].Split('=')[1].Trim();
-                cboState.SelectedValue = ss[4].Split('=')[1].Trim('}').Trim();
+                //加载成员
+                this.btns.SetEdit();
             }
-        }
-
-        private void btnAdd_Click(object sender, RoutedEventArgs e)
-        {
-            #region 控件列表集合
-            List<Control> con_list = new List<Control>()
-            {
-                txtNo,
-                txtName,
-                cboType,
-                txtSummary,
-                cboState
-            };
-            #endregion
-            foreach (Control item in con_list)
-            {
-                if (item is TextBox)
-                    if (((TextBox)item).Text == "")
-                    {
-                        Tip p = new Tip("请把信息填写完整 !");
-                        p.ShowDialog();
-                        return;
-                    }
-                if (item is ComboBox)
-                    if (((ComboBox)item).Text == "")
-                    {
-                        Tip p = new Tip("请把信息填写完整 !");
-                        p.ShowDialog();
-                        return;
-                    }
-            }
-            LR.Entity.Room room = new LR.Entity.Room();
-            room.No = txtNo.Text;
-            room.Name = txtName.Text;
-            room.CategoryID = new Guid(); //TODO
-            room.Summary = txtSummary.Text;
-            room.State = int.Parse(cboState.Text);
-            this._service.Insert(room);
-            this.InitListView();
-        }
-
-        private void btnUpdate_Click(object sender, RoutedEventArgs e)
-        {
-            #region 控件列表集合
-            List<Control> con_list = new List<Control>()
-            {
-                txtNo,
-                txtName,
-                cboType,
-                txtSummary,
-                cboState
-            };
-            #endregion
-            foreach (Control item in con_list)
-            {
-                if (item is TextBox)
-                    if (((TextBox)item).Text == "")
-                    {
-                        Tip p = new Tip("请把信息填写完整 !");
-                        p.ShowDialog();
-                        return;
-                    }
-                if (item is ComboBox)
-                    if (((ComboBox)item).Text == "")
-                    {
-                        Tip p = new Tip("请把信息填写完整 !");
-                        p.ShowDialog();
-                        return;
-                    }
-            }
-            LR.Entity.Room room = new LR.Entity.Room();
-            room.ID = this._service.Single(item => item.No == txtNo.Text).ID;
-            room.No = txtNo.Text;
-            room.Name = txtName.Text;
-            room.CategoryID = new Guid(); //TODO
-            room.Summary = txtSummary.Text;
-            room.State = int.Parse(cboState.Text);
-            this._service.Update(room.ID, room);
-            this.InitListView();
-        }
-
-        private void btnDelete_Click(object sender, RoutedEventArgs e)
-        {
-            LR.Entity.Room room = new LR.Entity.Room();
-            room.State = 400;
-            room.ID = this._service.Single(item => item.No == room.No).ID;
-            this._service.Update(room.ID, room);
-            this.InitListView();
         }
     }
 }

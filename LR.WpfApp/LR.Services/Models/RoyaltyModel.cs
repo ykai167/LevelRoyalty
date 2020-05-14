@@ -19,6 +19,7 @@ namespace LR.Models
         /// 产生消费的员工
         /// </summary>
         public string StaffName { get; set; }
+        public string StaffNo { get; set; }
 
         /// <summary>
         /// 提成类型
