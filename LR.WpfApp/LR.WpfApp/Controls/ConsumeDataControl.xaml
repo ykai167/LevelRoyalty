@@ -32,7 +32,8 @@
             <ComboBox x:Name="cbxRoom" Grid.Row="0" Grid.Column="3" Height="25" />
             <Label Content="金额" Grid.Row="0" Grid.Column="4" Height="25" />
             <TextBox x:Name="txtAmount" Grid.Row="0" Grid.Column="5" Height="25" />
-            <local:Buttons Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="6" x:Name="btns"/>
+            <local:Buttons Grid.Row="1" Grid.ColumnSpan="5" x:Name="btns"/>
+            <Button x:Name="btnExtract" Content="导出" Grid.Row="1" Grid.Column="5" Height="25" Width="60" Click="btnExtract_Click"/>
         </Grid>
         <local:PageControl Grid.Row="2" x:Name="ucPager"/>
         <ListView Grid.Row="1" Name="lvwShow" SelectionChanged="LvwShow_SelectionChanged">

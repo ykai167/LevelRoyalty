@@ -43,6 +43,7 @@
     <Reference Include="System.ValueTuple, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>..\packages\System.ValueTuple.4.5.0\lib\netstandard1.0\System.ValueTuple.dll</HintPath>
     </Reference>
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Core" />
@@ -80,6 +81,9 @@
     <Compile Include="Controls\common\PageControl.xaml.cs">
       <DependentUpon>PageControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\LogsControl.xaml.cs">
+      <DependentUpon>LogsControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\ManagerCategoryControl.xaml.cs">
       <DependentUpon>ManagerCategoryControl.xaml</DependentUpon>
     </Compile>
@@ -107,6 +111,7 @@
     <Compile Include="Controls\WorkGroupControl.xaml.cs">
       <DependentUpon>WorkGroupControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Models\ConusmeDataControlViewModel.cs" />
     <Compile Include="Models\LayOutViewModel.cs" />
     <Compile Include="Models\CurrentSettleControlViewModel.cs" />
     <Compile Include="Models\RoyaltySettleControlViewModel.cs" />
@@ -140,6 +145,10 @@
     <Page Include="Controls\CurrentSettleControl.xaml">
     </Page>
     <Page Include="Controls\common\PageControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\LogsControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

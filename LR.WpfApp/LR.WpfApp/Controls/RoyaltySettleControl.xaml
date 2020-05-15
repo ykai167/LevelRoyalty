@@ -38,6 +38,7 @@
                 <Label Name="lblReceiver" Content="领取人：" Height="25" Visibility="{Binding ShowReceiver}" Width="65"/>
                 <TextBox x:Name="txtReceiver" Height="25" Width="100" Text="{Binding Current.Receiver}" Visibility="{Binding ShowReceiver}" IsEnabled="{Binding Enabled}"/>
                 <Button x:Name="btnConmit" Content="确认发放" Height="25" Margin="10,0" Visibility="{Binding ShowButton}" Click="btnConmit_Click"></Button>
+                <Button x:Name="btnExtract" Content="数据导出" Height="25" Margin="10,0" Click="btnExtract_Click"></Button>
             </StackPanel>
         </Grid>
         <Grid Grid.Row="1">
