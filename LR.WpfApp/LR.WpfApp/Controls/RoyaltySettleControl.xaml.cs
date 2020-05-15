@@ -75,7 +75,7 @@ namespace LR.WpfApp.Controls
             sfd.Title = "导出文件路径";
             if (sfd.ShowDialog() == System.Windows.Forms.DialogResult.OK)
             {
-                DataTable dt = (this.lvwShow.ItemsSource as DataView).Table;
+                DataTable dt = IEnumerableHelper.ToDataTable<RoyaltySettleExpendModel>((IEnumerable<RoyaltySettleExpendModel>)this.lvwShow.ItemsSource);
                 ExcelHelper.DataTableToExcel(dt, sfd.FileName);
             }
         }

@@ -111,6 +111,7 @@
     <Compile Include="Controls\WorkGroupControl.xaml.cs">
       <DependentUpon>WorkGroupControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Models\ConusmeDataControlViewModel.cs" />
     <Compile Include="Models\LayOutViewModel.cs" />
     <Compile Include="Models\CurrentSettleControlViewModel.cs" />
     <Compile Include="Models\RoyaltySettleControlViewModel.cs" />

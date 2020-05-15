@@ -118,7 +118,7 @@ namespace LR.WpfApp.Controls
             sfd.Title = "导出文件路径";
             if (sfd.ShowDialog() == System.Windows.Forms.DialogResult.OK)
             {       
-                DataTable dt = IEnumerableHelper.ToDataTable<object>((LR.Tools.Pager<object>)this.lvwShow.ItemsSource);
+                DataTable dt = IEnumerableHelper.ToDataTable<Entity.ConsumeData>(this._service.List());
                 ExcelHelper.DataTableToExcel(dt, sfd.FileName);
             }
         }
