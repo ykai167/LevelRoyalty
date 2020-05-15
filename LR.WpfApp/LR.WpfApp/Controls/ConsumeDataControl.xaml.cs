@@ -1,6 +1,7 @@
 ﻿using LR.Tools;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -101,6 +102,25 @@ namespace LR.WpfApp.Controls
             this.txtAmount.Text = "";
             this.cbxRoom.SelectedValue = null;
             this.cbxStaff.SelectedValue = null;
+        }
+
+        private void btnExtract_Click(object sender, EventArgs e)
+        {
+            if (this.lvwShow.ItemsSource == null)
+            {
+                Tip p = new Tip("请把信息填写完整 !");
+                p.ShowDialog();
+                return;
+            }
+            System.Windows.Forms.SaveFileDialog sfd = new System.Windows.Forms.SaveFileDialog();
+            sfd.DefaultExt = "xls";
+            sfd.Filter = "Excel文件(*.xls)|*.xls";
+            sfd.Title = "导出文件路径";
+            if (sfd.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+            {       
+                DataTable dt = IEnumerableHelper.ToDataTable<object>((LR.Tools.Pager<object>)this.lvwShow.ItemsSource);
+                ExcelHelper.DataTableToExcel(dt, sfd.FileName);
+            }
         }
 
         private void UcPager_NextPage(object sender, RoutedEventArgs e)

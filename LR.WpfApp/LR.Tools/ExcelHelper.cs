@@ -19,7 +19,7 @@ namespace LR.Tools
         /// <param name="filePath">excel路径</param>  
         /// <param name="isColumnName">第一行是否是列名</param>  
         /// <returns>返回datatable</returns>  
-        public static DataTable ExcelToDataTable(string filePath, bool isColumnName)
+        public static DataTable ExcelToDataTable(string filePath, bool isColumnName=true)
         {
             DataTable dataTable = null;
             FileStream fs = null;
@@ -133,7 +133,7 @@ namespace LR.Tools
             }
         }
 
-        public static bool DataTableToExcel(DataTable dt)
+        public static bool DataTableToExcel(DataTable dt, string filePath)
         {
             bool result = false;
             IWorkbook workbook = null;
@@ -168,7 +168,7 @@ namespace LR.Tools
                             cell.SetCellValue(dt.Rows[i][j].ToString());
                         }
                     }
-                    using (fs = File.OpenWrite(@"D:/myxls.xls"))
+                    using (fs = File.OpenWrite(filePath))
                     {
                         workbook.Write(fs);//向打开的这个xls文件中写入数据  
                         result = true;
