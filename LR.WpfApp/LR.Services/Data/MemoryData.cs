@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using LR.Entity;
 using LR.Models;
@@ -96,11 +97,19 @@ namespace LR.Services
     public class MemoryData
     {
         public IEnumerable<StaffModel> Staffs;
-
         internal readonly RoyaltyConfigs RoyaltyConfigs;
 
-        public
+        public DateTime LastTime
+        {
+            get
+            {
+                return new DateTime(Math.Max(Math.Max(staffTime.Ticks, workGroupTime.Ticks), ConfigTime.Ticks));
+            }
+        }
 
+        DateTime staffTime;
+        DateTime workGroupTime;
+        DateTime ConfigTime;
         MemoryData()
         {
             this.ReloadStaffs();
@@ -109,7 +118,13 @@ namespace LR.Services
 
         public void ReloadStaffs()
         {
-            this.Staffs = Tools.DIHelper.GetInstance<IStaffService>().List(p => p.State == LR.Entity.DataState.Normal)
+            var staffService = Tools.DIHelper.GetInstance<IStaffService>();
+            var configServie = Tools.DIHelper.GetInstance<IRoyaltyConfigService>();
+            var workGroupService = Tools.DIHelper.GetInstance<IWorkGroupMemberService>();
+            staffTime = staffService.LastTime();
+            ConfigTime = configServie.LastTime();
+            workGroupTime = workGroupService.LastTime();
+            this.Staffs = staffService.List(p => p.State == LR.Entity.DataState.Normal)
                 .Select(item => new StaffModel
                 {
                     ID = item.ID,

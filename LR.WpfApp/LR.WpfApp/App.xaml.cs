@@ -24,7 +24,6 @@ namespace LR.WpfApp
         private void App_Startup(object sender, StartupEventArgs e)
         {
             var name = AppDomain.CurrentDomain.FriendlyName;
-
             var old = System.Diagnostics.Process.GetProcessesByName(name.Replace(".exe", ""));
             if (old.Length > 1)
             {
@@ -38,6 +37,8 @@ namespace LR.WpfApp
                     Process.GetCurrentProcess().Kill();
                 }
             }
+
+
 
             //UI线程未捕获异常处理事件
             this.DispatcherUnhandledException += new DispatcherUnhandledExceptionEventHandler(App_DispatcherUnhandledException);
@@ -57,9 +58,16 @@ namespace LR.WpfApp
 
             //判断:未创建超级管理员,创建超级管理员及密码
 
+            if (!Services.Initer.IsInit)
+            {
+                var result = new InitWindow().ShowDialog();
+                if (!result.HasValue || !result.Value)
+                {
+                    this.Shutdown();
+                }
+            }
 
-
-            LoginWindow window = new LoginWindow();
+            LoginWindow window = Tools.DIHelper.GetInstance<LoginWindow>();
             bool? dialogResult = window.ShowDialog();
             if ((dialogResult.HasValue == true) &&
                 (dialogResult.Value == true))

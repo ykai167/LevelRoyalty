@@ -11,7 +11,9 @@
             <RowDefinition  Height="*"/>
         </Grid.RowDefinitions>
         <StackPanel Grid.Row="0" Grid.Column="0" Orientation="Horizontal">
-            <Label Content="用户名"  Height="25" Width="65"/>
+            <Label Content="登录名"  Height="25" Width="65"/>
+            <TextBox x:Name="txtUserName"  Height="25" Width="150"></TextBox>
+            <Label Content="真实姓名"  Height="25" Width="65"/>
             <TextBox x:Name="txtName"  Height="25" Width="150"></TextBox>
         </StackPanel>
         <local:Buttons Grid.Row="1" x:Name="btns"/>

@@ -62,6 +62,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="ChangePSWindow.xaml.cs">
+      <DependentUpon>ChangePSWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\Attributes\UserControlUseAttribute.cs" />
     <Compile Include="Controls\common\Buttons.xaml.cs">
       <DependentUpon>Buttons.xaml</DependentUpon>
@@ -111,6 +114,9 @@
     <Compile Include="Controls\WorkGroupControl.xaml.cs">
       <DependentUpon>WorkGroupControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="InitWindow.xaml.cs">
+      <DependentUpon>InitWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Models\ConusmeDataControlViewModel.cs" />
     <Compile Include="Models\LayOutViewModel.cs" />
     <Compile Include="Models\CurrentSettleControlViewModel.cs" />
@@ -122,6 +128,10 @@
     <Compile Include="Tip.xaml.cs">
       <DependentUpon>Tip.xaml</DependentUpon>
     </Compile>
+    <Page Include="ChangePSWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Controls\AdminsControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -185,6 +195,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Controls\WorkGroupControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="InitWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -265,6 +279,24 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Models\NewFolder1\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="icons\main.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="icons\key.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="main.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="key.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="icons\admin.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="admin.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

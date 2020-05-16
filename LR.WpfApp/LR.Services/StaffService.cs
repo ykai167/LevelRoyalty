@@ -11,6 +11,7 @@ namespace LR.Services
     public interface IStaffService : IUpdateService<LR.Entity.Staff>
     {
         object[] GetStaffs();
+        DateTime LastTime();
     }
 
     class StaffService : UpdateServiceBase<LR.Entity.Staff>, IStaffService
@@ -90,6 +91,11 @@ namespace LR.Services
             var guid = base.Insert(entity);
             MemoryData.Current.ReloadStaffs();
             return guid;
+        }
+
+        public DateTime LastTime()
+        {
+            return this.Context.Context.Queryable<Staff>().Max(p => p.ModifyDate);
         }
     }
 }

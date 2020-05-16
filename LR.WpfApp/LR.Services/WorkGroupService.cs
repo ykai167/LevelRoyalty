@@ -23,12 +23,18 @@ namespace LR.Services
 
     public interface IWorkGroupMemberService : IQueryService<WorkGroupMember>
     {
+        DateTime LastTime();
     }
     class WorkGroupMemberService : DeleteServiceBase<WorkGroupMember>, IWorkGroupMemberService
     {
         public WorkGroupMemberService(Repositories.DataContext context) : base(context)
         {
 
+        }
+
+        public DateTime LastTime()
+        {
+            return this.Context.Context.Queryable<WorkGroupMember>().Max(p => p.ModifyDate);
         }
     }
 

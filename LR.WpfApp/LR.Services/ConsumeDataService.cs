@@ -50,9 +50,9 @@ namespace LR.Services
                 throw new Exception("不存在记录");
             }
 
-            if (old.CreateDate.AddHours(1) < DateTime.Now)
+            if (old.CreateDate < MemoryData.Current.LastTime)
             {
-                throw new Exception("超过修改时限");
+                throw new Exception("配置数据,员工等级,工作组已发生变化,不可修改");
             }
 
             var currentSettle = new SettleBatchService(this.Context).GetOrGenCurrent();

@@ -17,7 +17,7 @@
             <Button Content="退出" Width="100px" Click="Button_Click"/>
         </StatusBarItem>
         <StatusBarItem>
-            <Button Content="修改密码" Width="100px" Click="Button_Click"/>
+            <Button Content="修改密码" Width="100px" Name="btnChange" Click="btnChange_Click"/>
         </StatusBarItem>
     </StatusBar>
 

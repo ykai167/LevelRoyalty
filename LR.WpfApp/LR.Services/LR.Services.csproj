@@ -71,7 +71,7 @@
     <Compile Include="RoomService.cs" />
     <Compile Include="RoyaltyService.cs" />
     <Compile Include="StaffService.cs" />
-    <Compile Include="calss.cs" />
+    <Compile Include="Initer.cs" />
     <Compile Include="Enums\StaffState.cs" />
     <Compile Include="WorkGroupService.cs" />
   </ItemGroup>

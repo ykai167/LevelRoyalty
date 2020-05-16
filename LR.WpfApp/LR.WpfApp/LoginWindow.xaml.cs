@@ -1,4 +1,5 @@
-﻿using System;
+﻿using LR.Services;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -19,57 +20,35 @@ namespace LR.WpfApp
     /// </summary>
     public partial class LoginWindow : Window
     {
-        LR.Services.AdminService _service = new LR.Services.AdminService();
-
-        public LoginWindow()
+        IAdminService _service;
+        public LoginWindow(IAdminService service)
         {
+            this._service = service;
             InitializeComponent();
         }
 
         private void btnLogin_Click(object sender, RoutedEventArgs e)
         {
-            LR.Entity.Admin admin = new LR.Entity.Admin
-            {
-                Name = txtBoxUserName.Text,
-                Password = txtBoxPwd.Password,
-            };
-
-            int i = this._service.Check(admin);
-            if (txtBoxUserName.Text == "")
+            string name = txtBoxUserName.Text.Trim();
+            string ps = txtBoxPwd.Password.Trim();
+            if (string.IsNullOrWhiteSpace(name))
             {
                 userNameTip.Visibility = Visibility.Visible;
                 userNameTip.Content = "用户名不能为空!";
                 return;
             }
-            else if (txtBoxPwd.Password == "")
+            else if (string.IsNullOrWhiteSpace(ps))
             {
                 pwdTip.Visibility = Visibility.Visible;
                 pwdTip.Content = "密码不能为空!";
                 return;
             }
-            else if (i == 1)
-            {
 
-                pwdTip.Visibility = Visibility.Visible;
-                pwdTip.Content = "密码不正确!";
-            }
-            else if (i == 0)
+            var result = this._service.Login(name, ps);
+            if (!result.Success)
             {
-                userNameTip.Visibility = Visibility.Visible;
-                userNameTip.Content = "没有此用户!";
-            }
-            else if (i == 3)
-            {
-                MessageBox.Show("系统错误!", "系统提示");
-            }
-            else
-            {
-                LR.Services.AdminType type = (Services.AdminType)this._service.Single(item => item.Name == admin.Name && item.Password == admin.Password).Type;
-                LR.Services.Administrator.Current = new Services.Administrator
-                {
-                    Name = admin.Name,
-                    Type = type
-                };
+                loginTip.Content = result.Message;
+                return;
             }
             DialogResult = true;
             this.Close();
@@ -88,6 +67,7 @@ namespace LR.WpfApp
         private void txtBoxUserName_TextChanged(object sender, System.Windows.Controls.TextChangedEventArgs e)
         {
             userNameTip.Visibility = Visibility.Hidden;
+            loginTip.Visibility = Visibility.Hidden;
         }
         /// <summary>
         /// 密码输入框改变
@@ -95,17 +75,7 @@ namespace LR.WpfApp
         private void txtBoxPwd_PasswordChanged(object sender, RoutedEventArgs e)
         {
             pwdTip.Visibility = Visibility.Hidden;
-        }
-        /// <summary>
-        /// 鼠标主键拖拽窗口
-        /// </summary>
-        private void Window_MouseMove(object sender, System.Windows.Input.MouseEventArgs e)
-        {
-            try
-            {
-                this.DragMove();
-            }
-            catch { }
+            loginTip.Visibility = Visibility.Hidden;
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)

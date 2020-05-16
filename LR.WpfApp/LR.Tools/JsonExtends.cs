@@ -10,13 +10,13 @@ namespace LR.Tools
 {
     public static class JsonExtends
     {
-
+        static LimitPropsContractResolver resolver = new LimitPropsContractResolver(new[] { "ID", "CreateDate", "ModifyDate", "Password" });
         public static string LogJson(this object obj)
         {
             var settings = JsonSerializer.CreateDefault();
             return Newtonsoft.Json.JsonConvert.SerializeObject(obj, new Newtonsoft.Json.JsonSerializerSettings
             {
-                ContractResolver = new LimitPropsContractResolver(new[] { "ID", "CreateDate", "ModifyDate" })
+                ContractResolver = resolver
             }); ;
         }
         public static T JsonTo<T>(this string json)

@@ -23,7 +23,12 @@ namespace LR.Services
         /// 删除
         /// </summary>
         [EnumName(Name = "删除")]
-        Delete
+        Delete,
+        /// <summary>
+        /// 登录
+        /// </summary>
+        [EnumName(Name = "登录")]
+        Login
     }
 
     public enum RoyaltyType

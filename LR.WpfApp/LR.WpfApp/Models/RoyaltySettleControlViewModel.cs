@@ -55,8 +55,11 @@ namespace LR.WpfApp.Models
             set
             {
                 currentBatch = value;
-                base.RaisePropertyChanged();
-                this.ChangeBatch(value.Num);
+                if (value != null)
+                {
+                    base.RaisePropertyChanged();
+                    this.ChangeBatch(value.Num);
+                }
             }
         }
 
@@ -109,7 +112,7 @@ namespace LR.WpfApp.Models
                  ID = item.ID,
                  StaffNo = item.StaffNo,
                  StaffID = item.StaffID,
-                 StaffName = MemoryData.Current.Staffs.FirstOrDefault(p => p.ID == item.StaffID)?.Name,
+                 StaffName = item.StaffName,
                  Administration = item.Items.FirstOrDefault(p => p.Key == RoyaltyType.Administration).Value,
                  Cooperation = item.Items.FirstOrDefault(p => p.Key == RoyaltyType.Cooperation).Value,
                  Reservation = item.Items.FirstOrDefault(p => p.Key == RoyaltyType.Reservation).Value,

@@ -80,16 +80,24 @@ namespace LR.WpfApp.Controls
                 MessageBox.Show("数据不完整", "错误");
                 return false;
             }
-            if (this.btns.IsAdd)
+            try
             {
-                this._service.Insert(entity);
+                if (this.btns.IsAdd)
+                {
+                    this._service.Insert(entity);
+                }
+                else
+                {
+                    this._service.Update(this.btns.DataID, new { entity.RoomID, entity.StaffID, entity.Amount });
+                }
+                InitData();
+                return true;
             }
-            else
+            catch (Exception e)
             {
-                this._service.Update(this.btns.DataID, new { entity.RoomID, entity.StaffID, entity.Amount });
+                MessageBox.Show(e.Message);
+                return false;
             }
-            InitData();
-            return true;
         }
 
         private bool Btns_OnDelete()

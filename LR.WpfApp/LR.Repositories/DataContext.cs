@@ -9,12 +9,15 @@ namespace LR.Repositories
 {
     public class DataContext : IDisposable
     {
+        static readonly string dbPath = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "app.data");
+
+        public static bool Exist { get { return System.IO.File.Exists(dbPath); } }
         ISqlSugarClient context;
         public DataContext(bool createTabel = false)
         {
             this.context = new SqlSugarClient(new ConnectionConfig
             {
-                ConnectionString = $"DataSource={Tools.ConfigHelper.AppSettings["sqliteConnectionString"] ?? System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "data.db")}",
+                ConnectionString = $"Data Source={dbPath};Password=3b581fc9-972b-4999-8b09-e0cebac5da9a",
                 InitKeyType = InitKeyType.Attribute,
                 DbType = DbType.Sqlite,
                 IsAutoCloseConnection = true,
@@ -32,8 +35,7 @@ namespace LR.Repositories
             {
                 this.context.CodeFirst.InitTables(this.GetType().GetProperties().Where(p => p.PropertyType.IsGenericType).Select(p => p.PropertyType.GetGenericArguments()[0]).ToArray());
             }
-        }
-
+        }        
         public ISqlSugarClient Context => context;
         public SimpleClient<Entity.Admin> Admins => new SimpleClient<Entity.Admin>(context);
         public SimpleClient<Entity.ConsumeData> ConsumeDatas => new SimpleClient<Entity.ConsumeData>(context);

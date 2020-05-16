@@ -37,5 +37,10 @@ namespace LR.WpfApp.Controls
         {
             Application.Current.MainWindow.Close();
         }
+
+        private void btnChange_Click(object sender, RoutedEventArgs e)
+        {
+            Tools.DIHelper.GetInstance<ChangePSWindow>().ShowDialog();
+        }
     }
 }

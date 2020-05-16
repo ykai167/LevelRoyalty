@@ -27,7 +27,7 @@ namespace LR.Services
         {
             if (entity.ID == new Guid())
             {
-                entity.ID = Guid.NewGuid();
+                entity.ID = Guid.NewGuid();                  
             }
             entity.CreateDate = DateTime.Now;
             this.Context.Context.Insertable<T>(entity).ExecuteCommand();

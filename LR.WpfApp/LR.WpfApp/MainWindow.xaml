@@ -7,7 +7,7 @@
         xmlns:local="clr-namespace:LR.WpfApp"
         xmlns:Controls="clr-namespace:LR.WpfApp.Controls" x:Class="LR.WpfApp.MainWindow"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800" WindowStartupLocation="CenterScreen" WindowState="Maximized">
+        Title="奖励管理系统" Height="450" Width="800" WindowStartupLocation="CenterScreen" WindowState="Maximized" Icon="main.ico">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="*"></RowDefinition>

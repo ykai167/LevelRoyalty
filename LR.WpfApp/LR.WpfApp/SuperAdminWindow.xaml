@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:LR.WpfApp"
         xmlns:Controls="clr-namespace:LR.WpfApp.Controls" x:Class="LR.WpfApp.SuperAdminWindow"
         mc:Ignorable="d"
-        Title="SuperAdminWindow" Height="450" Width="800">
+        Title="系统管理" Height="450" Width="800" Icon="admin.ico" WindowState="Maximized" WindowStartupLocation="CenterScreen">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="*"></RowDefinition>

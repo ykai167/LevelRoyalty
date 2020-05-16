@@ -10,6 +10,7 @@ namespace LR.Services
     public interface IRoyaltyConfigService : IUpdateService<LR.Entity.RoyaltyConfig>
     {
         LR.Entity.RoyaltyConfig GetConfig(RoyaltyType type, Guid acceptID, Guid expendID);
+        DateTime LastTime();
     }
 
     class RoyaltyConfigService : UpdateServiceBase<LR.Entity.RoyaltyConfig>, IRoyaltyConfigService
@@ -32,6 +33,11 @@ namespace LR.Services
                 });
             }
             return entity;
+        }
+
+        public DateTime LastTime()
+        {
+            return this.Context.Context.Queryable<RoyaltyConfig>().Max(p => p.ModifyDate);
         }
     }
 }

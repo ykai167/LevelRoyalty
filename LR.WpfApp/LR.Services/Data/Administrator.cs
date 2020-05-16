@@ -1,4 +1,5 @@
-﻿using System;
+﻿using LR.Tools;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -12,6 +13,11 @@ namespace LR.Services
         public Guid ID { get; set; }
         public string Name { get; set; }
         public AdminType Type { get; set; }
+
+        internal static string PsString(string ps)
+        {
+            return $"{ps}{nameof(ps)}{ps}".ToMD5();
+        }
     }
 
     public enum AdminType
