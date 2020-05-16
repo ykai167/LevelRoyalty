@@ -27,7 +27,8 @@ namespace LR.Models
                     }
                     else
                     {
-                        var group = Subs.Select(item => item.Level)
+                        var group = Subs.Where(p => p.Level != null)
+                            .Select(item => item.Level)
                             .Distinct()
                             .Select(level => new
                             {
@@ -37,10 +38,10 @@ namespace LR.Models
                             .OrderByDescending(g => g.level.Order)
                             .FirstOrDefault();
 
-                        var group2 = Subs.GroupBy(item => item.Level)
-                            .Where(g => g.Count() >= g.Key.MinCount)
-                            .OrderByDescending(g => g.Key.Order)
-                            .FirstOrDefault();
+                        //var group2 = Subs.GroupBy(item => item.Level)
+                        //    .Where(g => g.Count() >= g.Key.MinCount)
+                        //    .OrderByDescending(g => g.Key.Order)
+                        //    .FirstOrDefault();
 
                         this._level = group?.level.Upper ?? group?.level ?? LevelModel.Min;
                     }
