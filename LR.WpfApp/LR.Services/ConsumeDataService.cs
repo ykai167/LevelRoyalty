@@ -14,6 +14,7 @@ namespace LR.Services
     public interface IConsumeDataService : IUpdateService<ConsumeData>
     {
         LR.Tools.Pager<object> GetPage(int pageIndex, int pageSize);
+        List<ConsumeDataModel> GetExtractList(DateTime start, DateTime end);
         void Delete(Guid id);
     }
     class ConsumeDataService : UpdateServiceBase<ConsumeData>, IConsumeDataService
@@ -219,6 +220,27 @@ namespace LR.Services
                     insert(config, item);
                 }
             }
+        }
+
+        public List<ConsumeDataModel> GetExtractList(DateTime start, DateTime end)
+        {
+            var query = this.Context.Context.Queryable<Entity.ConsumeData, Entity.Room, Entity.Staff, Entity.Admin>((d, r, s, a) => d.RoomID == r.ID && d.StaffID == s.ID && d.OperatorID == a.ID)
+                .Where(d => d.CreateDate>=start && d.CreateDate <= end)
+                .Select((d, r, s, a) => new ConsumeDataModel
+                {
+                    ID = d.ID,
+                    Amount = d.Amount,
+                    CreateDate = d.CreateDate,
+                    ModifyDate = d.ModifyDate,
+                    RoomID = r.ID,
+                    RoomNo = r.No,
+                    RoomName = r.Name,
+                    StaffID = s.ID,
+                    StaffName = s.Name,
+                    StaffNo = s.No,
+                    Admin = a.Name
+                });
+            return query.ToList();
         }
 
         public LR.Tools.Pager<object> GetPage(int pageIndex, int pageSize)

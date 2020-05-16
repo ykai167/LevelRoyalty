@@ -65,7 +65,7 @@ namespace LR.WpfApp.Controls
         {
             if (this.lvwShow.ItemsSource == null)
             {
-                Tip p = new Tip("请把信息填写完整 !");
+                Tip p = new Tip("当前账期没有数据 !");
                 p.ShowDialog();
                 return;
             }
@@ -76,9 +76,19 @@ namespace LR.WpfApp.Controls
             if (sfd.ShowDialog() == System.Windows.Forms.DialogResult.OK)
             {
                 DataTable dt = IEnumerableHelper.ToDataTable<RoyaltySettleExpendModel>((IEnumerable<RoyaltySettleExpendModel>)this.lvwShow.ItemsSource);
+                String[] columns = { "StaffNo", "StaffName", "Reservation", "Administration", "Cooperation", "Transcend", "WorkGroup", "Total", "Expend", "Self", "Receiver", "Admin", "ModifyDate" };
+                String[] names = { "员工号", "姓名", "订房奖励", "管理奖励", "协助奖励", "超越奖励", "工作组管理奖励", "总金额", "是否已发", "是否本人领取", "领取人", "操作人", "领取时间" };
+                DataView dv = dt.DefaultView;
+                dt = dv.ToTable(true, columns);
+                for (int i = 0; i < columns.Length; i++)
+                {
+                    dt.Columns[columns[i]].ColumnName = names[i];
+                }
                 ExcelHelper.DataTableToExcel(dt, sfd.FileName);
             }
         }
+
+        
 
         //private void Cbx_SelectionChanged(object sender, SelectionChangedEventArgs e)
         //{

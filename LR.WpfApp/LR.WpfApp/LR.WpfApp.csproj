@@ -114,6 +114,9 @@
     <Compile Include="Controls\WorkGroupControl.xaml.cs">
       <DependentUpon>WorkGroupControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="ExtractTips.xaml.cs">
+      <DependentUpon>ExtractTips.xaml</DependentUpon>
+    </Compile>
     <Compile Include="InitWindow.xaml.cs">
       <DependentUpon>InitWindow.xaml</DependentUpon>
     </Compile>
@@ -195,6 +198,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Controls\WorkGroupControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="ExtractTips.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -116,21 +116,8 @@ namespace LR.WpfApp.Controls
 
         private void btnExtract_Click(object sender, EventArgs e)
         {
-            if (this.lvwShow.ItemsSource == null)
-            {
-                Tip p = new Tip("请把信息填写完整 !");
-                p.ShowDialog();
-                return;
-            }
-            System.Windows.Forms.SaveFileDialog sfd = new System.Windows.Forms.SaveFileDialog();
-            sfd.DefaultExt = "xls";
-            sfd.Filter = "Excel文件(*.xls)|*.xls";
-            sfd.Title = "导出文件路径";
-            if (sfd.ShowDialog() == System.Windows.Forms.DialogResult.OK)
-            {
-                DataTable dt = IEnumerableHelper.ToDataTable<Entity.ConsumeData>(this._service.List());
-                ExcelHelper.DataTableToExcel(dt, sfd.FileName);
-            }
+            ExtractTips p = new ExtractTips(this._service);
+            p.ShowDialog();
         }
 
         private void UcPager_NextPage(object sender, RoutedEventArgs e)
