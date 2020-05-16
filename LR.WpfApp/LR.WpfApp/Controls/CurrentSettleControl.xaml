@@ -16,7 +16,7 @@
             <TextBlock Text="{Binding Batch.Num}" VerticalAlignment="Center" Margin="10,0,0,0"></TextBlock>
             <Label Width="80px" HorizontalContentAlignment="Right" HorizontalAlignment="Center" VerticalAlignment="Center">开始时间：</Label>
             <TextBlock Text="{Binding Batch.BeginEnd}" VerticalAlignment="Center" Margin="10,0,0,0"></TextBlock>
-            <Button Height="25" Width="60" Click="Button_Click">结算</Button>
+            <Button Height="25" Width="60" Click="Button_Click" IsEnabled="{Binding CanSettlement}">结算</Button>
         </StackPanel>
         <Grid Grid.Row="1">
             <Grid.ColumnDefinitions>
@@ -28,12 +28,48 @@
                     <ListView.View>
                         <GridView>
                             <GridViewColumn Header="姓名" DisplayMemberBinding="{Binding Path=StaffName}"/>
-                            <GridViewColumn Header="订房奖励" DisplayMemberBinding="{Binding Path=Reservation}"/>
-                            <GridViewColumn Header="管理奖励" DisplayMemberBinding="{Binding Path=Administration}"/>
-                            <GridViewColumn Header="协助奖励" DisplayMemberBinding="{Binding Path=Cooperation}"/>
-                            <GridViewColumn Header="超越奖励" DisplayMemberBinding="{Binding Path=Transcend}"/>
-                            <GridViewColumn Header="工作组管理奖励" DisplayMemberBinding="{Binding Path=WorkGroup}"/>
-                            <GridViewColumn Header="总金额" DisplayMemberBinding="{Binding Path=Total}"/>
+                            <GridViewColumn Header="订房奖励">
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <TextBlock Text="{Binding Reservation}" TextAlignment="Right" />
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
+                            <GridViewColumn Header="管理奖励">
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <TextBlock Text="{Binding Administration}" TextAlignment="Right" />
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
+                            <GridViewColumn Header="协助奖励">
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <TextBlock Text="{Binding Cooperation}" TextAlignment="Right" />
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
+                            <GridViewColumn Header="超越奖励">
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <TextBlock Text="{Binding Transcend}" TextAlignment="Right" />
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
+                            <GridViewColumn Header="工作组管理奖励">
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <TextBlock Text="{Binding WorkGroup}" TextAlignment="Right" />
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
+                            <GridViewColumn Header="总金额" Width="80">
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <TextBlock Text="{Binding Total}" TextAlignment="Right" />
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
                         </GridView>
                     </ListView.View>
                 </ListView>
@@ -43,10 +79,28 @@
                     <ListView.View>
                         <GridView>
                             <GridViewColumn Header="订房员工"  DisplayMemberBinding="{Binding Path=StaffName}" />
-                            <GridViewColumn Header="消费金额"  DisplayMemberBinding="{Binding Path=Amount}"/>
+                            <GridViewColumn Header="消费金额">
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <TextBlock Text="{Binding Amount}" TextAlignment="Right" />
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
                             <GridViewColumn Header="奖励类型"  DisplayMemberBinding="{Binding Path=RoyaltyType}"/>
-                            <GridViewColumn Header="比例"  DisplayMemberBinding="{Binding Path=Percent}"/>
-                            <GridViewColumn Header="奖励金额"   DisplayMemberBinding="{Binding Path=Total}"/>
+                            <GridViewColumn Header="比例">
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <TextBlock Text="{Binding Percent}" TextAlignment="Right" />
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
+                            <GridViewColumn Header="奖励金额" Width="80">
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <TextBlock Text="{Binding Total}" TextAlignment="Right" />
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
                             <GridViewColumn Header="时间"      DisplayMemberBinding="{Binding Path=CreateDate}"/>
                         </GridView>
                     </ListView.View>

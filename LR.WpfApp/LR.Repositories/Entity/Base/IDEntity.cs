@@ -9,10 +9,8 @@ namespace LR.Entity
     public class IDEntity<TID>
     {
         [SqlSugar.SugarColumn(IsPrimaryKey = true)]
-        [Newtonsoft.Json.JsonIgnore]
         public TID ID { get; set; }
         
-        [Newtonsoft.Json.JsonIgnore]
         public DateTime CreateDate { get; set; }
     }
 

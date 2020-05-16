@@ -50,7 +50,7 @@
                 <ComboBox Height="25" MinWidth="100" Name="cbxState"></ComboBox>
             </StackPanel>
         </Grid>
-        <ListView Grid.Row="1" Name="lvwShow" SelectionChanged="LvwShow_SelectionChanged">
+        <ListView Grid.Row="1" Name="lvwShow" SelectedValuePath="ID" SelectionChanged="LvwShow_SelectionChanged">
             <ListView.View>
                 <GridView>
                     <GridViewColumn Header="工号" DisplayMemberBinding="{Binding Path=No}" />

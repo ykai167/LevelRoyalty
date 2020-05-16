@@ -8,8 +8,8 @@
              d:DesignHeight="41">
     <StackPanel Grid.Row="1" Grid.Column="0" Orientation="Horizontal" HorizontalAlignment="Left">
         <TextBlock Name="tbxInfo" Margin="0 0 10 0" VerticalAlignment="Center" Foreground="#FFF02743"/>
-        <Button x:Name="btnAdd"  Content="新增" Height="25" Width="60" Click="btnAdd_Click" Margin="0 0 10 0" />
         <Button x:Name="btnSave"  Content="保存" Height="25" Width="60" Click="btnSave_Click"  Margin="0 0 10 0"/>
         <Button x:Name="btnDelete" Content="删除" Height="25" Width="60" Click="btnDelete_Click"  Margin="0 0 10 0"/>
+        <Button x:Name="btnReset" Content="重置" Height="25" Width="60" Click="btnReset_Click"  Margin="0 0 10 0"/>
     </StackPanel>
 </UserControl>

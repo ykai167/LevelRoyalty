@@ -37,7 +37,7 @@ namespace LR.Services
                 ID = Guid.NewGuid(),
                 OperatorID = LR.Services.Administrator.Current.ID,
                 Table = typeof(T).Name,
-                Data = entity.Json(),
+                Data = entity.LogJson(),
                 Type = (int)LogType.Insert,
                 DataID = entity.ID
             }).ExecuteCommand();

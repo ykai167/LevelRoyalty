@@ -6,5 +6,8 @@
         <Style  TargetType="{x:Type Button}" >
             <Setter Property="Width" Value="100"></Setter>
         </Style>
+        <Style TargetType="ListViewItem">
+            <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+        </Style>
     </Application.Resources>
 </Application>

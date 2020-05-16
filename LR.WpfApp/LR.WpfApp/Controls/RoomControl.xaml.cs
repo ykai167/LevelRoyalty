@@ -38,30 +38,34 @@ namespace LR.WpfApp.Controls
 
             this.btns.OnSave += Btns_OnSave;
             this.btns.OnDelete += Btns_OnDelete;
-            this.btns.OnAdd += Btns_OnAdd;
+            this.btns.OnReset += Btns_OnReset;
             this.lvwShow.SelectionChanged += LvwShow_SelectionChanged1;
         }
-        Guid ID;
-        private void Btns_OnDelete(object sender, EventArgs e)
+        private bool Btns_OnDelete()
         {
-            this._service.Update(ID, new { State = (int)Services.StaffState.Delete });
+            this._service.Update(btns.DataID, new { State = (int)Services.StaffState.Delete });
             this.InitListView();
+            return true;
         }
 
-        private void Btns_OnAdd(object sender, EventArgs e)
+        private void Btns_OnReset()
         {
-            this.ID = new Guid();
             this.txtNo.Text = "";
             this.txtName.Text = "";
             this.cbxCategory.SelectedItem = null;
         }
 
-        private void Btns_OnSave(object sender, EventArgs e)
+        private bool Btns_OnSave()
         {
+            if (string.IsNullOrWhiteSpace(this.txtName.Text) || string.IsNullOrWhiteSpace(this.txtNo.Text))
+            {
+                MessageBox.Show("输入不完整");
+                return false;
+            }
             if (this.cbxCategory.SelectedItem == null)
             {
                 MessageBox.Show("未选择房间类型", "提示");
-                return;
+                return false;
             }
             LR.Entity.Room room = new LR.Entity.Room()
             {
@@ -70,13 +74,13 @@ namespace LR.WpfApp.Controls
                 Summary = this.txtSummary.Text,
                 CategoryID = (this.cbxCategory.SelectedItem as Entity.RoomCategory).ID
             };
-            if (this.ID == new Guid())
+            if (btns.IsAdd)
             {
                 this._service.Insert(room);
             }
             else
             {
-                this._service.Update(ID, new
+                this._service.Update(btns.DataID, new
                 {
                     room.Name,
                     room.No,
@@ -85,6 +89,7 @@ namespace LR.WpfApp.Controls
                 });
             }
             this.InitListView();
+            return true;
         }
 
         private void InitListView()
@@ -97,11 +102,9 @@ namespace LR.WpfApp.Controls
             {
                 this.txtNo.Text = this.lvwShow.SelectedItem.GetObjectValue<string>("No");
                 this.txtName.Text = this.lvwShow.SelectedItem.GetObjectValue<string>("Name");
-                this.ID = this.lvwShow.SelectedItem.GetObjectValue<Guid>("ID");
                 this.txtSummary.Text = this.lvwShow.SelectedItem.GetObjectValue<string>("Summary");
 
-                //加载成员
-                this.btns.SetEdit();
+                this.btns.SetEdit(this.lvwShow.SelectedItem.GetObjectValue<Guid>("ID"));
             }
         }
     }

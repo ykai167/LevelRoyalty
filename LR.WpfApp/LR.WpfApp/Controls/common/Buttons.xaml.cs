@@ -20,35 +20,25 @@ namespace LR.WpfApp.Controls
     /// </summary>
     public partial class Buttons : UserControl
     {
+        const string Add = "[添加数据]";
+        const string Edit = "[编辑数据]";
         public Buttons()
         {
             InitializeComponent();
-            this.tbxInfo.Visibility = this.btnSave.Visibility = this.btnDelete.Visibility = Visibility.Collapsed;
+            this.Reset();
         }
 
-        private void btnAdd_Click(object sender, RoutedEventArgs e)
-        {
-            if (sender == this.btnAdd)
-            {
-                this.OnAdd?.Invoke(this, e);
-                this.tbxInfo.Text = "[新增状态]";
-                this.btnDelete.Visibility
-                    = this.btnAdd.Visibility
-                    = Visibility.Collapsed;
-                this.tbxInfo.Visibility
-                    = this.btnSave.Visibility
-                    = Visibility.Visible;
-                e.Handled = true;
-            }
-        }
 
         private void btnSave_Click(object sender, RoutedEventArgs e)
         {
             if (sender == this.btnSave)
             {
-                this.OnSave?.Invoke(this, e);
-                this.tbxInfo.Visibility = this.btnSave.Visibility = this.btnDelete.Visibility = Visibility.Collapsed;
-                this.btnAdd.Visibility = Visibility.Visible;
+                var success = this.OnSave?.Invoke() ?? false;
+                if (success)
+                {
+                    this.tbxInfo.Text = Add;
+                    this.OnReset?.Invoke();
+                }
                 e.Handled = true;
             }
         }
@@ -57,23 +47,42 @@ namespace LR.WpfApp.Controls
         {
             if (sender == this.btnDelete)
             {
-                this.OnDelete?.Invoke(this, e);
-                this.btnSave.Visibility = this.btnDelete.Visibility = Visibility.Collapsed;
+                var success = this.OnDelete?.Invoke() ?? false;
+                if (success)
+                {
+                    this.Reset();
+                }
+                e.Handled = true;
+            }
+        }
+        private void btnReset_Click(object sender, RoutedEventArgs e)
+        {
+            if (sender == this.btnReset)
+            {
+                this.Reset();
+                this.OnReset?.Invoke();
                 e.Handled = true;
             }
         }
 
-        public event EventHandler OnAdd;
-        public event EventHandler OnDelete;
-        public event EventHandler OnSave;
+        public event Action OnReset;
+        public event Func<bool> OnDelete;
+        public event Func<bool> OnSave;
 
-        public void SetEdit()
+        public Guid DataID { get; private set; }
+        public bool IsAdd { get { return DataID == Guid.Empty; } }
+        public void SetEdit(Guid id)
         {
-            this.tbxInfo.Visibility
-                = this.btnAdd.Visibility
-                = this.btnSave.Visibility
-                = this.btnDelete.Visibility = Visibility.Visible;
-            this.tbxInfo.Text = "[编辑状态]";
+            this.tbxInfo.Text = id == Guid.Empty ? Add : Edit;
+            this.DataID = id;
+            this.btnDelete.Visibility = Visibility.Visible;
+        }
+
+        void Reset()
+        {
+            this.DataID = Guid.Empty;
+            this.btnDelete.Visibility = Visibility.Collapsed;
+            this.tbxInfo.Text = Add;
         }
     }
 }

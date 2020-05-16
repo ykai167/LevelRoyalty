@@ -51,46 +51,47 @@ namespace LR.WpfApp.Controls
 
             this.btns.OnSave += Btns_OnSave;
             this.btns.OnDelete += Btns_OnDelete;
-            this.btns.OnAdd += Btns_OnAdd;
+            this.btns.OnReset += Btns_OnAdd;
         }
 
-        private void Btns_OnAdd(object sender, EventArgs e)
+        private void Btns_OnAdd()
         {
-            this.groupID = new Guid();
             this.lvwShow.SelectedItem = null;
             this.txtName.Text = "";
         }
 
-        private void Btns_OnDelete(object sender, EventArgs e)
+        private bool Btns_OnDelete()
         {
-            var r = this._service.Delete(this.groupID);
+            var r = this._service.Delete(this.btns.DataID);
             if (r.Success)
             {
                 this.InitListView();
+                return true;
             }
             else
             {
                 MessageBox.Show(r.Message, "错误");
-                return;
+                return false;
             }
         }
 
-        private void Btns_OnSave(object sender, EventArgs e)
+        private bool Btns_OnSave()
         {
             if (string.IsNullOrWhiteSpace(this.txtName.Text))
             {
                 MessageBox.Show("未输入或输入无效", "提示");
-                return;
+                return false;
             }
-            if (this.groupID == new Guid())
+            if (this.btns.IsAdd)
             {
                 this._service.Insert(new Entity.WorkGroup { Name = this.txtName.Text });
             }
             else
             {
-                this._service.Update(groupID, new { Name = this.txtName.Text });
+                this._service.Update(this.btns.DataID, new { Name = this.txtName.Text });
             }
             this.InitListView();
+            return true;
         }
 
         private void Btn_Click(object sender, RoutedEventArgs e)
@@ -131,7 +132,7 @@ namespace LR.WpfApp.Controls
                 else
                 {
                     //加载成员
-                    this.lvwStaff.ItemsSource = this._service.GetMembers(groupID);
+                    this.lvwStaff.ItemsSource = this._service.GetMembers(this.btns.DataID);
                 }
             }
         }
@@ -145,17 +146,16 @@ namespace LR.WpfApp.Controls
             }
         }
 
-        Guid groupID;
         private void LvwShow_SelectionChanged1(object sender, SelectionChangedEventArgs e)
         {
             if (sender == this.lvwShow && this.lvwShow.SelectedItem != null)
             {
                 this.txtName.Text = this.lvwShow.SelectedItem.GetObjectValue("Name")?.ToString();
-                this.groupID = (Guid)this.lvwShow.SelectedItem.GetObjectValue("ID");
+                var dataId = (Guid)this.lvwShow.SelectedItem.GetObjectValue("ID");
 
                 //加载成员
-                this.lvwStaff.ItemsSource = this._service.GetMembers(groupID);
-                this.btns.SetEdit();
+                this.lvwStaff.ItemsSource = this._service.GetMembers(dataId);
+                this.btns.SetEdit(dataId);
             }
         }
 

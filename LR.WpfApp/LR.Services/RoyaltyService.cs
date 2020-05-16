@@ -1,5 +1,6 @@
 ﻿using LR.Entity;
 using LR.Models;
+using LR.Tools;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -29,7 +30,7 @@ namespace LR.Services
         public List<object> Detaile(Guid staffID, int settleNum)
         {
             var data = this.Context.Context
-                .Queryable<Royalty, ConsumeData, Staff>((r, c, s) => c.ID == r.ConsumeDataID && r.StaffID == s.ID)
+                .Queryable<Royalty, ConsumeData, Staff>((r, c, s) => c.ID == r.ConsumeDataID && c.StaffID == s.ID)
                 .Where((r, c, s) => r.StaffID == staffID && r.SettleNum == settleNum)
                 .OrderBy(r => r.RoyaltyType)
                 .Select((r, c, s) => new
@@ -43,11 +44,11 @@ namespace LR.Services
                 .Select(p => (object)new
                 {
                     p.StaffName,
-                    p.Amount,
+                    Amount = p.Amount.Places(2),
                     p.CreateDate,
-                    p.Percent,
+                    Percent = p.Percent.Places(4),
                     RoyaltyType = p.RoyaltyType.GetName(),
-                    Total = p.Amount * p.Percent
+                    Total = (p.Amount * p.Percent).Places(2)
                 }).ToList();
 
             return data;

@@ -34,7 +34,7 @@ namespace LR.WpfApp.Controls
             this._wService = wService;
             InitListView();
             this.btns.OnSave += Btns_OnSave;
-            this.btns.OnAdd += Btns_OnAdd;
+            this.btns.OnReset += Btns_OnReset;
             this.btns.OnDelete += Btns_OnDelete;
 
             this.cbxWorkGroupID.ItemsSource = _wService.List().Select(p => new { p.Name, p.ID });
@@ -57,6 +57,8 @@ namespace LR.WpfApp.Controls
             this.cbxState.SelectionChanged += Cbx_SelectionChanged;
             this.cbxRefererID.SelectionChanged += Cbx_SelectionChanged;
             this.cbxWorkGroupID.SelectionChanged += Cbx_SelectionChanged;
+
+            Btns_OnReset();
         }
 
         private void Cbx_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -69,30 +71,32 @@ namespace LR.WpfApp.Controls
                     var value = cbx.SelectedValue;
                     if (cbx == this.cbxState)
                     {
-                        this._service.Update(ID, new { State = value });
+                        this._service.Update(this.btns.DataID, new { State = value });
                     }
                     else if (cbx == this.cbxRefererID)
                     {
-                        this._service.Update(ID, new { ReferrerID = value });
+                        this._service.Update(this.btns.DataID, new { ReferrerID = value });
                     }
                     else if (cbx == this.cbxWorkGroupID)
                     {
-                        this._wService.AddMember((Guid)value, ID);
+                        this._wService.AddMember((Guid)value, this.btns.DataID);
                     }
                     InitListView();
+                    this.lvwShow.SelectedValue = this.btns.DataID;
                 }
+                e.Handled = true;
             }
         }
 
-        private void Btns_OnDelete(object sender, EventArgs e)
+        private bool Btns_OnDelete()
         {
-            this._service.Update(ID, new { State = (int)Services.StaffState.Delete });
+            this._service.Update(this.btns.DataID, new { State = (int)Services.StaffState.Delete });
             this.InitListView();
+            return true;
         }
 
-        private void Btns_OnAdd(object sender, EventArgs e)
+        private void Btns_OnReset()
         {
-            this.ID = new Guid();
             this.txtIdenNo.Text = "";
             this.txtNo.Text = "";
             this.txtName.Text = "";
@@ -101,7 +105,7 @@ namespace LR.WpfApp.Controls
             cbxHide();
         }
 
-        private void Btns_OnSave(object sender, EventArgs e)
+        private bool Btns_OnSave()
         {
             LR.Entity.Staff staff = new LR.Entity.Staff()
             {
@@ -111,13 +115,21 @@ namespace LR.WpfApp.Controls
                 Name = this.txtName.Text,
                 EntryTime = this.dpEntryTime.SelectedDate
             };
-            if (this.ID == new Guid())
+            if (string.IsNullOrEmpty(staff.No)
+                || string.IsNullOrEmpty(staff.IdenNo)
+                || string.IsNullOrEmpty(staff.MobileNo)
+                || string.IsNullOrEmpty(staff.Name))
+            {
+                MessageBox.Show("输入不完整", "提示");
+                return false;
+            }
+            if (this.btns.IsAdd)
             {
                 this._service.Insert(staff);
             }
             else
             {
-                this._service.Update(ID, new
+                this._service.Update(this.btns.DataID, new
                 {
                     staff.Name,
                     staff.No,
@@ -127,15 +139,14 @@ namespace LR.WpfApp.Controls
                 });
             }
             this.InitListView();
+            return true;
         }
 
         private void InitListView()
         {
             this.lvwShow.ItemsSource = this._service.GetStaffs();
-            cbxHide();
         }
 
-        Guid ID;
         bool listSelecting = false;
         private void LvwShow_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
@@ -143,21 +154,31 @@ namespace LR.WpfApp.Controls
             {
                 listSelecting = true;
                 var selectedItem = lvwShow.SelectedItem;
-                this.ID = selectedItem.GetObjectValue<Guid>(nameof(ID));
+                Guid id = selectedItem.GetObjectValue<Guid>("ID");
                 this.txtIdenNo.Text = selectedItem.GetObjectValue("IdenNo") as string;
                 this.txtNo.Text = selectedItem.GetObjectValue("No") as string;
                 this.txtName.Text = selectedItem.GetObjectValue("Name") as string;
                 this.txtMobileNo.Text = selectedItem.GetObjectValue("MobileNo") as string;
                 this.dpEntryTime.SelectedDate = selectedItem.GetObjectValue<DateTime?>("EntryTime");
-                this.btns.SetEdit();
+                this.btns.SetEdit(id);
 
                 this.cbxWorkGroupID.SelectedValue = selectedItem.GetObjectValue("WorkGroupID");
-                this.cbxState.SelectedValue = selectedItem.GetObjectValue("State");
+
+                int state = selectedItem.GetObjectValue<int>("State");
+                this.cbxState.SelectedValue = state;
+                if (state == (int)StaffState.Quit)
+                {
+                    this.cbxRefererID.IsEnabled = this.cbxWorkGroupID.IsEnabled = false;
+                }
+                else
+                {
+                    this.cbxRefererID.IsEnabled = this.cbxWorkGroupID.IsEnabled = true;
+                }
                 this.cbxRefererID.ItemsSource =
                     new[] { new { name = "无", id = new Guid() } }.Concat(
                     LR.Services.MemoryData.Current
                     .Staffs
-                    .GetReferrers(this.ID)
+                    .GetReferrers(id)
                     .Select(item => new
                     {
                         name = item.Name,
@@ -167,6 +188,7 @@ namespace LR.WpfApp.Controls
                 this.cbxRefererID.SelectedValue = selectedItem.GetObjectValue("ReferrerID");
                 cbxShow();
                 listSelecting = false;
+                this.btns.SetEdit(id);
             }
         }
 

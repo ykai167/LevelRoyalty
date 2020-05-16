@@ -18,7 +18,6 @@ namespace LR.Entity
         /// <summary>
         /// 更新时间
         /// </summary>
-        [Newtonsoft.Json.JsonIgnore]
         public DateTime ModifyDate { get; set; }
 
         /// <summary>

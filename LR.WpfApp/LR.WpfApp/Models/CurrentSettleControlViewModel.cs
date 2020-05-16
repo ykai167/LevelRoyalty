@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using LR.Tools;
 
 namespace LR.WpfApp.Models
 {
@@ -16,22 +17,7 @@ namespace LR.WpfApp.Models
         {
             this._royaltyService = royaltySettleService;
             this._settleBatchService = settleBatchService;
-            var current = settleBatchService.GetOrGenCurrent();
-            this.batchs = new SettleBatch { Num = current.Num, BeginEnd = $"{current.StartTime.ToString("yyyy-MM-dd HH:mm:ss")}" };
-            this.Rows = _royaltyService.Statistics(current.Num)
-                .Select(item => new RoyaltySettleModel
-                {
-                    ID = item.ID,
-                    StaffID = item.StaffID,
-                    StaffNo = item.StaffNo,
-                    StaffName = MemoryData.Current.Staffs.FirstOrDefault(p => p.ID == item.StaffID)?.Name,
-                    Administration = item.Items.FirstOrDefault(p => p.Key == RoyaltyType.Administration).Value,
-                    Cooperation = item.Items.FirstOrDefault(p => p.Key == RoyaltyType.Cooperation).Value,
-                    Reservation = item.Items.FirstOrDefault(p => p.Key == RoyaltyType.Reservation).Value,
-                    Transcend = item.Items.FirstOrDefault(p => p.Key == RoyaltyType.Transcend).Value,
-                    WorkGroup = item.Items.FirstOrDefault(p => p.Key == RoyaltyType.WorkGroup).Value,
-                    Total = item.Total
-                }).ToList();
+            this.Reload();
             this.BatchSelectedCommand = new Prism.Commands.DelegateCommand<object>(BatchSelected);
         }
 
@@ -42,10 +28,25 @@ namespace LR.WpfApp.Models
         public SettleBatch Batch
         {
             get { return batchs; }
-            set { batchs = value; }
+            set { batchs = value; base.RaisePropertyChanged(); }
         }
 
-        public List<RoyaltySettleModel> Rows { get; set; }
+        List<RoyaltySettleModel> rows;
+        public List<RoyaltySettleModel> Rows
+        {
+            get
+            {
+                return rows;
+            }
+            set
+            {
+                rows = value;
+                base.RaisePropertyChanged();
+                base.RaisePropertyChanged(nameof(this.CanSettlement)) ;
+            }
+        }
+
+        public bool CanSettlement { get { return this.Rows.Count > 0; } }
         void BatchSelected(object num)
         {
         }
@@ -61,6 +62,29 @@ namespace LR.WpfApp.Models
         {
             this.Detailes = _royaltyService.Detaile(staffID, Batch.Num);
         }
+
+        public void Reload()
+        {
+            var current = _settleBatchService.GetOrGenCurrent();
+            this.Batch = new SettleBatch
+            {
+                Num = current.Num,
+                BeginEnd = $"{current.StartTime.ToString("yyyy-MM-dd HH:mm:ss")}"
+            };
+            this.Rows = _royaltyService.Statistics(current.Num)
+                .Select(item => new RoyaltySettleModel
+                {
+                    ID = item.ID,
+                    StaffID = item.StaffID,
+                    StaffNo = item.StaffNo,
+                    StaffName = MemoryData.Current.Staffs.FirstOrDefault(p => p.ID == item.StaffID)?.Name,
+                    Administration = item.Items.FirstOrDefault(p => p.Key == RoyaltyType.Administration).Value,
+                    Cooperation = item.Items.FirstOrDefault(p => p.Key == RoyaltyType.Cooperation).Value,
+                    Reservation = item.Items.FirstOrDefault(p => p.Key == RoyaltyType.Reservation).Value,
+                    Transcend = item.Items.FirstOrDefault(p => p.Key == RoyaltyType.Transcend).Value,
+                    WorkGroup = item.Items.FirstOrDefault(p => p.Key == RoyaltyType.WorkGroup).Value,
+                }).ToList();
+        }
     }
     public class RoyaltySettleModel
     {
@@ -72,20 +96,20 @@ namespace LR.WpfApp.Models
         public string StaffNo { get; set; }
         /// <summary>
         /// 提成员工
-        /// </summary>
+        /// </summary>        
         public string StaffName { get; set; }
 
-        public decimal Reservation { get; set; }
-
-        public decimal Administration { get; set; }
-
-        public decimal Cooperation { get; set; }
-
-        public decimal Transcend { get; set; }
-
-        public decimal WorkGroup { get; set; }
-
-        public decimal Total { get; set; }
+        decimal _eservation;
+        public decimal Reservation { get { return _eservation.Places(); } set { _eservation = value; } }
+        decimal a;
+        public decimal Administration { get { return a.Places(); } set { a = value; } }
+        decimal c;
+        public decimal Cooperation { get { return c.Places(); } set { c = value; } }
+        decimal tr;
+        public decimal Transcend { get { return tr.Places(); } set { tr = value; } }
+        decimal w;
+        public decimal WorkGroup { get { return w.Places(); } set { w = value; } }
+        public decimal Total { get { return Reservation + Administration + Cooperation + Transcend + WorkGroup; } }
     }
 
 }

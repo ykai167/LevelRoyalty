@@ -53,7 +53,7 @@ namespace LR.Services
                 OperatorID = Administrator.Current.ID,
                 ID = Guid.NewGuid(),
                 Table = typeof(T).Name,
-                Data = columData.Json()
+                Data = columData.LogJson()
             }).ExecuteCommand();
             this.Context.Context.Updateable<T>(dic).Where(item => item.ID == id).ExecuteCommand();
         }

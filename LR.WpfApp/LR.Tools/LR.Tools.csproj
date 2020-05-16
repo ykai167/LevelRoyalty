@@ -74,6 +74,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Attribute.cs" />
+    <Compile Include="Class1.cs" />
     <Compile Include="IEnumerableHelper.cs" />
     <Compile Include="JsonExtends.cs" />
     <Compile Include="ObjectExtends.cs" />

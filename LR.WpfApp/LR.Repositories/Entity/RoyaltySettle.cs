@@ -14,6 +14,8 @@ namespace LR.Entity
         /// 员工ID
         /// </summary>
         public Guid StaffID { get; set; }
+
+        [SqlSugar.SugarColumn(IsIgnore = true)]
         public string StaffNo { get; set; }
         /// <summary>
         /// 员工姓名

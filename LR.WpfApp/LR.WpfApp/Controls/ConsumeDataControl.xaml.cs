@@ -45,7 +45,7 @@ namespace LR.WpfApp.Controls
             this.cbxStaff.SelectedValuePath = "id";
             this.cbxStaff.SelectedIndex = 0;
 
-            this.btns.OnAdd += Btns_OnAdd;
+            this.btns.OnReset += Btns_OnAdd;
             this.btns.OnDelete += Btns_OnDelete; ;
             this.btns.OnSave += Btns_OnSave; ;
 
@@ -55,18 +55,18 @@ namespace LR.WpfApp.Controls
             this.ucPager.NextPage += UcPager_NextPage;
         }
 
-        private void Btns_OnSave(object sender, EventArgs e)
+        private bool Btns_OnSave()
         {
             decimal amount;
             if (!decimal.TryParse(this.txtAmount.Text, out amount))
             {
                 MessageBox.Show("金额输入错误", "错误");
-                return;
+                return false;
             }
             if (this.cbxRoom.SelectedValue == null || this.cbxStaff.SelectedValue == null)
             {
                 MessageBox.Show("未选择房间或员工", "错误");
-                return;
+                return false;
             }
 
             var entity = new Entity.ConsumeData
@@ -75,29 +75,31 @@ namespace LR.WpfApp.Controls
                 RoomID = (Guid)this.cbxRoom.SelectedValue,
                 StaffID = (Guid)this.cbxStaff.SelectedValue
             };
-            if (entity.RoomID == new Guid() || entity.StaffID == new Guid())
+            if (entity.RoomID == Guid.Empty || entity.StaffID == Guid.Empty)
             {
                 MessageBox.Show("数据不完整", "错误");
-                return;
+                return false;
             }
-            if (this.ID == new Guid())
+            if (this.btns.IsAdd)
             {
                 this._service.Insert(entity);
             }
             else
             {
-                this._service.Update(ID, new { entity.RoomID, entity.StaffID, entity.Amount });
+                this._service.Update(this.btns.DataID, new { entity.RoomID, entity.StaffID, entity.Amount });
             }
             InitData();
+            return true;
         }
 
-        private void Btns_OnDelete(object sender, EventArgs e)
+        private bool Btns_OnDelete()
         {
-            this._service.Delete(ID);
+            this._service.Delete(this.btns.DataID);
             InitData();
+            return true;
         }
 
-        private void Btns_OnAdd(object sender, EventArgs e)
+        private void Btns_OnAdd()
         {
             this.txtAmount.Text = "";
             this.cbxRoom.SelectedValue = null;
@@ -117,7 +119,7 @@ namespace LR.WpfApp.Controls
             sfd.Filter = "Excel文件(*.xls)|*.xls";
             sfd.Title = "导出文件路径";
             if (sfd.ShowDialog() == System.Windows.Forms.DialogResult.OK)
-            {       
+            {
                 DataTable dt = IEnumerableHelper.ToDataTable<Entity.ConsumeData>(this._service.List());
                 ExcelHelper.DataTableToExcel(dt, sfd.FileName);
             }
@@ -147,15 +149,14 @@ namespace LR.WpfApp.Controls
             InitData();
         }
 
-        Guid ID;
         private void LvwShow_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if (sender == this.lvwShow && this.lvwShow.SelectedItem != null)
             {
-                this.ID = this.lvwShow.SelectedItem.GetObjectValue<Guid>(nameof(ID));
                 this.txtAmount.Text = this.lvwShow.SelectedItem.GetObjectValue("Amount")?.ToString();
                 this.cbxStaff.SelectedValue = this.lvwShow.SelectedItem.GetObjectValue("StaffID");
                 this.cbxRoom.SelectedValue = this.lvwShow.SelectedItem.GetObjectValue("RoomID");
+                this.btns.SetEdit(this.lvwShow.SelectedItem.GetObjectValue<Guid>("ID"));
             }
         }
 

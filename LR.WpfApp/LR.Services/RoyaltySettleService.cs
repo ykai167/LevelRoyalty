@@ -84,7 +84,7 @@ namespace LR.Services
                     SettleNum = currentSettle.Num,
                     StaffID = item.StaffID,
                     State = (int)DataState.Normal,
-                    Json = item.Items.Json()
+                    Json = item.Items.LogJson()
                 }).ToArray());
 
                 //2.当前账期结束

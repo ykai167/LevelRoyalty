@@ -1,4 +1,5 @@
 ﻿using LR.Entity;
+using LR.Tools;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -223,12 +224,12 @@ namespace LR.Services
         public LR.Tools.Pager<object> GetPage(int pageIndex, int pageSize)
         {
             var query = this.Context.Context.Queryable<Entity.ConsumeData, Entity.Room, Entity.Staff, Entity.Admin>((d, r, s, a) => d.RoomID == r.ID && d.StaffID == s.ID && d.OperatorID == a.ID)
-                .Select((d, r, s, a) => new
+                .Select((d, r, s, a) => new ConsumeDataModel
                 {
-                    d.ID,
-                    d.Amount,
-                    d.CreateDate,
-                    d.ModifyDate,
+                    ID = d.ID,
+                    Amount = d.Amount,
+                    CreateDate = d.CreateDate,
+                    ModifyDate = d.ModifyDate,
                     RoomID = r.ID,
                     RoomNo = r.No,
                     RoomName = r.Name,
@@ -239,5 +240,22 @@ namespace LR.Services
                 });
             return new Tools.Pager<object>(query.OrderBy(d => d.CreateDate, SqlSugar.OrderByType.Desc).ToPageList(pageIndex, pageSize), pageSize, query.Count());
         }
+    }
+
+    public class ConsumeDataModel
+    {
+        public Guid ID { get; set; }
+        decimal a;
+        public decimal Amount { get { return a.Places(2); } set { a = value; } }
+        public DateTime CreateDate { get; set; }
+        public DateTime ModifyDate { get; set; }
+        public Guid RoomID { get; set; }
+        public string RoomNo { get; set; }
+        public string RoomName { get; set; }
+        public Guid StaffID { get; set; }
+        public string StaffName { get; set; }
+        public string StaffNo { get; set; }
+        public string Admin { get; set; }
+
     }
 }

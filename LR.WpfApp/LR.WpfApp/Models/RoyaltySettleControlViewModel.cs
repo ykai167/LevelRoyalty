@@ -99,8 +99,7 @@ namespace LR.WpfApp.Models
                 }
             }
         }
-
-        int num = 0;
+        int num;
         public void ChangeBatch(int num)
         {
             this.num = num;
@@ -116,7 +115,6 @@ namespace LR.WpfApp.Models
                  Reservation = item.Items.FirstOrDefault(p => p.Key == RoyaltyType.Reservation).Value,
                  Transcend = item.Items.FirstOrDefault(p => p.Key == RoyaltyType.Transcend).Value,
                  WorkGroup = item.Items.FirstOrDefault(p => p.Key == RoyaltyType.WorkGroup).Value,
-                 Total = item.Total,
                  IsExpend = item.IsExpend,
                  IsSelf = item.IsSelf,
                  Receiver = item.Receiver,
@@ -176,6 +174,7 @@ namespace LR.WpfApp.Models
             this.Current.Receiver = name;
             this.Current.IsExpend = true;
             this.Current = this.Current;
+            this.ChangeBatch(this.num);
             base.RaisePropertyChanged(nameof(this.Rows));
         }
     }

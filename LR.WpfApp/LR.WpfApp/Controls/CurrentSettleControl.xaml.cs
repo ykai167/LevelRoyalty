@@ -42,7 +42,7 @@ namespace LR.WpfApp.Controls
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             Tools.DIHelper.GetInstance<IRoyaltySettleService>().Settlement();
-            this.DataContext = vm = Tools.DIHelper.GetInstance<Models.CurrentSettleControlViewModel>();
+            vm.Reload();
         }
     }
 }

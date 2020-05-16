@@ -66,7 +66,7 @@ namespace LR.Services
         public override void Update(Guid id, object columData)
         {
             Staff entity;
-            if (columData.GetType().GetProperty(nameof(entity.State)).GetValue(columData).Equals((int)StaffState.Quit))
+            if (columData.GetType().GetProperty(nameof(entity.State))?.GetValue(columData)?.Equals((int)StaffState.Quit) ?? false)
             {
                 //删除组,删除推荐人
                 this.Context.Context.Deleteable<Entity.WorkGroupMember>(p => p.StaffID == id).ExecuteCommand();
