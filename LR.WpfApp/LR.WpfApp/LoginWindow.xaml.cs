@@ -47,6 +47,7 @@ namespace LR.WpfApp
             var result = this._service.Login(name, ps);
             if (!result.Success)
             {
+                loginTip.Visibility = Visibility.Visible;
                 loginTip.Content = result.Message;
                 return;
             }

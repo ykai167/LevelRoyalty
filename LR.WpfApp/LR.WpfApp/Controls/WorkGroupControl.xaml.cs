@@ -51,10 +51,10 @@ namespace LR.WpfApp.Controls
 
             this.btns.OnSave += Btns_OnSave;
             this.btns.OnDelete += Btns_OnDelete;
-            this.btns.OnReset += Btns_OnAdd;
+            this.btns.OnReset += Btns_OnReset;
         }
 
-        private void Btns_OnAdd()
+        private void Btns_OnReset()
         {
             this.lvwShow.SelectedItem = null;
             this.txtName.Text = "";
@@ -96,7 +96,7 @@ namespace LR.WpfApp.Controls
 
         private void Btn_Click(object sender, RoutedEventArgs e)
         {
-            if (MemberID == new Guid())
+            if (MemberID == Guid.Empty)
             {
                 MessageBox.Show("未选择组员", "提示");
                 return;

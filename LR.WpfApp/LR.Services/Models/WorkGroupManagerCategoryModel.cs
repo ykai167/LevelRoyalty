@@ -13,15 +13,16 @@ namespace LR.Models
         public Guid ID { get; set; }
         public string Name { get; set; }
 
-        public readonly static WorkGroupManagerCategoryModel[] WorkGroupManagerCategories;
-        static WorkGroupManagerCategoryModel()
+        public static WorkGroupManagerCategoryModel[] WorkGroupManagerCategories
         {
-            WorkGroupManagerCategories = LR.Tools.DIHelper.GetInstance<IWorkGroupManagerCategoryService>().List().Select(item => new WorkGroupManagerCategoryModel
+            get
             {
-                ID = item.ID,
-                Name = item.Name
-            }).ToArray();
+                return LR.Tools.DIHelper.GetInstance<IWorkGroupManagerCategoryService>().List().Select(item => new WorkGroupManagerCategoryModel
+                {
+                    ID = item.ID,
+                    Name = item.Name
+                }).ToArray();
+            }
         }
     }
-
 }

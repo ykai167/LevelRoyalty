@@ -16,6 +16,7 @@
                 <GridView>
                     <GridViewColumn Header="操作员" Width="75" DisplayMemberBinding="{Binding Path=Operator}" />
                     <GridViewColumn Header="数据表" Width="75" DisplayMemberBinding="{Binding Path=Table}" />
+                    <GridViewColumn Header="类型" Width="75" DisplayMemberBinding="{Binding Path=Type}" />
                     <GridViewColumn Header="数据" Width="200" DisplayMemberBinding="{Binding Path=Data}" />
                     <GridViewColumn Header="创建时间" Width="75" DisplayMemberBinding="{Binding Path=CreateDate}"/>
                 </GridView>

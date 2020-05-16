@@ -25,7 +25,7 @@ namespace LR.Services
                 LR.Entity.Admin>((s, wgm, wg, a) => new JoinQueryInfos(
                 JoinType.Left, s.ID == wgm.StaffID,
                 JoinType.Left, wgm.WorkGroupID == wg.ID,
-                JoinType.Inner, s.OperatorID == a.ID))
+                JoinType.Left, s.OperatorID == a.ID))
                 .Where(s => s.State != Entity.DataState.Delete)
                 .Select((s, wgm, wg, a) => new
                 {

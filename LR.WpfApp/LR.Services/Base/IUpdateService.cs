@@ -1,4 +1,5 @@
-﻿using LR.Tools;
+﻿using LR.Models;
+using LR.Tools;
 using SqlSugar;
 using System;
 using System.Collections.Generic;
@@ -12,6 +13,7 @@ namespace LR.Services
     public interface IUpdateService<T> : IInsertService<T> where T : LR.Entity.UpdateEntity<Guid, Guid>, new()
     {
         void Update(Guid id, object columData);
+        OperateResult Delete(Guid id);
     }
 
     public partial class UpdateServiceBase<T> : InsertServiceBase<T>, IUpdateService<T> where T : LR.Entity.UpdateEntity<Guid, Guid>, new()
@@ -24,7 +26,7 @@ namespace LR.Services
         {
 
         }
-        protected override ISugarQueryable<T> Queryable => base.Queryable.Where(p => p.State == LR.Entity.DataState.Normal);
+        protected override ISugarQueryable<T> Queryable => base.Queryable.Where(p => p.State != LR.Entity.DataState.Delete);
 
         public virtual void Update(Guid id, object columData)
         {
@@ -66,11 +68,16 @@ namespace LR.Services
             base.Insert(entity);
             return entity.ID;
         }
+
+        public virtual OperateResult Delete(Guid id)
+        {
+            this.Update(id, new { State = Entity.DataState.Delete });
+            return new OperateResult();
+        }
     }
 
     internal interface IDeleteService<T> : IUpdateService<T> where T : LR.Entity.UpdateEntity<Guid, Guid>, new()
     {
-        void Delete(Guid id);
         void Delete(Expression<Func<T, bool>> expression);
     }
 
@@ -85,9 +92,10 @@ namespace LR.Services
 
         }
 
-        public virtual void Delete(Guid id)
+        public override OperateResult Delete(Guid id)
         {
             this.Context.Context.Deleteable<T>().Where(item => item.ID == id).ExecuteCommand();
+            return new OperateResult();
         }
 
         public void Delete(Expression<Func<T, bool>> expression)

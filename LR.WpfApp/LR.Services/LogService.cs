@@ -16,10 +16,11 @@ namespace LR.Services
     {
         public List<object> GetAll()
         {
-            return this.Context.Context.Queryable<Entity.Log, Entity.Admin>((log, admin) => log.OperatorID == admin.ID)
+            return this.Context.Context.Queryable<Entity.Log, Entity.Admin>((log, admin) => new SqlSugar.JoinQueryInfos(SqlSugar.JoinType.Left, log.OperatorID == admin.ID))
                  .Select((log, admin) => (object)new
                  {
                      Operator = admin.Name,
+                     Type = (LogType)log.Type,
                      Table = log.Table,
                      Data = log.Data,
                      CreateDate = log.CreateDate,
