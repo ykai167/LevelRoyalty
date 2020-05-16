@@ -37,6 +37,7 @@ namespace LR.WpfApp.Controls
                 if (success)
                 {
                     this.tbxInfo.Text = Add;
+                    this.Reset();
                     this.OnReset?.Invoke();
                 }
                 e.Handled = true;
@@ -51,6 +52,7 @@ namespace LR.WpfApp.Controls
                 if (success)
                 {
                     this.Reset();
+                    this.OnReset?.Invoke();
                 }
                 e.Handled = true;
             }
@@ -75,7 +77,10 @@ namespace LR.WpfApp.Controls
         {
             this.tbxInfo.Text = id == Guid.Empty ? Add : Edit;
             this.DataID = id;
-            this.btnDelete.Visibility = Visibility.Visible;
+            if (ShowDelButton)
+            {
+                this.btnDelete.Visibility = Visibility.Visible;
+            }
         }
 
         void Reset()
@@ -83,6 +88,22 @@ namespace LR.WpfApp.Controls
             this.DataID = Guid.Empty;
             this.btnDelete.Visibility = Visibility.Collapsed;
             this.tbxInfo.Text = Add;
+        }
+        bool showDel = true;
+        public bool ShowDelButton
+        {
+            set
+            {
+                showDel = value;
+                if (!value)
+                {
+                    this.btnDelete.Visibility = Visibility.Collapsed;
+                }
+            }
+            get
+            {
+                return showDel;
+            }
         }
     }
 }

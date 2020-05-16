@@ -23,4 +23,12 @@ namespace LR.Services
         [EnumName(Name = "删除")]
         Delete = LR.Entity.DataState.Delete,
     }
+
+    public enum AdminState
+    {
+        [EnumName(Name = "启用")]
+        Normal = LR.Entity.DataState.Normal,
+        [EnumName(Name = "禁用")]
+        Disable = LR.Entity.DataState.Disable,
+    }
 }

@@ -90,7 +90,7 @@ namespace LR.WpfApp.Controls
 
         private bool Btns_OnDelete()
         {
-            this._service.Update(this.btns.DataID, new { State = (int)Services.StaffState.Delete });
+            this._service.Delete(this.btns.DataID);
             this.InitListView();
             return true;
         }

@@ -9,9 +9,10 @@ namespace LR.Models
 {
     public class LevelModel
     {
-        public readonly static LevelModel Min;
+        static LevelModel min;
+        public static LevelModel Min { get => min; }
 
-        static LevelModel()
+        public static void Load()
         {
             var list = LR.Tools.DIHelper.GetInstance<IStaffLevelService>().List().OrderBy(item => item.Order).Select(item => new LevelModel
             {
@@ -30,9 +31,13 @@ namespace LR.Models
                 }
                 if (i == 0)
                 {
-                    Min = current;
+                    min = current;
                 }
             }
+        }
+        static LevelModel()
+        {
+            Load();
         }
 
         public Guid ID { get; set; }
