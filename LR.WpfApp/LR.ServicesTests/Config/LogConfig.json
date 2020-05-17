@@ -1,0 +1,47 @@
+﻿{
+  "Global": [
+    {
+      "Name": "State",
+      "Header": "数据状态"
+    }
+  ],
+  "Tables": [
+    {
+      "Table": "Admin",
+      "Fields": [
+        {
+          "Name": "UserName",
+          "Header": "登录名",
+          "Map": {
+            "Table": "",
+            "Field": ""
+          }
+        },
+        {
+          "Name": "Type",
+          "Header": "登录名",
+          "Enum": {
+            "Table": "AdminType"
+          }
+        },
+        {
+          "Name": "Name",
+          "Header": "真实姓名"
+        }
+      ]
+    },
+    {
+      "Table": "",
+      "Fields": [
+        {
+          "Name": "",
+          "Header": "",
+          "Map": {
+            "Table": "",
+            "Field": ""
+          }
+        }
+      ]
+    }
+  ]
+}

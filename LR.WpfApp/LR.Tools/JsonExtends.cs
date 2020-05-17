@@ -23,6 +23,10 @@ namespace LR.Tools
         {
             return Newtonsoft.Json.JsonConvert.DeserializeObject<T>(json);
         }
+        public static Newtonsoft.Json.Linq.JToken JsonTo(this string json)
+        {
+            return Newtonsoft.Json.JsonConvert.DeserializeObject(json) as Newtonsoft.Json.Linq.JToken;
+        }
     }
 
     public class LimitPropsContractResolver : DefaultContractResolver

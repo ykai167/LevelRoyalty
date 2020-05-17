@@ -67,4 +67,16 @@ namespace LR.Services
         [EnumName(Name = "工作组管理奖励")]
         WorkGroup
     }
+    public enum AdminType
+    {
+        /// <summary>
+        /// 超级管理员
+        /// </summary>
+        Super,
+        /// <summary>
+        /// 普通管理员
+        /// </summary>
+        [EnumName(Name = "普通管理员")]
+        Ordin
+    }
 }

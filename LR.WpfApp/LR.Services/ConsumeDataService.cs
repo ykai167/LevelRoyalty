@@ -160,11 +160,9 @@ namespace LR.Services
 
         void AddRoy(Guid consumeDataID, Models.StaffModel staff, Models.WorkGroupMemberModel[] managers, int num)
         {
-            var royaltyService = new RoyaltyService(this.Context);
-
             Action<Models.RoyaltyConfigModel, Models.StaffBase> insert = (config, accept) =>
             {
-                royaltyService.Insert(new Royalty
+                this.Context.Royalties.Insert(new Royalty
                 {
                     ConsumeDataID = consumeDataID,
                     StaffID = accept.ID,
@@ -225,7 +223,7 @@ namespace LR.Services
         public List<ConsumeDataModel> GetExtractList(DateTime start, DateTime end)
         {
             var query = this.Context.Context.Queryable<Entity.ConsumeData, Entity.Room, Entity.Staff, Entity.Admin>((d, r, s, a) => d.RoomID == r.ID && d.StaffID == s.ID && d.OperatorID == a.ID)
-                .Where(d => d.CreateDate>=start && d.CreateDate <= end)
+                .Where(d => d.CreateDate >= start && d.CreateDate <= end)
                 .Select((d, r, s, a) => new ConsumeDataModel
                 {
                     ID = d.ID,

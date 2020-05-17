@@ -1,0 +1,123 @@
+﻿{
+  "Global": [
+    {
+      "Name": "State",
+      "Header": "数据状态"
+    },
+    {
+      "Name": "Name",
+      "Header": "名称"
+    }
+  ],
+  "Tables": [
+    {
+      "Table": "Admin",
+      "Name": "管理员",
+      "Fields": [
+        {
+          "Name": "UserName",
+          "Header": "登录名"
+        },
+        {
+          "Name": "Type",
+          "Header": "管理员类型",
+          "Enum": {
+            "Type": "LR.Services.AdminType"
+          }
+        },
+        {
+          "Name": "Name",
+          "Header": "真实姓名"
+        }
+      ]
+    },
+    {
+      "Table": "ConsumeData",
+      "Name": "消费记录",
+      "Fields": [
+        {
+          "Name": "StaffID",
+          "Header": "员工姓名",
+          "Map": {
+            "Table": "Staff",
+            "Field": "Name"
+          }
+        },
+        {
+          "Name": "RoomID",
+          "Header": "房间名称",
+          "Map": {
+            "Table": "Room",
+            "Field": "Name"
+          }
+        },
+        {
+          "Name": "Amount",
+          "Header": "消费金额"
+        },
+        {
+          "Name": "SettleNum",
+          "Header": "账期"
+        }
+      ]
+    },
+    {
+      "Table": "RoomCategory",
+      "Name": "房间类型",
+      "Fields": [
+        {
+          "Name": "MinCharge",
+          "Header": "最低消费金额"
+        }
+      ]
+    },
+    {
+      "Table": "RoyaltyConfig",
+      "Name": "奖励配置",
+      "Fields": [
+      ]
+    },
+    {
+      "Table": "SettleBatch",
+      "Name": "结账",
+      "Fields": [
+      ]
+    },
+    {
+      "Table": "WorkGroupMember",
+      "Name": "工作组成员",
+      "Fields": [
+      ]
+    },
+    {
+      "Table": "Staff",
+      "Name": "员工管理",
+      "Fields": [
+      ]
+    },
+    {
+      "Table": "StaffLevel",
+      "Name": "员工等级",
+      "Fields": [
+      ]
+    },
+    {
+      "Table": "WorkGroup",
+      "Name": "工作组管理",
+      "Fields": [
+      ]
+    },
+    {
+      "Table": "RoyaltySettle",
+      "Name": "奖励发放",
+      "Fields": [
+      ]
+    },
+    {
+      "Table": "WorkGroupManagerCategory",
+      "Name": "工作组类别管理",
+      "Fields": [
+      ]
+    }
+  ]
+}

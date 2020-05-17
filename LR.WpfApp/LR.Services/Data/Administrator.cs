@@ -20,15 +20,5 @@ namespace LR.Services
         }
     }
 
-    public enum AdminType
-    {
-        /// <summary>
-        /// 超级管理员
-        /// </summary>
-        Super,
-        /// <summary>
-        /// 普通管理员
-        /// </summary>
-        Ordin
-    }
+    
 }
