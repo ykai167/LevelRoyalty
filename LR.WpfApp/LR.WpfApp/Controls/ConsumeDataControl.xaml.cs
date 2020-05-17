@@ -155,13 +155,14 @@ namespace LR.WpfApp.Controls
             }
         }
 
-        Pager<object> page;
+        Pager<LR.Services.ConsumeDataModel> page;
         void InitData()
         {
             page = this._service.GetPage(curentPage, pageSize);
             this.ucPager.TotalPage = page.TotalPage.ToString();
             this.ucPager.CurrentPage = this.curentPage.ToString();
             this.lvwShow.ItemsSource = page;
+            this.txtSum.Text = String.Format("金额合计：{0}", page.Select(item => item.Amount).Sum().ToString());
         }
     }
 }

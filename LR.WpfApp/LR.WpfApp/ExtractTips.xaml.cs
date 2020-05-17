@@ -32,22 +32,29 @@ namespace LR.WpfApp
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             DateTime start = this.dtStart.SelectedDate??DateTime.Now;
-            DateTime end = this.dtEnd.SelectedDate??DateTime.Now;
+            DateTime end = this.dtEnd.SelectedDate?? DateTime.Now;
             System.Windows.Forms.SaveFileDialog sfd = new System.Windows.Forms.SaveFileDialog();
             sfd.DefaultExt = "xls";
             sfd.Filter = "Excel文件(*.xls)|*.xls";
             sfd.Title = "导出文件路径";
             if (sfd.ShowDialog() == System.Windows.Forms.DialogResult.OK)
             {
-                DataTable dt = IEnumerableHelper.ToDataTable<LR.Services.ConsumeDataModel>(this._service.GetExtractList(start, end));
+                DataTable dt = IEnumerableHelper.ToDataTable<LR.Services.ConsumeDataModel>(this._service.GetExtractList(start, end.AddDays(1)));
                 String[] columns = { "StaffNo", "StaffName", "RoomNo", "RoomName", "Amount", "Admin", "CreateDate", "ModifyDate" };
                 String[] names = { "员工号", "姓名", "房间号", "房间", "金额", "操作人", "创建时间", "修改时间" };
                 DataView dv = dt.DefaultView;
                 dt = dv.ToTable(true, columns);
+
+                DataRow dr = dt.NewRow();
+                dr["RoomName"] = "总计";
+                dr["Amount"] = dt.Compute("sum(Amount)", "");
+                dt.Rows.Add(dr);
+
                 for(int i = 0; i < columns.Length; i++)                
                 {
                     dt.Columns[columns[i]].ColumnName = names[i];
                 }
+                
                 ExcelHelper.DataTableToExcel(dt, sfd.FileName);
             }
             this.Close();

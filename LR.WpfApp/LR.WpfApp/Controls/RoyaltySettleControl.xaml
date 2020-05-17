@@ -53,7 +53,14 @@
                         <RowDefinition></RowDefinition>
                         <RowDefinition Height="20"></RowDefinition>
                     </Grid.RowDefinitions>
-                    <TextBlock Grid.Row="1" Text="{Binding AllTotal, StringFormat=金额合计:\{0\}}" TextAlignment="Right"></TextBlock>
+                    <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Right">
+                        <TextBlock Text="{Binding ReservationTotal, StringFormat=订房奖励合计:\{0\}|}" TextAlignment="Right"></TextBlock>
+                        <TextBlock Text="{Binding AdministrationTotal, StringFormat=管理奖励合计:\{0\}|}" TextAlignment="Right"></TextBlock>
+                        <TextBlock Text="{Binding CooperationTotal, StringFormat=协助奖励合计:\{0\}|}" TextAlignment="Right"></TextBlock>
+                        <TextBlock Text="{Binding TranscendTotal, StringFormat=超越奖励合计:\{0\}|}" TextAlignment="Right"></TextBlock>
+                        <TextBlock Text="{Binding WorkGroupTotal, StringFormat=工作组奖励合计:\{0\}|}" TextAlignment="Right"></TextBlock>
+                        <TextBlock Text="{Binding AllTotal, StringFormat=金额合计:\{0\}}" TextAlignment="Right"></TextBlock>
+                    </StackPanel>
                     <ListView Grid.Row="0" Name="lvwShow" 
                           ItemsSource="{Binding Rows}"
                           SelectedItem="{Binding Current}">

@@ -13,7 +13,7 @@ namespace LR.Services
 
     public interface IConsumeDataService : IUpdateService<ConsumeData>
     {
-        LR.Tools.Pager<object> GetPage(int pageIndex, int pageSize);
+        LR.Tools.Pager<ConsumeDataModel> GetPage(int pageIndex, int pageSize);
         List<ConsumeDataModel> GetExtractList(DateTime start, DateTime end);
         void Delete(Guid id);
     }
@@ -241,7 +241,7 @@ namespace LR.Services
             return query.ToList();
         }
 
-        public LR.Tools.Pager<object> GetPage(int pageIndex, int pageSize)
+        public LR.Tools.Pager<ConsumeDataModel> GetPage(int pageIndex, int pageSize)
         {
             var query = this.Context.Context.Queryable<Entity.ConsumeData, Entity.Room, Entity.Staff, Entity.Admin>((d, r, s, a) => d.RoomID == r.ID && d.StaffID == s.ID && d.OperatorID == a.ID)
                 .Select((d, r, s, a) => new ConsumeDataModel
@@ -258,7 +258,7 @@ namespace LR.Services
                     StaffNo = s.No,
                     Admin = a.Name
                 });
-            return new Tools.Pager<object>(query.OrderBy(d => d.CreateDate, SqlSugar.OrderByType.Desc).ToPageList(pageIndex, pageSize), pageSize, query.Count());
+            return new Tools.Pager<ConsumeDataModel>(query.OrderBy(d => d.CreateDate, SqlSugar.OrderByType.Desc).ToPageList(pageIndex, pageSize), pageSize, query.Count());
         }
     }
 

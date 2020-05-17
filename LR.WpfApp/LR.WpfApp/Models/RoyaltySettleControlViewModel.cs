@@ -78,7 +78,12 @@ namespace LR.WpfApp.Models
             }
         }
 
-        public decimal AllTotal { get { return this.Rows.Sum(p => p.Total).Places(); } }
+        public decimal ReservationTotal { get { return this.Rows == null ? 0 : this.Rows.Sum(p => p.Reservation).Places(); } }
+        public decimal AdministrationTotal { get { return this.Rows == null ? 0 : this.Rows.Sum(p => p.Administration).Places(); } }
+        public decimal CooperationTotal { get { return this.Rows == null ? 0 : this.Rows.Sum(p => p.Cooperation).Places(); } }
+        public decimal TranscendTotal { get { return this.Rows == null ? 0 : this.Rows.Sum(p => p.Transcend).Places(); } }
+        public decimal WorkGroupTotal { get { return this.Rows == null ? 0 : this.Rows.Sum(p => p.WorkGroup).Places(); } }
+        public decimal AllTotal { get { return this.Rows == null ? 0 : this.Rows.Sum(p => p.Total).Places(); } }
 
         private RoyaltySettleExpendModel current;
 
