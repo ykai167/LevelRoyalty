@@ -36,25 +36,33 @@
             <Button x:Name="btnExtract" Content="导出" Grid.Row="1" Grid.Column="5" Height="25" Width="60" Click="btnExtract_Click"/>
         </Grid>
         <local:PageControl Grid.Row="2" x:Name="ucPager"/>
-        <ListView Grid.Row="1" Name="lvwShow" SelectionChanged="LvwShow_SelectionChanged">
-            <ListView.View>
-                <GridView>
-                    <GridViewColumn Header="员工号" DisplayMemberBinding="{Binding Path=StaffNo}"/>
-                    <GridViewColumn Header="姓名" DisplayMemberBinding="{Binding Path=StaffName}"/>
-                    <GridViewColumn Header="房间号" DisplayMemberBinding="{Binding Path=RoomNo}"/>
-                    <GridViewColumn Header="房间" DisplayMemberBinding="{Binding Path=RoomName}"/>
-                    <GridViewColumn Header="金额">
-                        <GridViewColumn.CellTemplate>
-                            <DataTemplate>
-                                <TextBlock Text="{Binding Amount}" TextAlignment="Right" />
-                            </DataTemplate>
-                        </GridViewColumn.CellTemplate>
-                    </GridViewColumn>
-                    <GridViewColumn Header="操作人" DisplayMemberBinding="{Binding Path=Admin}"/>
-                    <GridViewColumn Header="创建时间" DisplayMemberBinding="{Binding Path=CreateDate}"/>
-                    <GridViewColumn Header="修改时间" DisplayMemberBinding="{Binding Path=ModifyDate}"/>
-                </GridView>
-            </ListView.View>
-        </ListView>
+        <Grid Grid.Row="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="30"/>
+            </Grid.RowDefinitions>
+            <ListView Grid.Row="0" Name="lvwShow" SelectionChanged="LvwShow_SelectionChanged">
+                <ListView.View>
+                    <GridView>
+                        <GridViewColumn Header="员工号" DisplayMemberBinding="{Binding Path=StaffNo}"/>
+                        <GridViewColumn Header="姓名" DisplayMemberBinding="{Binding Path=StaffName}"/>
+                        <GridViewColumn Header="房间号" DisplayMemberBinding="{Binding Path=RoomNo}"/>
+                        <GridViewColumn Header="房间" DisplayMemberBinding="{Binding Path=RoomName}"/>
+                        <GridViewColumn Header="金额">
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding Amount}" TextAlignment="Right" />
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                        </GridViewColumn>
+                        <GridViewColumn Header="操作人" DisplayMemberBinding="{Binding Path=Admin}"/>
+                        <GridViewColumn Header="创建时间" DisplayMemberBinding="{Binding Path=CreateDate}"/>
+                        <GridViewColumn Header="修改时间" DisplayMemberBinding="{Binding Path=ModifyDate}"/>
+                    </GridView>
+                </ListView.View>
+            </ListView>
+            <TextBlock x:Name="txtSum" Grid.Row="1" Text="{Binding AllTotal, StringFormat=金额合计:\{0\}}" TextAlignment="Right"></TextBlock>
+        </Grid>
+        
     </Grid>
 </UserControl>
