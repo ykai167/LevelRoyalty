@@ -75,30 +75,110 @@
       "Table": "RoyaltyConfig",
       "Name": "奖励配置",
       "Fields": [
+        {
+          "Name": "Percent",
+          "Header": "比例"
+        }
       ]
     },
     {
       "Table": "SettleBatch",
-      "Name": "结账",
+      "Name": "账期",
       "Fields": [
+        {
+          "Name": "Num",
+          "Header": "账期"
+        },
+        {
+          "Name": "IsHistory",
+          "Header": "是否历史账期"
+        },
+        {
+          "Name": "StartTime",
+          "Header": "开始时间"
+        },
+        {
+          "Name": "EndTime",
+          "Header": "结束时间"
+        }
       ]
     },
     {
       "Table": "WorkGroupMember",
       "Name": "工作组成员",
       "Fields": [
+        {
+          "Name": "StaffID",
+          "Header": "成员姓名",
+          "Map": {
+            "Table": "Staff",
+            "Field": "Name"
+          }
+        },
+        {
+          "Name": "CategoryID",
+          "Header": "成员类别",
+          "Map": {
+            "Table": "WorkGroupManagerCategory",
+            "Field": "Name"
+          }
+        },
+        {
+          "Name": "WorkGroupID",
+          "Header": "工作组",
+          "Map": {
+            "Table": "WorkGroup",
+            "Field": "Name"
+          }
+        }
       ]
     },
     {
       "Table": "Staff",
       "Name": "员工管理",
       "Fields": [
+        {
+          "Name": "No",
+          "Header": "工号"
+        },
+        {
+          "Name": "IdenNo",
+          "Header": "身份证号"
+        },
+        {
+          "Name": "MobileNo",
+          "Header": "手机号"
+        },
+        {
+          "Name": "EntryTime",
+          "Header": "入职时间"
+        },
+        {
+          "Name": "Amount",
+          "Header": "消费金额"
+        },
+        {
+          "Name": "ReferrerID",
+          "Header": "推荐人",
+          "Map": {
+            "Table": "Staff",
+            "Field": "Name"
+          }
+        }
       ]
     },
     {
       "Table": "StaffLevel",
       "Name": "员工等级",
       "Fields": [
+        {
+          "Name": "Order",
+          "Header": "排序"
+        },
+        {
+          "Name": "MinCount",
+          "Header": "升级人数"
+        }
       ]
     },
     {

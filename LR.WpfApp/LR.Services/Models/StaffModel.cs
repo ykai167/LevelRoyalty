@@ -57,5 +57,9 @@ namespace LR.Models
         {
             return $"{ID}\t{Name}\t{Level}\t[{string.Join(",", Subs.AsEnumerable())}]";
         }
+        public string Show
+        {
+            get { return $"{Name}({Level})"; }
+        }
     }
 }

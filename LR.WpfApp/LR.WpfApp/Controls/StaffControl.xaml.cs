@@ -1,4 +1,5 @@
-﻿using LR.Services;
+﻿using LR.Models;
+using LR.Services;
 using LR.Tools;
 using System;
 using System.Collections.Generic;
@@ -32,10 +33,15 @@ namespace LR.WpfApp.Controls
             InitializeComponent();
             this._service = service;
             this._wService = wService;
-            InitListView();
             this.btns.OnSave += Btns_OnSave;
             this.btns.OnReset += Btns_OnReset;
             this.btns.OnDelete += Btns_OnDelete;
+            this.Loaded += StaffControl_Loaded;
+        }
+
+        private void StaffControl_Loaded(object sender, RoutedEventArgs e)
+        {
+            InitListView();
 
             this.cbxWorkGroupID.ItemsSource = _wService.List().Select(p => new { p.Name, p.ID });
             this.cbxWorkGroupID.DisplayMemberPath = "Name";
@@ -57,8 +63,36 @@ namespace LR.WpfApp.Controls
             this.cbxState.SelectionChanged += Cbx_SelectionChanged;
             this.cbxRefererID.SelectionChanged += Cbx_SelectionChanged;
             this.cbxWorkGroupID.SelectionChanged += Cbx_SelectionChanged;
-
             Btns_OnReset();
+        }
+
+        void LoadTree(Guid id)
+        {
+            tvStaff.Items.Clear();
+            if (id == Guid.Empty)
+            {
+                foreach (var item in MemoryData.Current.Staffs.Where(p => p.ReferrerID == Guid.Empty))
+                {
+                    AddItem(tvStaff, item);
+                }
+            }
+            else
+            {
+                foreach (var item in MemoryData.Current.Staffs.Where(p => p.ID == id))
+                {
+                    AddItem(tvStaff, item);
+                }
+            }
+
+        }
+        void AddItem(ItemsControl control, StaffModel staff)
+        {
+            var tvi = new TreeViewItem { Header = $"{staff.Name}({staff.Level})", IsExpanded = true };
+            control.Items.Add(tvi);
+            foreach (var item in staff.Subs ?? new StaffModel[0])
+            {
+                AddItem(tvi, item);
+            }
         }
 
         private void Cbx_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -92,6 +126,7 @@ namespace LR.WpfApp.Controls
         {
             this._service.Delete(this.btns.DataID);
             this.InitListView();
+
             return true;
         }
 
@@ -102,6 +137,7 @@ namespace LR.WpfApp.Controls
             this.txtName.Text = "";
             this.txtMobileNo.Text = "";
             this.dpEntryTime.SelectedDate = DateTime.Now;
+            LoadTree(Guid.Empty);
             cbxHide();
         }
 
@@ -145,6 +181,7 @@ namespace LR.WpfApp.Controls
         private void InitListView()
         {
             this.lvwShow.ItemsSource = this._service.GetStaffs();
+            LoadTree(Guid.Empty);
         }
 
         bool listSelecting = false;
@@ -186,6 +223,7 @@ namespace LR.WpfApp.Controls
                     }));
 
                 this.cbxRefererID.SelectedValue = selectedItem.GetObjectValue("ReferrerID");
+                LoadTree(selectedItem.GetObjectValue<Guid>("ID"));
                 cbxShow();
                 listSelecting = false;
                 this.btns.SetEdit(id);

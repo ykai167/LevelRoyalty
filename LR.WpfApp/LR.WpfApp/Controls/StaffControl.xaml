@@ -50,23 +50,31 @@
                 <ComboBox Height="25" MinWidth="100" Name="cbxState"></ComboBox>
             </StackPanel>
         </Grid>
-        <ListView Grid.Row="1" Name="lvwShow" SelectedValuePath="ID" SelectionChanged="LvwShow_SelectionChanged">
-            <ListView.View>
-                <GridView>
-                    <GridViewColumn Header="工号" DisplayMemberBinding="{Binding Path=No}" />
-                    <GridViewColumn Header="姓名" DisplayMemberBinding="{Binding Path=Name}"/>
-                    <GridViewColumn Header="身份证号" DisplayMemberBinding="{Binding Path=IdenNo}"/>
-                    <GridViewColumn Header="手机号" DisplayMemberBinding="{Binding Path=MobileNo}"/>
-                    <GridViewColumn Header="工作组" DisplayMemberBinding="{Binding Path=GroupName}"/>
-                    <GridViewColumn Header="员工级别" DisplayMemberBinding="{Binding Path=Level}"/>
-                    <GridViewColumn Header="入职时间" DisplayMemberBinding="{Binding Path=EntryTime}"/>
-                    <GridViewColumn Header="推荐人" DisplayMemberBinding="{Binding Path=Referrer}"/>
-                    <GridViewColumn Header="状态" DisplayMemberBinding="{Binding Path=StateName}"/>
-                    <GridViewColumn Header="操作人" DisplayMemberBinding="{Binding Path=Admin}"/>
-                    <GridViewColumn Header="创建时间" DisplayMemberBinding="{Binding Path=CreateDate}"/>
-                    <GridViewColumn Header="修改时间" DisplayMemberBinding="{Binding Path=ModifyDate}"/>
-                </GridView>
-            </ListView.View>
-        </ListView>
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="3*"></ColumnDefinition>
+                <ColumnDefinition Width="1*"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <TreeView x:Name="tvStaff" Grid.Column="1"></TreeView>
+            <ListView Name="lvwShow" Grid.Column="0" SelectedValuePath="ID" SelectionChanged="LvwShow_SelectionChanged">
+                <ListView.View>
+                    <GridView>
+                        <GridViewColumn Header="工号" DisplayMemberBinding="{Binding Path=No}" />
+                        <GridViewColumn Header="姓名" DisplayMemberBinding="{Binding Path=Name}"/>
+                        <GridViewColumn Header="身份证号" DisplayMemberBinding="{Binding Path=IdenNo}"/>
+                        <GridViewColumn Header="手机号" DisplayMemberBinding="{Binding Path=MobileNo}"/>
+                        <GridViewColumn Header="工作组" DisplayMemberBinding="{Binding Path=GroupName}"/>
+                        <GridViewColumn Header="员工级别" DisplayMemberBinding="{Binding Path=Level}"/>
+                        <GridViewColumn Header="入职时间" DisplayMemberBinding="{Binding Path=EntryTime}"/>
+                        <GridViewColumn Header="推荐人" DisplayMemberBinding="{Binding Path=Referrer}"/>
+                        <GridViewColumn Header="状态" DisplayMemberBinding="{Binding Path=StateName}"/>
+                        <GridViewColumn Header="操作人" DisplayMemberBinding="{Binding Path=Admin}"/>
+                        <GridViewColumn Header="创建时间" DisplayMemberBinding="{Binding Path=CreateDate}"/>
+                        <GridViewColumn Header="修改时间" DisplayMemberBinding="{Binding Path=ModifyDate}"/>
+                    </GridView>
+                </ListView.View>
+            </ListView>
+
+        </Grid>
     </Grid>
 </UserControl>
