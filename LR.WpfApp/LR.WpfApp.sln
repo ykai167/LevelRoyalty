@@ -17,6 +17,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LR.RepositoriesTests", "LR.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LR.ServicesTests", "LR.ServicesTests\LR.ServicesTests.csproj", "{9C99296E-E4CB-419B-840A-1B8C7DB29E08}"
 EndProject
+Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "LRSetup", "LRSetup\LRSetup.vdproj", "{51657C72-C07E-4D96-86CD-07B67D39BC6B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -51,6 +53,8 @@ Global
 		{9C99296E-E4CB-419B-840A-1B8C7DB29E08}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9C99296E-E4CB-419B-840A-1B8C7DB29E08}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9C99296E-E4CB-419B-840A-1B8C7DB29E08}.Release|Any CPU.Build.0 = Release|Any CPU
+		{51657C72-C07E-4D96-86CD-07B67D39BC6B}.Debug|Any CPU.ActiveCfg = Debug
+		{51657C72-C07E-4D96-86CD-07B67D39BC6B}.Release|Any CPU.ActiveCfg = Release
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

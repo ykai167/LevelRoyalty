@@ -94,9 +94,9 @@ namespace LR.WpfApp
             try
             {
                 e.Handled = true; //把 Handled 属性设为true，表示此异常已处理，程序可以继续运行，不会强制退出      
-                MessageBox.Show("UI线程异常:" + e.Exception.Message);
+                MessageBox.Show("UI线程异常:" + e.Exception.Message + "\r\n" + e.Exception?.InnerException?.Message + "\r\n" + e.Exception.StackTrace);
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 //此时程序出现严重异常，将强制结束退出
                 MessageBox.Show("UI线程发生致命错误！");

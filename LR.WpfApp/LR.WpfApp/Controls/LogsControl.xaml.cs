@@ -31,13 +31,19 @@ namespace LR.WpfApp.Controls
             InitializeComponent();
             this._service = service;
 
-            this.InitData();
 
             this.ucPager.FirstPage += UcPager_FirstPage;
             this.ucPager.LastPage += UcPager_LastPage;
             this.ucPager.PreviousPage += UcPager_PreviousPage;
             this.ucPager.NextPage += UcPager_NextPage;
-        }        
+
+            this.Loaded += LogsControl_Loaded;
+        }
+
+        private void LogsControl_Loaded(object sender, RoutedEventArgs e)
+        {
+            this.InitData();
+        }
 
         private void UcPager_NextPage(object sender, RoutedEventArgs e)
         {

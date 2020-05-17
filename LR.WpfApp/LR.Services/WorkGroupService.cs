@@ -18,7 +18,6 @@ namespace LR.Services
         OperateResult CancelManager(Guid memberID);
         object[] GetAll();
         object[] GetMembers(Guid groupID);
-        OperateResult Delete(Guid groupID);
     }
 
     public interface IWorkGroupMemberService : IQueryService<WorkGroupMember>
@@ -200,7 +199,7 @@ namespace LR.Services
                 }).ToArray();
         }
 
-        public OperateResult Delete(Guid groupID)
+        public override OperateResult Delete(Guid groupID)
         {
             try
             {

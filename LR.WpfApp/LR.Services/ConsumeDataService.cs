@@ -1,4 +1,5 @@
 ﻿using LR.Entity;
+using LR.Models;
 using LR.Tools;
 using System;
 using System.Collections.Generic;
@@ -15,7 +16,6 @@ namespace LR.Services
     {
         LR.Tools.Pager<ConsumeDataModel> GetPage(int pageIndex, int pageSize);
         List<ConsumeDataModel> GetExtractList(DateTime start, DateTime end);
-        void Delete(Guid id);
     }
     class ConsumeDataService : UpdateServiceBase<ConsumeData>, IConsumeDataService
     {
@@ -26,7 +26,7 @@ namespace LR.Services
         }
 
 
-        public void Delete(Guid id)
+        public override OperateResult Delete(Guid id)
         {
             try
             {
@@ -34,6 +34,7 @@ namespace LR.Services
                 this.Context.Context.Deleteable<Entity.Royalty>(p => p.ConsumeDataID == id).ExecuteCommand();
                 this.Update(id, new { State = Entity.DataState.Delete });
                 this.Context.Context.Ado.CommitTran();
+                return new OperateResult();
             }
             catch (Exception e)
             {

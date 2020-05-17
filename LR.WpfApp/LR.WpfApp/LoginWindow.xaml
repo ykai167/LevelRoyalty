@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:LR.WpfApp"
         mc:Ignorable="d"
         WindowStartupLocation="CenterScreen"
-        Title="LoginWindow" Height="400" Width="600" ResizeMode="NoResize" WindowStyle="None" BorderThickness="2" SnapsToDevicePixels="True" BorderBrush="#FF876868">
+        Title="LoginWindow" Height="400" Width="600" ResizeMode="NoResize" WindowStyle="None" BorderThickness="2" SnapsToDevicePixels="True" BorderBrush="#FF876868" Icon="login.png">
     <Grid>
         <Grid.Background>
             <RadialGradientBrush>
@@ -50,8 +50,8 @@
                     IsEnabled="True" BorderBrush="Transparent" Click="btnCancel_Click"
                     Content="取消" Margin="10">
             </Button>
-            <Button Content="超级" Click="Button_Click" Height="30"></Button>
-            <Button Content="普通" Click="Button_Click_1" Height="30"></Button>
+            <!--<Button Content="超级" Click="Button_Click" Height="30"></Button>
+            <Button Content="普通" Click="Button_Click_1" Height="30"></Button>-->
         </StackPanel>
         <Label Grid.Row="1" Grid.Column="2" Name="userNameTip"
                    FontSize="15" FontFamily="宋体" Foreground="Red" Height="25" />

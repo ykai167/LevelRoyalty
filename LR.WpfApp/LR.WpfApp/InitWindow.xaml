@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:LR.WpfApp"
         mc:Ignorable="d"
-        Title="InitWindow" Height="200" Width="300" WindowStartupLocation="CenterScreen" ResizeMode="NoResize" WindowStyle="None">
+        Title="InitWindow" Height="200" Width="300" WindowStartupLocation="CenterScreen" ResizeMode="NoResize" WindowStyle="None" Icon="init.png">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="2*"></RowDefinition>
