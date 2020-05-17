@@ -101,7 +101,7 @@ namespace LR.WpfApp.Controls
             this.txtNo.Text = "";
             this.txtName.Text = "";
             this.txtMobileNo.Text = "";
-            this.dpEntryTime.Text = "";
+            this.dpEntryTime.SelectedDate = DateTime.Now;
             cbxHide();
         }
 

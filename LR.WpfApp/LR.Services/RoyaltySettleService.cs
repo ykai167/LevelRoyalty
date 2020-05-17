@@ -4,6 +4,7 @@ using LR.Tools;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -31,7 +32,10 @@ namespace LR.Services
 
         public RoyaltyStatisticsModel[] GetSettles(int settleNum)
         {
-            return this.Context.Context.Queryable<RoyaltySettle, Staff, Admin>((r, s, a) => r.SettleNum == settleNum && r.StaffID == s.ID && r.OperatorID == a.ID)
+            return this.Context.Context.Queryable<RoyaltySettle, Staff, Admin>((r, s, a) => new SqlSugar.JoinQueryInfos(
+                SqlSugar.JoinType.Inner, r.StaffID == s.ID,
+                SqlSugar.JoinType.Left, r.OperatorID == a.ID))
+                .Where(r=>r.SettleNum==settleNum)
                 .Select((r, s, a) => new
                 {
                     s.No,

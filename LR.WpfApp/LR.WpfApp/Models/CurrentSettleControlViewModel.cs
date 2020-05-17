@@ -42,7 +42,7 @@ namespace LR.WpfApp.Models
             {
                 rows = value;
                 base.RaisePropertyChanged();
-                base.RaisePropertyChanged(nameof(this.CanSettlement)) ;
+                base.RaisePropertyChanged(nameof(this.CanSettlement));
             }
         }
 
@@ -62,6 +62,7 @@ namespace LR.WpfApp.Models
         {
             this.Detailes = _royaltyService.Detaile(staffID, Batch.Num);
         }
+        public decimal AllTotal { get { return this.rows.Sum(p => p.Total).Places(); } }
 
         public void Reload()
         {
@@ -84,6 +85,7 @@ namespace LR.WpfApp.Models
                     Transcend = item.Items.FirstOrDefault(p => p.Key == RoyaltyType.Transcend).Value,
                     WorkGroup = item.Items.FirstOrDefault(p => p.Key == RoyaltyType.WorkGroup).Value,
                 }).ToList();
+            base.RaisePropertyChanged(nameof(AllTotal));
         }
     }
     public class RoyaltySettleModel

@@ -76,7 +76,7 @@ namespace LR.WpfApp.Controls
             if (sfd.ShowDialog() == System.Windows.Forms.DialogResult.OK)
             {
                 DataTable dt = IEnumerableHelper.ToDataTable<RoyaltySettleExpendModel>((IEnumerable<RoyaltySettleExpendModel>)this.lvwShow.ItemsSource);
-                String[] columns = { "StaffNo", "StaffName", "Reservation", "Administration", "Cooperation", "Transcend", "WorkGroup", "Total", "Expend", "Self", "Receiver", "Admin", "ModifyDate" };
+                String[] columns = { "StaffNo", "StaffName", "Reservation", "Administration", "Cooperation", "Transcend", "WorkGroup", "Total", "Expend", "Self", "Receiver", "Admin", "ExpandTimeStr" };
                 String[] names = { "员工号", "姓名", "订房奖励", "管理奖励", "协助奖励", "超越奖励", "工作组管理奖励", "总金额", "是否已发", "是否本人领取", "领取人", "操作人", "领取时间" };
                 DataView dv = dt.DefaultView;
                 dt = dv.ToTable(true, columns);

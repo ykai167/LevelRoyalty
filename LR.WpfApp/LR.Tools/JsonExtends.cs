@@ -10,7 +10,7 @@ namespace LR.Tools
 {
     public static class JsonExtends
     {
-        static LimitPropsContractResolver resolver = new LimitPropsContractResolver(new[] { "ID", "CreateDate", "ModifyDate", "Password" });
+        static LimitPropsContractResolver resolver = new LimitPropsContractResolver(new[] { "ID", "CreateDate", "ModifyDate", "Password", "OperatorID" });
         public static string LogJson(this object obj)
         {
             var settings = JsonSerializer.CreateDefault();

@@ -48,63 +48,70 @@
                 <ColumnDefinition Width="2*"></ColumnDefinition>
             </Grid.ColumnDefinitions>
             <GroupBox Header="当前账期列表" Grid.Column="0">
-                <ListView Grid.Row="1" Name="lvwShow" 
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition></RowDefinition>
+                        <RowDefinition Height="20"></RowDefinition>
+                    </Grid.RowDefinitions>
+                    <TextBlock Grid.Row="1" Text="{Binding AllTotal, StringFormat=金额合计:\{0\}}" TextAlignment="Right"></TextBlock>
+                    <ListView Grid.Row="0" Name="lvwShow" 
                           ItemsSource="{Binding Rows}"
                           SelectedItem="{Binding Current}">
-                    <ListView.View>
-                        <GridView>
-                            <GridViewColumn Header="员工号" DisplayMemberBinding="{Binding Path=StaffNo}" FrameworkElement.FlowDirection="RightToLeft"/>
-                            <GridViewColumn Header="姓名" DisplayMemberBinding="{Binding Path=StaffName}" FrameworkElement.FlowDirection="RightToLeft"/>
-                            <GridViewColumn Header="订房奖励">
-                                <GridViewColumn.CellTemplate>
-                                    <DataTemplate>
-                                        <TextBlock Text="{Binding Reservation}" TextAlignment="Right" />
-                                    </DataTemplate>
-                                </GridViewColumn.CellTemplate>
-                            </GridViewColumn>
-                            <GridViewColumn Header="管理奖励">
-                                <GridViewColumn.CellTemplate>
-                                    <DataTemplate>
-                                        <TextBlock Text="{Binding Administration}" TextAlignment="Right" />
-                                    </DataTemplate>
-                                </GridViewColumn.CellTemplate>
-                            </GridViewColumn>
-                            <GridViewColumn Header="协助奖励">
-                                <GridViewColumn.CellTemplate>
-                                    <DataTemplate>
-                                        <TextBlock Text="{Binding Cooperation}" TextAlignment="Right" />
-                                    </DataTemplate>
-                                </GridViewColumn.CellTemplate>
-                            </GridViewColumn>
-                            <GridViewColumn Header="超越奖励">
-                                <GridViewColumn.CellTemplate>
-                                    <DataTemplate>
-                                        <TextBlock Text="{Binding Transcend}" TextAlignment="Right" />
-                                    </DataTemplate>
-                                </GridViewColumn.CellTemplate>
-                            </GridViewColumn>
-                            <GridViewColumn Header="工作组管理奖励">
-                                <GridViewColumn.CellTemplate>
-                                    <DataTemplate>
-                                        <TextBlock Text="{Binding WorkGroup}" TextAlignment="Right" />
-                                    </DataTemplate>
-                                </GridViewColumn.CellTemplate>
-                            </GridViewColumn>
-                            <GridViewColumn Header="总金额" Width="80">
-                                <GridViewColumn.CellTemplate>
-                                    <DataTemplate>
-                                        <TextBlock Text="{Binding Total}" TextAlignment="Right" />
-                                    </DataTemplate>
-                                </GridViewColumn.CellTemplate>
-                            </GridViewColumn>
-                            <GridViewColumn Header="是否已发" DisplayMemberBinding="{Binding Path=Expend}"/>
-                            <GridViewColumn Header="是否本人领取" DisplayMemberBinding="{Binding Path=Self}"/>
-                            <GridViewColumn Header="领取人" DisplayMemberBinding="{Binding Path=Receiver}"/>
-                            <GridViewColumn Header="操作人" DisplayMemberBinding="{Binding Path=Admin}"/>
-                            <GridViewColumn Header="领取时间" DisplayMemberBinding="{Binding Path=ModifyDate}"/>
-                        </GridView>
-                    </ListView.View>
-                </ListView>
+                        <ListView.View>
+                            <GridView>
+                                <GridViewColumn Header="员工号" DisplayMemberBinding="{Binding Path=StaffNo}" FrameworkElement.FlowDirection="RightToLeft"/>
+                                <GridViewColumn Header="姓名" DisplayMemberBinding="{Binding Path=StaffName}" FrameworkElement.FlowDirection="RightToLeft"/>
+                                <GridViewColumn Header="订房奖励">
+                                    <GridViewColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <TextBlock Text="{Binding Reservation}" TextAlignment="Right" />
+                                        </DataTemplate>
+                                    </GridViewColumn.CellTemplate>
+                                </GridViewColumn>
+                                <GridViewColumn Header="管理奖励">
+                                    <GridViewColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <TextBlock Text="{Binding Administration}" TextAlignment="Right" />
+                                        </DataTemplate>
+                                    </GridViewColumn.CellTemplate>
+                                </GridViewColumn>
+                                <GridViewColumn Header="协助奖励">
+                                    <GridViewColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <TextBlock Text="{Binding Cooperation}" TextAlignment="Right" />
+                                        </DataTemplate>
+                                    </GridViewColumn.CellTemplate>
+                                </GridViewColumn>
+                                <GridViewColumn Header="超越奖励">
+                                    <GridViewColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <TextBlock Text="{Binding Transcend}" TextAlignment="Right" />
+                                        </DataTemplate>
+                                    </GridViewColumn.CellTemplate>
+                                </GridViewColumn>
+                                <GridViewColumn Header="工作组管理奖励">
+                                    <GridViewColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <TextBlock Text="{Binding WorkGroup}" TextAlignment="Right" />
+                                        </DataTemplate>
+                                    </GridViewColumn.CellTemplate>
+                                </GridViewColumn>
+                                <GridViewColumn Header="总金额" Width="80">
+                                    <GridViewColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <TextBlock Text="{Binding Total}" TextAlignment="Right" />
+                                        </DataTemplate>
+                                    </GridViewColumn.CellTemplate>
+                                </GridViewColumn>
+                                <GridViewColumn Header="是否已发" DisplayMemberBinding="{Binding Path=Expend}"/>
+                                <GridViewColumn Header="是否本人领取" DisplayMemberBinding="{Binding Path=Self}"/>
+                                <GridViewColumn Header="领取人" DisplayMemberBinding="{Binding Path=Receiver}"/>
+                                <GridViewColumn Header="操作人" DisplayMemberBinding="{Binding Path=Admin}"/>
+                                <GridViewColumn Header="领取时间" DisplayMemberBinding="{Binding Path=ExpandTimeStr}"/>
+                            </GridView>
+                        </ListView.View>
+                    </ListView>
+                </Grid>
             </GroupBox>
             <GroupBox Header="所选员工奖励明细" Grid.Column="1">
                 <ListView Name="lvwDetail" ItemsSource="{Binding Detailes}">

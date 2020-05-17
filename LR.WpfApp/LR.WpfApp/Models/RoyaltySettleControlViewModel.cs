@@ -1,10 +1,12 @@
 ﻿using LR.Services;
+using LR.Tools;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Forms;
 
 namespace LR.WpfApp.Models
 {
@@ -76,6 +78,8 @@ namespace LR.WpfApp.Models
             }
         }
 
+        public decimal AllTotal { get { return this.Rows.Sum(p => p.Total).Places(); } }
+
         private RoyaltySettleExpendModel current;
 
         public RoyaltySettleExpendModel Current
@@ -121,10 +125,12 @@ namespace LR.WpfApp.Models
                  IsExpend = item.IsExpend,
                  IsSelf = item.IsSelf,
                  Receiver = item.Receiver,
-                 ExpendTime = item.ModifyDate
+                 ExpendTime = item.ModifyDate,
+                 Admin = item.Admin
              }).ToList();
             this.Current = null;
             base.RaisePropertyChanged(nameof(Rows));
+            base.RaisePropertyChanged(nameof(AllTotal));
         }
 
         public Visibility ShowReceiver
@@ -206,10 +212,25 @@ namespace LR.WpfApp.Models
         /// 实际领取人
         /// </summary>
         public string Receiver { get; set; }
-
-        public DateTime ExpendTime { get; set; }
-
+        /// <summary>
+        /// 发放时间
+        /// </summary>
+        public DateTime ExpendTime
+        {
+            get; set;
+        }
+        public string ExpandTimeStr { get { return IsExpend ? ExpendTime.ToString() : null; } }
+        /// <summary>
+        /// 是否本人
+        /// </summary>
         public string Self { get { return IsSelf ? "是" : "否"; } }
+        /// <summary>
+        /// 是否已发
+        /// </summary>
         public string Expend { get { return IsExpend ? "是" : ""; } }
+        /// <summary>
+        /// 操作人
+        /// </summary>
+        public string Admin { get; set; }
     }
 }
