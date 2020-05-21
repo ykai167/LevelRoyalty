@@ -31,13 +31,21 @@ namespace LR.WpfApp.Controls
             InitializeComponent();
             this._service = service;
 
-
+            this.lvwShow.SelectionChanged += LvwShow_SelectionChanged;
             this.ucPager.FirstPage += UcPager_FirstPage;
             this.ucPager.LastPage += UcPager_LastPage;
             this.ucPager.PreviousPage += UcPager_PreviousPage;
             this.ucPager.NextPage += UcPager_NextPage;
 
             this.Loaded += LogsControl_Loaded;
+        }
+
+        private void LvwShow_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (sender == lvwShow && lvwShow.SelectedItem != null)
+            {
+                this.lvwLog.ItemsSource = _service.GetHistory(lvwShow.SelectedItem.GetObjectValue<Guid>("DataID"));
+            }
         }
 
         private void LogsControl_Loaded(object sender, RoutedEventArgs e)

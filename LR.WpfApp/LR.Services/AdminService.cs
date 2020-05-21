@@ -76,7 +76,7 @@ namespace LR.Services
             {
                 Type = (int)LogType.Login,
                 CreateDate = DateTime.Now,
-                DataID = Guid.Empty,
+                DataID = admin.ID,
                 OperatorID = Administrator.Current.ID,
                 ID = Guid.NewGuid(),
                 Table = "",

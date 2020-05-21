@@ -5,21 +5,37 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:LR.WpfApp.Controls">
     <Grid Margin="10">
-        <Grid.RowDefinitions>
-            <RowDefinition  Height="*"/>
-            <RowDefinition Height="30"/>
-        </Grid.RowDefinitions>
-        <ListView Name="lvwShow" Margin="0 0 10 0">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="3*"></ColumnDefinition>
+            <ColumnDefinition Width="2*"></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition  Height="*"/>
+                <RowDefinition Height="30"/>
+            </Grid.RowDefinitions>
+            <ListView Name="lvwShow" Margin="0 0 10 0">
+                <ListView.View>
+                    <GridView>
+                        <GridViewColumn Header="数据表" DisplayMemberBinding="{Binding Path=Table}" />
+                        <GridViewColumn Header="类型" DisplayMemberBinding="{Binding Path=Type}" />
+                        <GridViewColumn Header="操作员" DisplayMemberBinding="{Binding Path=Operator}" />
+                        <GridViewColumn Header="数据" DisplayMemberBinding="{Binding Path=Data}" />
+                        <GridViewColumn Header="时间" DisplayMemberBinding="{Binding Path=CreateDate}"/>
+                    </GridView>
+                </ListView.View>
+            </ListView>
+            <local:PageControl Grid.Row="1" x:Name="ucPager"/>
+        </Grid>
+        <ListView Grid.Column="1" Name="lvwLog" Margin="0 0 10 0">
             <ListView.View>
                 <GridView>
-                    <GridViewColumn Header="操作员" Width="75" DisplayMemberBinding="{Binding Path=Operator}" />
-                    <GridViewColumn Header="数据表" Width="75" DisplayMemberBinding="{Binding Path=Table}" />
-                    <GridViewColumn Header="类型" Width="75" DisplayMemberBinding="{Binding Path=Type}" />
-                    <GridViewColumn Header="数据" Width="200" DisplayMemberBinding="{Binding Path=Data}" />
-                    <GridViewColumn Header="创建时间" Width="75" DisplayMemberBinding="{Binding Path=CreateDate}"/>
+                    <GridViewColumn Header="类型" DisplayMemberBinding="{Binding Path=Type}" />
+                    <GridViewColumn Header="数据" DisplayMemberBinding="{Binding Path=Data}" />
+                    <GridViewColumn Header="操作员" DisplayMemberBinding="{Binding Path=Operator}" />
+                    <GridViewColumn Header="时间" DisplayMemberBinding="{Binding Path=CreateDate}"/>
                 </GridView>
             </ListView.View>
         </ListView>
-        <local:PageControl Grid.Row="1" x:Name="ucPager"/>
     </Grid>
 </UserControl>

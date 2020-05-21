@@ -12,28 +12,48 @@ namespace LR.Services
     public interface ILogService : IQueryService<LR.Entity.Log>
     {
         LR.Tools.Pager<object> GetPage(int pageIndex, int pageSize);
+        List<object> GetHistory(Guid dataID);
     }
 
     class LogService : QueryServiceBase<LR.Entity.Log>, ILogService
     {
+        ISugarQueryable<LogModel> AllQuery
+        {
+            get
+            {
+                return this.Context.Context.Queryable<Entity.Log, Entity.Admin>((log, admin) => new SqlSugar.JoinQueryInfos(SqlSugar.JoinType.Left, log.OperatorID == admin.ID))
+                 .Select((log, admin) => new LogModel
+                 {
+                     DataID = log.DataID,
+                     Type = (LogType)log.Type,
+                     Operator = admin.Name,
+                     Table = log.Table,
+                     Data = log.Data,
+                     CreateDate = log.CreateDate
+                 });
+            }
+        }
+
+        public List<object> GetHistory(Guid dataID)
+        {
+            var logHelper = LogHelper.Current;
+            var query = this.AllQuery.Where(log => log.DataID == dataID);
+            return query.ToArray().Select(p => ToDetail(p, logHelper)).ToList();
+        }
         public LR.Tools.Pager<object> GetPage(int pageIndex, int pageSize)
         {
-            var query = this.Context.Context.Queryable<Entity.Log, Entity.Admin>((log, admin) => new SqlSugar.JoinQueryInfos(SqlSugar.JoinType.Left, log.OperatorID == admin.ID))
-                .Select((log, admin) => new LogModel
-                {
-                    Type = (LogType)log.Type,
-                    Operator = admin.Name,
-                    Table = log.Table,
-                    Data = log.Data,
-                    CreateDate = log.CreateDate
-                });
-
             var logHelper = LogHelper.Current;
+            var query = this.AllQuery;
+            return new Tools.Pager<object>(query.OrderBy(log => log.CreateDate, SqlSugar.OrderByType.Desc).ToPageList(pageIndex, pageSize).Select(p => ToDetail(p, logHelper)), pageSize, query.Count());
+        }
 
-            return new Tools.Pager<object>(query.OrderBy(log => log.CreateDate, SqlSugar.OrderByType.Desc).ToPageList(pageIndex, pageSize).Select(p => new
+        object ToDetail(LogModel p, LogHelper logHelper)
+        {
+            return new
             {
-                CreateDate = p.CreateDate,
-                Operator = p.Operator,
+                p.DataID,
+                p.CreateDate,
+                p.Operator,
                 Table = logHelper.Tables.FirstOrDefault(t => t.Table == p.Table)?.Name ?? p.Table,
                 Type = p.Type.GetName(),
                 Data = string.Join("\r\n", p.Data.JsonTo()
@@ -65,7 +85,7 @@ namespace LR.Services
                         return $"{prop.Name}:{prop.Value}";
                     }
                 }))
-            }), pageSize, query.Count());
+            };
         }
     }
 
@@ -77,6 +97,7 @@ namespace LR.Services
 
     public class LogModel
     {
+        public Guid DataID { get; set; }
         public String Operator { get; set; }
         public LogType Type { get; set; }
         public String Table { get; set; }
